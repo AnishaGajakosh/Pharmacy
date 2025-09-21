@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Register - A1 Medical</title>
+  <meta name="viewport" content="width=device-width,initial-scale=2">
+  <title>Register - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html">A1 Medical</a>
+    <a class="logo" href="index.html">CareKart</a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
       <a href="login.html" id="loginLink">Login</a>
@@ -31,7 +31,7 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container">© <span id="year"></span> A1 Medical</div>
+  <div class="container">© <span id="year"></span> CareKart</div>
 </footer>
 
 <script>
@@ -54,7 +54,6 @@
 
       const json = await res.json();
       if (json.ok) {
-        // ✅ Save email for login autofill, don’t auto-login
         localStorage.setItem("lastRegisteredEmail", data.email);
 
         alert("Registration successful! Please login.");
@@ -63,12 +62,11 @@
         alert(json.msg || "Registration failed");
       }
     } catch (err) {
-      console.error("❌ Register error:", err);
+      console.error(" Register error:", err);
       alert("Error connecting to server");
     }
   });
 
-  // Show/hide login/register/logout links
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
     const loginLink = document.getElementById("loginLink");
@@ -86,7 +84,6 @@
     }
   }
 
-  // Logout function
   const logoutLink = document.getElementById("logoutLink");
   if (logoutLink) {
     logoutLink.addEventListener("click", (e) => {
@@ -97,41 +94,13 @@
       window.location.href = "login.html";
     });
   }
-
   updateAuthLinks();
 </script>
-
 <style>
-  .auth-form {
-    max-width: 400px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
-  .auth-form input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  .btn-add {
-    margin-top: 12px;
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  .btn-add:hover {
-    background: #218838;
-  }
+  .auth-form {max-width: 400px;margin: 20px auto;display: flex;flex-direction: column;gap: 12px;padding: 20px;background: #fff;border-radius: 8px;border: 1px solid #eee;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+  .auth-form input {padding: 10px;border: 1px solid #ccc;border-radius: 6px;}
+  .btn-add {margin-top: 12px;background: #28a745;color: white;border: none;padding: 12px;border-radius: 6px;cursor: pointer;font-size: 16px;}
+  .btn-add:hover {background: #218838;}
 </style>
 </body>
 </html>
