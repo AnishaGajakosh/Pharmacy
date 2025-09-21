@@ -1,21 +1,20 @@
+// routes/admin.js
 import express from "express";
 import Order from "../models/Order.js";
-import User from "../models/User.js";
-import { authMiddleware } from "../middleware/auth.js"; // your JWT middleware
+import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// ✅ Get all orders (admin only)
+// ✅ Fetch all orders (admin only)
 router.get("/orders", authMiddleware, async (req, res) => {
   try {
-    // check if logged in user is admin
     if (!req.user.isAdmin) {
       return res.status(403).json({ ok: false, msg: "Access denied" });
     }
 
     const orders = await Order.find()
-      .populate("user", "name email") // show user details
-      .populate("payment");
+      .populate("user", "name email")  // customer details
+      .populate("payment");            // payment details
 
     res.json({ ok: true, orders });
   } catch (err) {
