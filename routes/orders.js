@@ -26,7 +26,6 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, msg: "No items in order" });
     }
 
-    // Enrich items with name + price from DB
     const detailedItems = await Promise.all(
       items.map(async (it) => {
         const product = await Product.findById(it.id);
