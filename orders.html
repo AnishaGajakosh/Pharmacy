@@ -7,7 +7,8 @@
 </head>
 <body>
 <main class="container">
-  <h1>My Orders</h1>
+  <a href="index.html" class="back-arrow">← Back</a>
+  <h1>Order Details</h1>
   <div id="ordersList"></div>
 </main>
 
@@ -29,7 +30,6 @@
         const div = document.createElement("div");
         div.className = "order";
 
-        // Payment details if available
         let paymentDetails = "";
         if (o.payment) {
           paymentDetails = `
