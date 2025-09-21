@@ -13,6 +13,8 @@
 </main>
 
 <script>
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
+
   async function loadOrder() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -22,7 +24,7 @@
     }
 
     try {
-      const res = await fetch("/api/orders", {
+      const res = await fetch(`${API_BASE}/api/orders`, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") }
       });
       const data = await res.json();
@@ -63,6 +65,7 @@
       document.getElementById("orderDetails").innerText = "Error loading order.";
     }
   }
+
   loadOrder();
 </script>
 
