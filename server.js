@@ -38,11 +38,11 @@ app.use("/api/payments", paymentRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files from root folder
+// Serve static files from root (index.html, style.css, etc.)
 app.use(express.static(__dirname));
 
-// Fallback to index.html for unknown routes
-app.get("*", (req, res) => {
+// Fallback to index.html for any non-API route
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 // ---------------------------------------------------------------
