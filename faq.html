@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FAQ - PharmaHub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .back-arrow {
+      display: inline-block;
+      font-size: 22px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      color: #28a745;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-arrow:hover {
+      color: #1e7e34;
+    }
+
+    /* Search + Category */
+    .faq-controls {
+      margin: 15px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .faq-controls input, .faq-controls select {
+      padding: 8px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Accordion FAQ */
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .faq-question {
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+    }
+    .faq-question:hover {
+      color: #28a745;
+    }
+    .faq-answer {
+      display: none;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #555;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">PharmaHub</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="titlebar">FAQ</div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Back arrow -->
+  <a href="index.html" class="back-arrow">← Back</a>
+  <h1>Frequently Asked Questions</h1>
+
+  <!-- Controls -->
+  <div class="faq-controls">
+    <input type="text" id="faqSearch" placeholder="Search FAQs...">
+    <select id="faqCategory">
+      <option value="">All Categories</option>
+      <option value="orders">Orders</option>
+      <option value="delivery">Delivery</option>
+      <option value="payments">Payments</option>
+      <option value="returns">Returns & Refunds</option>
+      <option value="privacy">Privacy</option>
+    </select>
+  </div>
+
+  <!-- FAQ List -->
+  <div id="faqList">
+    <div class="faq-item" data-cat="orders">
+      <div class="faq-question">How do I place an order? <span>+</span></div>
+      <div class="faq-answer">Simply browse our products, add them to your cart, and proceed to checkout.</div>
+    </div>
+
+    <div class="faq-item" data-cat="delivery">
+      <div class="faq-question">Do you deliver all over India? <span>+</span></div>
+      <div class="faq-answer">Yes, we deliver across India with reliable shipping partners.</div>
+    </div>
+
+    <div class="faq-item" data-cat="orders">
+      <div class="faq-question">Are prescriptions required? <span>+</span></div>
+      <div class="faq-answer">Yes, for certain prescription medicines, you must upload a valid prescription at checkout.</div>
+    </div>
+
+    <div class="faq-item" data-cat="delivery">
+      <div class="faq-question">How can I track my order? <span>+</span></div>
+      <div class="faq-answer">Once your order is shipped, you will receive a tracking link via SMS/email to monitor your delivery status.</div>
+    </div>
+
+    <div class="faq-item" data-cat="payments">
+      <div class="faq-question">What payment methods do you accept? <span>+</span></div>
+      <div class="faq-answer">We accept credit/debit cards, UPI, net banking, wallets, and cash on delivery (COD) in select locations.</div>
+    </div>
+
+    <div class="faq-item" data-cat="delivery">
+      <div class="faq-question">How long does delivery take? <span>+</span></div>
+      <div class="faq-answer">Delivery usually takes 2–5 business days depending on your location. Metro cities may get next-day delivery.</div>
+    </div>
+
+    <div class="faq-item" data-cat="orders">
+      <div class="faq-question">Can I cancel or modify my order? <span>+</span></div>
+      <div class="faq-answer">Yes, orders can be canceled or modified before they are shipped. Once shipped, cancellations are not possible.</div>
+    </div>
+
+    <div class="faq-item" data-cat="returns">
+      <div class="faq-question">What if I receive a damaged or wrong product? <span>+</span></div>
+      <div class="faq-answer">If you receive a wrong or damaged item, contact our support team within 48 hours for a replacement or refund.</div>
+    </div>
+
+    <div class="faq-item" data-cat="privacy">
+      <div class="faq-question">Is my personal information safe? <span>+</span></div>
+      <div class="faq-answer">Yes, we use SSL encryption and strict privacy policies to protect your data. We never sell your information.</div>
+    </div>
+
+    <div class="faq-item" data-cat="orders">
+      <div class="faq-question">How do I contact customer support? <span>+</span></div>
+      <div class="faq-answer">You can reach us via the <a href="contact.html">Contact Us</a> page, email, or our 24/7 customer care helpline.</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">© <span id="year"></span> PharmaHub</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent=new Date().getFullYear();
+
+  // Accordion toggle
+  document.querySelectorAll('.faq-question').forEach(q=>{
+    q.addEventListener('click',()=>{
+      const item=q.parentElement;
+      item.classList.toggle('active');
+      q.querySelector('span').textContent=item.classList.contains('active') ? '−' : '+';
+    });
+  });
+
+  // Search filter
+  const search=document.getElementById('faqSearch');
+  const category=document.getElementById('faqCategory');
+  const faqs=document.querySelectorAll('.faq-item');
+
+  function filterFAQs(){
+    const text=search.value.toLowerCase();
+    const cat=category.value;
+    faqs.forEach(f=>{
+      const q=f.querySelector('.faq-question').textContent.toLowerCase();
+      const a=f.querySelector('.faq-answer').textContent.toLowerCase();
+      const matchesText=q.includes(text)||a.includes(text);
+      const matchesCat=!cat||f.dataset.cat===cat;
+      f.style.display=(matchesText && matchesCat)?'block':'none';
+    });
+  }
+
+  search.addEventListener('input',filterFAQs);
+  category.addEventListener('change',filterFAQs);
+</script>
+</body>
+</html>

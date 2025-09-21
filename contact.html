@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact Us - PharmaHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">PharmaHub</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="titlebar">Contact Us</div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Back arrow -->
+  <a href="index.html" class="back-arrow">← Back</a>
+  <h1>Get in Touch</h1>
+  <p>If you have any questions, feel free to reach us:</p>
+  <ul>
+    <li>Email: support@pharmahub.com</li>
+    <li>Phone: +91 98765 43210</li>
+    <li>Address: PharmaHub HQ, Mumbai, India</li>
+  </ul>
+
+  <form style="margin-top:20px">
+    <label>Your Name:<br><input type="text" style="width:100%;padding:8px"></label><br><br>
+    <label>Your Email:<br><input type="email" style="width:100%;padding:8px"></label><br><br>
+    <label>Message:<br><textarea style="width:100%;padding:8px;height:120px"></textarea></label><br><br>
+    <button class="btn-add" type="submit">Send Message</button>
+  </form>
+</main>
+
+<footer class="site-footer">
+  <div class="container">© <span id="year"></span> PharmaHub</div>
+</footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<style>
+  .back-arrow {
+    display: inline-block;
+    font-size: 22px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    color: #28a745;   /* green instead of blue */
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .back-arrow:hover {
+    color: #1e7e34;   /* darker green hover */
+  }
+  </style>
+</body>
+</html>

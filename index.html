@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A1 Medical - Your Online Pharmacy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        <a class="logo" href="index.html">
+          <img src="https://via.placeholder.com/40?text=PH" alt="Pharmacy" style="height: 50px"> A1 Medical 
+        </a>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+      </nav>
+      <div class="titlebar">Trusted medicines, delivered fast</div>
+    </div>
+  </header>
+
+  <!-- sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="profile">
+      <div class="avatar" id="avatar">U</div>
+      <div>
+        <div class="welcome" id="welcome">Welcome, Guest</div>
+        <div style="font-size:12px;color:var(--muted)">Customer</div>
+      </div>
+    </div>
+    <div class="nav">
+      <a href="login.html" id="loginLink">Login</a>
+      <a href="register.html" id="registerLink">Register</a>
+      <a href="index.html">Home</a>
+      <a href="orders.html">My Orders</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="faq.html">FAQ</a>
+      <a href="#" id="logoutLink" style="color:red;display:none">Sign Out</a>
+    </div>
+  </aside>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Welcome to A1 Medical </h1>
+      <p>Your trusted online pharmacy for OTC medicines, supplements, devices, and more.</p>
+      <p><a href="products.html" class="btn-add">Shop Now</a></p>
+    </section>
+
+    <section>
+      <h2>Shop by Category</h2>
+      <div class="product-grid" id="catGrid"></div>
+    </section>
+
+    <section>
+      <h2>Featured Products</h2>
+      <div class="product-grid" id="featGrid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> PharmaHub</div>
+  </footer>
+
+  <!-- load products.js -->
+  <script src="products.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // === Sidebar toggle ===
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    hamburger.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      sidebar.classList.toggle('open');
+    });
+    document.addEventListener('click', (e)=>{
+      if(sidebar.classList.contains('open') && !sidebar.contains(e.target) && !hamburger.contains(e.target)){
+        sidebar.classList.remove('open');
+      }
+    });
+
+    // === User login/logout handling ===
+    const user = JSON.parse(localStorage.getItem('user')||'null');
+    const logoutLink = document.getElementById("logoutLink");
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+
+    if(user){
+      document.getElementById('welcome').textContent = `Welcome, ${user.name}`;
+      document.getElementById('avatar').textContent = (user.name||'U').split(' ').map(s=>s[0]).slice(0,2).join('');
+      logoutLink.style.display = "block";
+      loginLink.style.display = "none";
+      registerLink.style.display = "none";
+    } else {
+      logoutLink.style.display = "none";
+      loginLink.style.display = "block";
+      registerLink.style.display = "block";
+    }
+
+    if (logoutLink) {
+      logoutLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        alert("You have been signed out.");
+        window.location.href = "index.html";
+      });
+    }
+
+    // === Init cart count ===
+    const cartCount = (JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
+    document.getElementById('cart-count').textContent = cartCount;
+
+    // === Wait until products.json is loaded ===
+    document.addEventListener("productsLoaded", ()=>{
+      // Build categories
+      const cats = [...new Set((window.PRODUCTS||[]).map(p=>p.category||'General'))];
+      const catGrid = document.getElementById('catGrid');
+      cats.forEach(c=>{
+        const card=document.createElement('div');
+        card.className='product-card';
+        card.innerHTML = `
+          <h3>${c}</h3>
+          <p>Explore our ${c} products</p>
+          <a class="btn-add" href="products.html?cat=${encodeURIComponent(c)}">${c}</a>`;
+        catGrid.appendChild(card);
+      });
+
+      // Featured products
+      const featGrid = document.getElementById('featGrid');
+      (window.PRODUCTS||[]).slice(0,4).forEach(p=>{
+        const card=document.createElement('div');
+        card.className='product-card';
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <p class="desc">${p.description}</p>
+            <div class="price">₹ ${p.price.toFixed(2)}</div>
+            <a href="product.html?id=${p.id}" class="btn-add">View</a>
+          </div>`;
+        featGrid.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>

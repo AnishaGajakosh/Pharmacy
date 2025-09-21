@@ -1,0 +1,632 @@
+[
+  {
+    "id": "med001",
+    "name": "Paracetamol 500mg (Strip of 10)",
+    "price": 40.00,
+    "description": "Effective relief from fever and mild pain.",
+    "sku": "PARA500-10",
+    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med002",
+    "name": "Cough Syrup (100 ml)",
+    "price": 120.00,
+    "description": "Relieves cough and soothes throat.",
+    "sku": "COUGH100",
+    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med003",
+    "name": "Vitamin C 500mg (60 tablets)",
+    "price": 220.00,
+    "description": "Supports immunity and general health.",
+    "sku": "VITC500-60",
+    "image": "https://images.unsplash.com/photo-1611078489935-0cbab8e1fa6c?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med004",
+    "name": "Antacid Tablets (Strip of 10)",
+    "price": 55.00,
+    "description": "Fast-acting relief from heartburn and acidity.",
+    "sku": "ANTACID-10",
+    "image": "https://images.unsplash.com/photo-1584315154643-89a89f73d6a0?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med005",
+    "name": "Bandage Roll (5 cm x 4 m)",
+    "price": 80.00,
+    "description": "Sterile, flexible bandage for wounds and dressing.",
+    "sku": "BAND-5X4",
+    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med006",
+    "name": "Hand Sanitizer (200 ml)",
+    "price": 150.00,
+    "description": "Kills 99.9% of germs; alcohol-based sanitizer.",
+    "sku": "SAN200",
+    "image": "https://images.unsplash.com/photo-1583947582886-965f7d8c9f0c?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med007",
+    "name": "Face Masks (Pack of 50)",
+    "price": 350.00,
+    "description": "Disposable surgical masks for daily use.",
+    "sku": "MASK50",
+    "image": "https://images.unsplash.com/photo-1584556812952-905ffd0b1917?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med008",
+    "name": "Omega-3 Capsules (30 Softgels)",
+    "price": 450.00,
+    "description": "Supports heart and brain health.",
+    "sku": "OMEGA30",
+    "image": "https://images.unsplash.com/photo-1611078489311-5f934e1ac822?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med009",
+    "name": "Calcium + Vitamin D Tablets (60 tabs)",
+    "price": 320.00,
+    "description": "Supports bone strength and overall health.",
+    "sku": "CALVD60",
+    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med010",
+    "name": "Digital Thermometer",
+    "price": 250.00,
+    "description": "Quick and accurate temperature readings.",
+    "sku": "THERMO",
+    "image": "https://images.unsplash.com/photo-1584315154643-89a89f73d6a0?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med011",
+    "name": "Blood Pressure Monitor",
+    "price": 1200.00,
+    "description": "Digital BP monitor for home use.",
+    "sku": "BPMON",
+    "image": "https://images.unsplash.com/photo-1611078489649-260709e27d43?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med012",
+    "name": "Amoxicillin 500mg Capsules (10 caps)",
+    "price": 180.00,
+    "description": "Antibiotic for bacterial infections.",
+    "sku": "AMOX500-10",
+    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med013",
+    "name": "Metformin 500mg Tablets (30 tabs)",
+    "price": 250.00,
+    "description": "For managing type 2 diabetes.",
+    "sku": "MET500-30",
+    "image": "https://images.unsplash.com/photo-1588776814317-1d144a7a1d1a?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med014",
+    "name": "Ibuprofen 400mg (Strip of 10)",
+    "price": 60.00,
+    "description": "Pain reliever and anti-inflammatory.",
+    "sku": "IBU400-10",
+    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med015",
+    "name": "Cetirizine 10mg (Strip of 10)",
+    "price": 45.00,
+    "description": "Relieves allergies, runny nose, and sneezing.",
+    "sku": "CET10-10",
+    "image": "https://images.unsplash.com/photo-1588776814300-b8a9c90be07e?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med016",
+    "name": "Vitamin D3 1000 IU (60 tabs)",
+    "price": 280.00,
+    "description": "Supports bone and immune health.",
+    "sku": "VITD3-60",
+    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med017",
+    "name": "Multivitamin Tablets (30 tabs)",
+    "price": 300.00,
+    "description": "Daily multivitamin for overall wellness.",
+    "sku": "MULTI-30",
+    "image": "https://images.unsplash.com/photo-1584367369853-8aa0b26e20db?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med018",
+    "name": "Protein Powder (1 kg)",
+    "price": 950.00,
+    "description": "Supports muscle recovery and strength.",
+    "sku": "PROT1KG",
+    "image": "https://images.unsplash.com/photo-1600180758895-0a23c8a47a02?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med019",
+    "name": "Glucometer Device",
+    "price": 1400.00,
+    "description": "Measures blood sugar levels at home.",
+    "sku": "GLUCO",
+    "image": "https://images.unsplash.com/photo-1588776814309-bb6d81d77ec7?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med020",
+    "name": "Pulse Oximeter",
+    "price": 800.00,
+    "description": "Checks blood oxygen saturation and pulse.",
+    "sku": "OXI",
+    "image": "https://images.unsplash.com/photo-1584291527939-83e13e3e03d4?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med021",
+    "name": "Nebulizer Machine",
+    "price": 2200.00,
+    "description": "For respiratory therapy and inhalation.",
+    "sku": "NEBUL",
+    "image": "https://images.unsplash.com/photo-1620912173602-8ff1cd58b1a7?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med022",
+    "name": "Antiseptic Liquid (500 ml)",
+    "price": 120.00,
+    "description": "Disinfects wounds and surfaces.",
+    "sku": "ANTISEP500",
+    "image": "https://images.unsplash.com/photo-1615485295632-fb5f75a42ad1?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med023",
+    "name": "Cotton Wool Roll (500 g)",
+    "price": 150.00,
+    "description": "Soft cotton roll for medical use.",
+    "sku": "COTTON500",
+    "image": "https://images.unsplash.com/photo-1588776814471-916e68e5c1d2?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med024",
+    "name": "Shampoo (Anti-Dandruff, 200 ml)",
+    "price": 180.00,
+    "description": "Keeps scalp clean and reduces dandruff.",
+    "sku": "SHAMP200",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med025",
+    "name": "Pain Relief Spray (50 ml)",
+    "price": 160.00,
+    "description": "Quick relief for muscle and joint pain.",
+    "sku": "PAINSPRAY50",
+    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med026",
+    "name": "Cold & Flu Tablets (10 tabs)",
+    "price": 90.00,
+    "description": "For common cold, sneezing, and fever.",
+    "sku": "COLDFLU10",
+    "image": "https://images.unsplash.com/photo-1611078489311-5f934e1ac822?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med027",
+    "name": "Azithromycin 500mg (3 tabs)",
+    "price": 70.00,
+    "description": "Antibiotic used for bacterial infections.",
+    "sku": "AZI500-3",
+    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med028",
+    "name": "Insulin Pen (Disposable)",
+    "price": 450.00,
+    "description": "For diabetes management.",
+    "sku": "INSULINPEN",
+    "image": "https://images.unsplash.com/photo-1580281657521-b0de6f9fb96b?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med029",
+    "name": "Pregnancy Test Kit",
+    "price": 90.00,
+    "description": "Easy-to-use home pregnancy detection kit.",
+    "sku": "PREGKIT",
+    "image": "https://images.unsplash.com/photo-1620912182867-2f163cd4c43e?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med030",
+    "name": "Zinc Tablets (50 tabs)",
+    "price": 200.00,
+    "description": "Boosts immunity and wound healing.",
+    "sku": "ZINC50",
+    "image": "https://images.unsplash.com/photo-1611078489649-260709e27d43?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med031",
+    "name": "Vitamin B12 Capsules (30 caps)",
+    "price": 350.00,
+    "description": "Supports energy production and nerve health.",
+    "sku": "VITB12-30",
+    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med032",
+    "name": "Skin Moisturizer (100 ml)",
+    "price": 180.00,
+    "description": "Hydrates and nourishes skin.",
+    "sku": "MOIST100",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med033",
+    "name": "Ear Drops (10 ml)",
+    "price": 70.00,
+    "description": "Relieves ear pain and infections.",
+    "sku": "EAR10",
+    "image": "https://images.unsplash.com/photo-1588776814300-b8a9c90be07e?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med034",
+    "name": "Nasal Spray (15 ml)",
+    "price": 120.00,
+    "description": "Relieves nasal congestion.",
+    "sku": "NASAL15",
+    "image": "https://images.unsplash.com/photo-1588776814317-1d144a7a1d1a?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med035",
+    "name": "Hair Oil (200 ml)",
+    "price": 220.00,
+    "description": "Nourishes scalp and reduces hair fall.",
+    "sku": "HAIROIL200",
+    "image": "https://images.unsplash.com/photo-1588776814471-916e68e5c1d2?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med036",
+    "name": "Cough Lozenges (Pack of 20)",
+    "price": 50.00,
+    "description": "Soothes throat irritation and cough.",
+    "sku": "LOZ20",
+    "image": "https://images.unsplash.com/photo-1588776814309-bb6d81d77ec7?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med037",
+    "name": "Probiotic Capsules (30 caps)",
+    "price": 300.00,
+    "description": "Improves gut health and digestion.",
+    "sku": "PROBIO30",
+    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med038",
+    "name": "Electrolyte Powder (200 g)",
+    "price": 150.00,
+    "description": "Restores hydration and minerals.",
+    "sku": "ELECTRO200",
+    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med039",
+    "name": "Allergy Eye Drops (10 ml)",
+    "price": 110.00,
+    "description": "Relieves redness and itching in eyes.",
+    "sku": "EYEDROP10",
+    "image": "https://images.unsplash.com/photo-1588776814471-916e68e5c1d2?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med040",
+    "name": "Diaper Rash Cream (50 g)",
+    "price": 190.00,
+    "description": "Protects and soothes baby skin.",
+    "sku": "DIAPER50",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med041",
+    "name": "Hand Wash (250 ml)",
+    "price": 120.00,
+    "description": "Gentle hand wash with antibacterial action.",
+    "sku": "HANDWASH250",
+    "image": "https://images.unsplash.com/photo-1615484477609-1f5c8fba07f4?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med042",
+    "name": "Aspirin 75mg (Strip of 14)",
+    "price": 65.00,
+    "description": "Used for heart health and blood thinning.",
+    "sku": "ASP75-14",
+    "image": "https://images.unsplash.com/photo-1584367369853-8aa0b26e20db?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med043",
+    "name": "Antifungal Cream (15 g)",
+    "price": 85.00,
+    "description": "Treats fungal skin infections.",
+    "sku": "FUNGICRM15",
+    "image": "https://images.unsplash.com/photo-1611930021817-bfa7e4dd2c1b?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med044",
+    "name": "Iron Supplement Syrup (150 ml)",
+    "price": 180.00,
+    "description": "Helps treat iron deficiency anemia.",
+    "sku": "IRON150",
+    "image": "https://images.unsplash.com/photo-1600180758895-0a23c8a47a02?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med045",
+    "name": "Antiseptic Cream (20 g)",
+    "price": 75.00,
+    "description": "Heals cuts, wounds, and burns.",
+    "sku": "ANTICRM20",
+    "image": "https://images.unsplash.com/photo-1611078489649-260709e27d43?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med046",
+    "name": "Calamine Lotion (100 ml)",
+    "price": 130.00,
+    "description": "Soothes itching and rashes.",
+    "sku": "CALAMINE100",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med047",
+    "name": "Ginger Capsules (60 caps)",
+    "price": 240.00,
+    "description": "Supports digestion and relieves nausea.",
+    "sku": "GINGER60",
+    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med048",
+    "name": "Aloe Vera Gel (200 g)",
+    "price": 200.00,
+    "description": "Moisturizes and heals skin naturally.",
+    "sku": "ALOE200",
+    "image": "https://images.unsplash.com/photo-1611930021817-bfa7e4dd2c1b?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med049",
+    "name": "Throat Spray (20 ml)",
+    "price": 90.00,
+    "description": "Provides quick relief from sore throat.",
+    "sku": "THROAT20",
+    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med050",
+    "name": "Vitamin E Capsules (30 caps)",
+    "price": 320.00,
+    "description": "Supports skin and hair health.",
+    "sku": "VITE30",
+    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med051",
+    "name": "Liver Tonic (200 ml)",
+    "price": 180.00,
+    "description": "Herbal tonic to support liver health.",
+    "sku": "LIVER200",
+    "image": "https://images.unsplash.com/photo-1600180758895-0a23c8a47a02?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med052",
+    "name": "Inhaler (200 doses)",
+    "price": 350.00,
+    "description": "Relieves asthma and breathing difficulties.",
+    "sku": "INHALER200",
+    "image": "https://images.unsplash.com/photo-1588776814317-1d144a7a1d1a?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med053",
+    "name": "Pain Balm (25 g)",
+    "price": 95.00,
+    "description": "Topical relief for headaches and body pain.",
+    "sku": "PAINBALM25",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med054",
+    "name": "Neem Capsules (60 caps)",
+    "price": 200.00,
+    "description": "Promotes skin health and immunity.",
+    "sku": "NEEM60",
+    "image": "https://images.unsplash.com/photo-1611078489311-5f934e1ac822?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med055",
+    "name": "Glucosamine Tablets (60 tabs)",
+    "price": 450.00,
+    "description": "Supports joint health and flexibility.",
+    "sku": "GLUCOS60",
+    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med056",
+    "name": "Baby Lotion (200 ml)",
+    "price": 210.00,
+    "description": "Gentle moisturizer for babies’ delicate skin.",
+    "sku": "BABYLOT200",
+    "image": "https://images.unsplash.com/photo-1611930021817-bfa7e4dd2c1b?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med057",
+    "name": "Antacid Syrup (150 ml)",
+    "price": 95.00,
+    "description": "Relieves acidity and indigestion.",
+    "sku": "ANTASYR150",
+    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med058",
+    "name": "Herbal Tea (20 bags)",
+    "price": 170.00,
+    "description": "Supports digestion and relaxation.",
+    "sku": "TEA20",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med059",
+    "name": "Sunscreen SPF 50 (100 ml)",
+    "price": 280.00,
+    "description": "Protects skin from harmful UV rays.",
+    "sku": "SUNSCR100",
+    "image": "https://images.unsplash.com/photo-1611930021817-bfa7e4dd2c1b?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med060",
+    "name": "Digestive Enzyme Tablets (30 tabs)",
+    "price": 220.00,
+    "description": "Aids digestion and nutrient absorption.",
+    "sku": "ENZYME30",
+    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med061",
+    "name": "Blood Glucose Test Strips (50 pcs)",
+    "price": 600.00,
+    "description": "For use with glucometers to test sugar levels.",
+    "sku": "GLUSTRIPS50",
+    "image": "https://images.unsplash.com/photo-1588776814309-bb6d81d77ec7?w=300&auto=format&fit=crop&q=60",
+    "category": "Devices"
+  },
+  {
+    "id": "med062",
+    "name": "Herbal Cough Syrup (100 ml)",
+    "price": 130.00,
+    "description": "Natural relief for cough and sore throat.",
+    "sku": "HERBCOUGH100",
+    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med063",
+    "name": "Vitamin K2 + D3 Tablets (30 tabs)",
+    "price": 340.00,
+    "description": "Supports bone and heart health.",
+    "sku": "VITKD30",
+    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med064",
+    "name": "Antiviral Medicine (10 tabs)",
+    "price": 500.00,
+    "description": "Used for viral infections under prescription.",
+    "sku": "ANTIVIRAL10",
+    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "category": "Prescription"
+  },
+  {
+    "id": "med065",
+    "name": "Oral Rehydration Salts (ORS Pack)",
+    "price": 40.00,
+    "description": "Restores hydration quickly during dehydration.",
+    "sku": "ORS",
+    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med066",
+    "name": "Turmeric Capsules (60 caps)",
+    "price": 300.00,
+    "description": "Natural anti-inflammatory and antioxidant.",
+    "sku": "TURM60",
+    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med067",
+    "name": "Sleep Aid Tablets (10 tabs)",
+    "price": 200.00,
+    "description": "Helps manage occasional sleeplessness.",
+    "sku": "SLEEP10",
+    "image": "https://images.unsplash.com/photo-1588776814300-b8a9c90be07e?w=300&auto=format&fit=crop&q=60",
+    "category": "OTC"
+  },
+  {
+    "id": "med068",
+    "name": "Energy Drink Powder (500 g)",
+    "price": 450.00,
+    "description": "Replenishes electrolytes and energy.",
+    "sku": "ENERGY500",
+    "image": "https://images.unsplash.com/photo-1600180758895-0a23c8a47a02?w=300&auto=format&fit=crop&q=60",
+    "category": "Supplements"
+  },
+  {
+    "id": "med069",
+    "name": "All-purpose Ointment (25 g)",
+    "price": 100.00,
+    "description": "Soothes cuts, burns, and rashes.",
+    "sku": "OINT25",
+    "image": "https://images.unsplash.com/photo-1611930021817-bfa7e4dd2c1b?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  },
+  {
+    "id": "med070",
+    "name": "Herbal Hair Shampoo (200 ml)",
+    "price": 190.00,
+    "description": "Strengthens hair and reduces dandruff.",
+    "sku": "HERBSHAMP200",
+    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "category": "Personal Care"
+  }
+]

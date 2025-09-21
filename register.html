@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Register - A1 Medical</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">A1 Medical</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <div class="titlebar">Create Account</div>
+  </div>
+</header>
+
+<main class="container">
+  <h1>Register</h1>
+  <form id="registerForm" class="auth-form">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit" class="btn-add">Register</button>
+  </form>
+</main>
+
+<footer class="site-footer">
+  <div class="container">© <span id="year"></span> A1 Medical</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const form = document.getElementById("registerForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const json = await res.json();
+      if (json.ok) {
+        // save token + user to localStorage
+        localStorage.setItem("token", json.token);
+        localStorage.setItem("user", JSON.stringify(json.user));
+
+        alert("Registration successful!");
+        window.location.href = "index.html"; // or products.html
+      } else {
+        alert(json.msg || "Registration failed");
+      }
+    } catch (err) {
+      console.error("❌ Register error:", err);
+      alert("Error connecting to server");
+    }
+  });
+</script>
+
+<style>
+  .auth-form {
+    max-width: 400px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .auth-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  .btn-add {
+    margin-top: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn-add:hover {
+    background: #218838;
+  }
+</style>
+</body>
+</html>

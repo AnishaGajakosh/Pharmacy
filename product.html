@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Details — A1 Medical</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </div>
+        <a class="logo" href="index.html">
+          <img src="https://via.placeholder.com/40?text=PH" alt="Pharmacy" style="height:60px"> A1 Medical
+        </a>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+      </nav>
+      <div class="titlebar">Safe medicines • Fast delivery</div>
+    </div>
+  </header>
+
+  <!-- sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="profile">
+      <div class="avatar" id="avatar">U</div>
+      <div>
+        <div class="welcome" id="welcome">Welcome, Guest</div>
+        <div style="font-size:12px;color:var(--muted)">Customer</div>
+      </div>
+    </div>
+    <div class="nav">
+      <a href="login.html" id="loginLink">Login</a>
+      <a href="register.html" id="registerLink">Register</a>
+      <a href="index.html">Home</a>
+      <a href="orders.html">My Orders</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About Us</a>
+      <a href="faq.html">FAQ</a>
+      <a href="#" id="logoutLink" style="color:red;display:none">Sign Out</a>
+    </div>
+  </aside>
+
+  <main class="container">
+    <a href="products.html" class="back-arrow">← Back</a>
+
+    <div id="product-detail" class="product-detail"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> A1 Medical</div>
+  </footer>
+
+  <!-- Load products.js -->
+  <script src="products.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Sidebar toggle
+    const hamburger=document.getElementById('hamburger');
+    const sidebar=document.getElementById('sidebar');
+    hamburger.addEventListener('click',(e)=>{e.stopPropagation();sidebar.classList.toggle('open');});
+    document.addEventListener('click',(e)=>{if(sidebar.classList.contains('open')&&!sidebar.contains(e.target)&&!hamburger.contains(e.target)){sidebar.classList.remove('open');}});
+
+    // User login/logout
+    const user=JSON.parse(localStorage.getItem('user')||'null');
+    const logoutLink=document.getElementById("logoutLink");
+    const loginLink=document.getElementById("loginLink");
+    const registerLink=document.getElementById("registerLink");
+    if(user){
+      document.getElementById('welcome').textContent=`Welcome, ${user.name}`;
+      document.getElementById('avatar').textContent=(user.name||'U').split(' ').map(s=>s[0]).slice(0,2).join('');
+      logoutLink.style.display="block"; loginLink.style.display="none"; registerLink.style.display="none";
+    } else {
+      logoutLink.style.display="none"; loginLink.style.display="block"; registerLink.style.display="block";
+    }
+    logoutLink.addEventListener("click",(e)=>{e.preventDefault();localStorage.removeItem("token");localStorage.removeItem("user");alert("You have been signed out.");window.location.href="index.html";});
+
+    // Init cart count
+    const cartCount=(JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
+    document.getElementById('cart-count').textContent=cartCount;
+
+    // ====== Product detail rendering ======
+    function getQueryParam(key){
+      return new URLSearchParams(window.location.search).get(key);
+    }
+
+    document.addEventListener("productsLoaded", ()=>{
+      const id=getQueryParam("id");
+      const p=(window.PRODUCTS||[]).find(x=>x.id===id);
+      if(!p){
+        document.getElementById("product-detail").innerHTML="<p>Product not found.</p>";
+        return;
+      }
+
+      const detail=document.getElementById("product-detail");
+      detail.innerHTML=`
+        <div class="detail-card">
+          <img src="${p.image}" alt="${p.name}" class="detail-image">
+          <div class="detail-info">
+            <h1>${p.name}</h1>
+            <p class="category">Category: ${p.category}</p>
+            <p>${p.description}</p>
+            <p><strong>Price:</strong> ₹ ${p.price.toFixed(2)}</p>
+            <button class="btn-add" id="addCartBtn">Add to Cart</button>
+          </div>
+        </div>`;
+      
+      // Add to cart button
+      document.getElementById("addCartBtn").addEventListener("click",()=>{
+        const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+        const existing=cart.find(it=>it.id===p.id);
+        if(existing) existing.quantity+=1; else cart.push({id:p.id,name:p.name,price:p.price,quantity:1});
+        localStorage.setItem('cart', JSON.stringify(cart));
+        document.getElementById('cart-count').textContent=cart.reduce((s,i)=>s+i.quantity,0);
+        alert(`${p.name} added to cart`);
+      });
+    });
+  </script>
+
+  <!-- ===== Custom CSS at the bottom ===== -->
+  <style>
+  .back-arrow {
+    display: inline-block;
+    font-size: 22px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    color: #28a745;   /* green instead of blue */
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .back-arrow:hover {
+    color: #1e7e34;   /* darker green hover */
+  }
+
+  .detail-card {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .detail-image {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    padding: 10px;
+  }
+
+  .detail-info {
+    flex: 1;
+  }
+
+  .detail-info h1 {
+    margin: 0 0 10px;
+    font-size: 26px;
+    color: #222;
+  }
+
+  .detail-info .category {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+  }
+
+  .detail-info p {
+    margin: 10px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+  }
+
+  .btn-add {
+    margin-top: 16px;
+    background: #28a745;  /* green button */
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+  }
+  .btn-add:hover {
+    background: #1e7e34;  /* darker green hover */
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .detail-card {
+      flex-direction: column;
+      text-align: center;
+    }
+    .detail-image {
+      width: 100%;
+      max-width: 350px;
+      margin: 0 auto 15px;
+    }
+    .btn-add {
+      width: 100%;
+    }
+  }
+</style>
+</body>
+</html>

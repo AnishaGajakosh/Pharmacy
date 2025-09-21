@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Order Confirmation - A1 Medical</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="container">
+  <h1>Order Confirmation</h1>
+  <div id="orderDetails">Loading...</div>
+  <a href="orders.html" class="btn-add">View My Orders</a>
+</main>
+
+<script>
+  async function loadOrder() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    if (!id) {
+      document.getElementById("orderDetails").innerText = "Order ID missing.";
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/orders", {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      });
+      const data = await res.json();
+      if (!data.ok) return alert("Failed to load order");
+
+      const order = data.orders.find(o => o._id === id);
+      if (!order) {
+        document.getElementById("orderDetails").innerText = "Order not found.";
+        return;
+      }
+
+      let paymentDetails = "";
+      if (order.payment) {
+        paymentDetails = `
+          <h3>Payment Details</h3>
+          <p><strong>Payment ID:</strong> ${order.payment.razorpayPaymentId || "—"}</p>
+          <p><strong>Status:</strong> ${order.payment.status}</p>
+          <p><strong>Amount:</strong> ₹${(order.payment.amount || 0) / 100}</p>
+        `;
+      }
+
+      document.getElementById("orderDetails").innerHTML = `
+        <h2>Thank you for your order!</h2>
+        <p><strong>Order ID:</strong> ${order._id}</p>
+        <p><strong>Status:</strong> ${order.status}</p>
+        <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+        ${paymentDetails}
+        <h3>Items</h3>
+        <ul>
+          ${order.items.map(i => `<li>${i.name} x${i.quantity} - ₹${i.price}</li>`).join("")}
+        </ul>
+        <h3>Shipping Information</h3>
+        <p>${order.shipping.name}, ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.state} - ${order.shipping.zip}</p>
+        <p>Phone: ${order.shipping.phone}</p>
+      `;
+    } catch (err) {
+      console.error(err);
+      document.getElementById("orderDetails").innerText = "Error loading order.";
+    }
+  }
+  loadOrder();
+</script>
+
+<style>
+.container{max-width:700px;margin:30px auto}
+#orderDetails{border:1px solid #ddd;padding:20px;border-radius:8px;background:#fff}
+.btn-add{display:inline-block;margin-top:20px;background:#28a745;color:#fff;padding:12px 18px;border-radius:6px;text-decoration:none}
+.btn-add:hover{background:#218838}
+</style>
+</body>
+</html>
