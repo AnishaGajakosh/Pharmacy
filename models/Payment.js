@@ -1,4 +1,4 @@
-// /models/Payments.js
+// /models/Payment.js
 import mongoose from "mongoose";
 
 const paymentSchema = new mongoose.Schema({
