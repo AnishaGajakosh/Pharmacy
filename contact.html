@@ -3,13 +3,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact Us - CareKart</title>
+  <title>Contact Us - PharmaHub</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .back-arrow {
+      display: inline-block;
+      font-size: 22px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      color: #28a745;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-arrow:hover {
+      color: #1e7e34;
+    }
+    .messages-list {
+      margin-top: 30px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    .message-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .message-item:last-child {
+      border-bottom: none;
+    }
+    .message-date {
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html">CareKart</a>
+    <a class="logo" href="index.html">PharmaHub</a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
@@ -18,69 +50,100 @@
     <div class="titlebar">Contact Us</div>
   </div>
 </header>
-<main class="container">
 
+<main class="container">
+  <!-- Back arrow -->
   <a href="index.html" class="back-arrow">← Back</a>
   <h1>Get in Touch</h1>
   <p>If you have any questions, feel free to reach us:</p>
   <ul>
-    <li>Email: support@carekart.com</li>
-    <li>Phone: +91 9876543210</li>
-    <li>Address: Carekart, Mumbai, India</li>
+    <li>Email: support@pharmahub.com</li>
+    <li>Phone: +91 98765 43210</li>
+    <li>Address: PharmaHub HQ, Mumbai, India</li>
   </ul>
 
   <form id="contactForm" style="margin-top:20px">
-    <label>Your Name:<br>
-      <input name="name" type="text" required style="width:100%;padding:8px">
-    </label><br><br>
-    <label>Your Email:<br>
-      <input name="email" type="email" required style="width:100%;padding:8px">
-    </label><br><br>
-    <label>Message:<br>
-      <textarea name="message" required style="width:100%;padding:8px;height:120px"></textarea>
-    </label><br><br>
+    <label>Your Name:<br><input type="text" name="name" style="width:100%;padding:8px" required></label><br><br>
+    <label>Your Email:<br><input type="email" name="email" style="width:100%;padding:8px" required></label><br><br>
+    <label>Message:<br><textarea name="message" style="width:100%;padding:8px;height:120px" required></textarea></label><br><br>
     <button class="btn-add" type="submit">Send Message</button>
   </form>
+
+  <!-- Show messages -->
+  <div class="messages-list">
+    <h2>Your Messages</h2>
+    <div id="messagesContainer">Loading...</div>
+  </div>
 </main>
 
 <footer class="site-footer">
-  <div class="container">© <span id="year"></span> CareKart</div>
+  <div class="container">© <span id="year"></span> PharmaHub</div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  document.getElementById("contactForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  const form = document.getElementById("contactForm");
+  const messagesContainer = document.getElementById("messagesContainer");
 
-    const formData = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      message: e.target.message.value
-    };
+  // Submit form
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(data),
       });
-
-      const data = await res.json();
-      if (data.ok) {
-        alert("✅ Message sent successfully!");
-        e.target.reset();
+      const result = await res.json();
+      if (result.ok) {
+        alert("✅ Message sent!");
+        form.reset();
+        loadMessages(); // refresh list
       } else {
-        alert("❌ " + data.error);
+        alert("❌ " + result.error);
       }
     } catch (err) {
       alert("⚠️ Error: " + err.message);
     }
   });
+
+  // Load messages
+  async function loadMessages() {
+    try {
+      const res = await fetch("/api/contact");
+      const data = await res.json();
+
+      if (!data.ok) {
+        messagesContainer.innerHTML = "<p>Error loading messages</p>";
+        return;
+      }
+
+      if (data.messages.length === 0) {
+        messagesContainer.innerHTML = "<p>No messages yet.</p>";
+        return;
+      }
+
+      messagesContainer.innerHTML = "";
+      data.messages.forEach(msg => {
+        const div = document.createElement("div");
+        div.className = "message-item";
+        div.innerHTML = `
+          <strong>${msg.name}</strong> (${msg.email})<br>
+          ${msg.message}<br>
+          <span class="message-date">${new Date(msg.createdAt).toLocaleString()}</span>
+        `;
+        messagesContainer.appendChild(div);
+      });
+    } catch (err) {
+      messagesContainer.innerHTML = "<p>⚠️ Error: " + err.message + "</p>";
+    }
+  }
+
+  loadMessages();
 </script>
-<style>
-  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
-  .back-arrow:hover {color: #1e7e34;}
-</style>
 </body>
 </html>
