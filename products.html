@@ -66,6 +66,9 @@
   </main>
 
   <script src="products.js"></script>
+   <footer class="site-footer">
+  <div class="container">© <span id="year"></span> CareKart. All rights reserved. </div>
+</footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -176,8 +179,5 @@
       setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),400)},2000);
     }
   </script>
-  <footer class="site-footer">
-  <div class="container">© <span id="year"></span> CareKart. All rights reserved. </div>
-</footer>
 </body>
 </html>
