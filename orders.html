@@ -12,9 +12,11 @@
 </main>
 
 <script>
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
+
   async function loadOrders() {
     try {
-      const res = await fetch("/api/orders", {
+      const res = await fetch(`${API_BASE}/api/orders`, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") }
       });
       const data = await res.json();
@@ -54,6 +56,7 @@
       alert("Error loading orders");
     }
   }
+
   loadOrders();
 </script>
 
