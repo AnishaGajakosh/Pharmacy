@@ -1,20 +1,16 @@
-// /middleware/auth.js
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-export default function auth(req, res, next) {
-  const token = req.header("Authorization")?.split(" ")[1];
+export const authMiddleware = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).json({ ok: false, msg: "No token" });
 
   try {
-    // decode the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // decoded itself already contains { id, name, email }
-    req.user = decoded;
-
+    req.user = await User.findById(decoded.id).select("-password");
+    if (!req.user) return res.status(401).json({ ok: false, msg: "User not found" });
     next();
   } catch (err) {
-    console.error("Auth middleware error:", err.message);
-    return res.status(401).json({ ok: false, msg: "Invalid token" });
+    res.status(401).json({ ok: false, msg: "Invalid token" });
   }
-}
+};
