@@ -14,7 +14,7 @@
     "price": 120.00,
     "description": "Relieves cough and soothes throat.",
     "sku": "COUGH100",
-    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med2.jpeg",
     "category": "OTC"
   },
   {
@@ -23,7 +23,7 @@
     "price": 220.00,
     "description": "Supports immunity and general health.",
     "sku": "VITC500-60",
-    "image": "https://images.unsplash.com/photo-1611078489935-0cbab8e1fa6c?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med3.jpeg",
     "category": "Supplements"
   },
   {
@@ -32,7 +32,7 @@
     "price": 55.00,
     "description": "Fast-acting relief from heartburn and acidity.",
     "sku": "ANTACID-10",
-    "image": "https://images.unsplash.com/photo-1584315154643-89a89f73d6a0?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med4.jpeg",
     "category": "OTC"
   },
   {
