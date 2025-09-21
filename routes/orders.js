@@ -32,7 +32,7 @@ router.post("/", authMiddleware, async (req, res) => {
     });
 
     await order.save();
-    res.status(201).json({ ok: true, order });
+   res.status(201).json({ ok: true, orderId: order._id, order });
   } catch (err) {
     console.error("❌ Order create error:", err);
     res.status(500).json({ ok: false, msg: "Error placing order" });
