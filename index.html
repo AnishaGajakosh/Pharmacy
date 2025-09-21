@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>A1 Medical - Your Online Pharmacy</title>
+  <meta name="viewport" content="width=device-width,initial-scale=2">
+  <title>CareKart - Your Online Pharmacy</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,9 +11,7 @@
     <div class="container header-inner">
       <div style="display:flex;gap:12px;align-items:center">
         <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-        <a class="logo" href="index.html">
-          <img src="https://via.placeholder.com/40?text=PH" alt="Pharmacy" style="height: 50px"> A1 Medical 
-        </a>
+        <a class="logo" href="index.html"> CareKart </a>
       </div>
       <nav class="main-nav">
         <a href="index.html">Home</a>
@@ -24,7 +22,6 @@
     </div>
   </header>
 
-  <!-- sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="profile">
       <div class="avatar" id="avatar">U</div>
@@ -42,7 +39,6 @@
       <a href="about.html">About Us</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms & Conditions</a>
-      <a href="shippimg.html">Shipping</a>
       <a href="faq.html">FAQ</a>
       <a href="#" id="logoutLink" style="color:red;display:none">Sign Out</a>
     </div>
@@ -50,7 +46,7 @@
 
   <main class="container">
     <section class="hero">
-      <h1>Welcome to A1 Medical </h1>
+      <h1>Welcome to CareKart </h1>
       <p>Your trusted online pharmacy for OTC medicines, supplements, devices, and more.</p>
       <p><a href="products.html" class="btn-add">Shop Now</a></p>
     </section>
@@ -67,17 +63,16 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">© <span id="year"></span> PharmaHub</div>
+    <div class="container">© <span id="year"></span> CareKart</div>
   </footer>
   <script>
     const API_BASE = "https://pharmacy-oszy.onrender.com";
   </script>
-  <!-- load products.js -->
+  
   <script src="products.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // === Sidebar toggle ===
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('sidebar');
     hamburger.addEventListener('click', (e)=>{
@@ -90,7 +85,6 @@
       }
     });
 
-    // === User login/logout handling ===
     const user = JSON.parse(localStorage.getItem('user')||'null');
     const logoutLink = document.getElementById("logoutLink");
     const loginLink = document.getElementById("loginLink");
@@ -118,13 +112,11 @@
       });
     }
 
-    // === Init cart count ===
     const cartCount = (JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
     document.getElementById('cart-count').textContent = cartCount;
 
-    // === Wait until products.json is loaded ===
     document.addEventListener("productsLoaded", ()=>{
-      // Build categories
+
       const cats = [...new Set((window.PRODUCTS||[]).map(p=>p.category||'General'))];
       const catGrid = document.getElementById('catGrid');
       cats.forEach(c=>{
@@ -137,7 +129,6 @@
         catGrid.appendChild(card);
       });
 
-      // Featured products
       const featGrid = document.getElementById('featGrid');
       (window.PRODUCTS||[]).slice(0,4).forEach(p=>{
         const card=document.createElement('div');
