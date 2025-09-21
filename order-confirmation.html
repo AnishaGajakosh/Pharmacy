@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Order Confirmation -CareKart</title>
+  <title>Order Confirmation - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,11 +12,13 @@
     <div class="titlebar">Safe medicines • Fast delivery</div>
   </div>
 </header>
+
 <main class="container">
   <h1>Order Confirmation</h1>
   <div id="orderDetails">Loading...</div>
   <a href="orders.html" class="btn-add">View My Orders</a>
 </main>
+
 <script>
   const API_BASE = "https://pharmacy-oszy.onrender.com";
 
@@ -41,6 +43,18 @@
         return;
       }
 
+      // Format date nicely
+      const orderDate = new Date(order.createdAt).toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      // Calculate total
+      const total = order.items.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
       let paymentDetails = "";
       if (order.payment) {
         paymentDetails = `
@@ -55,12 +69,14 @@
         <h2>Thank you for your order!</h2>
         <p><strong>Order ID:</strong> ${order._id}</p>
         <p><strong>Status:</strong> ${order.status}</p>
+        <p><strong>Date:</strong> ${orderDate}</p>
         <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
         ${paymentDetails}
         <h3>Items</h3>
         <ul>
           ${order.items.map(i => `<li>${i.name} x${i.quantity} - ₹${i.price}</li>`).join("")}
         </ul>
+        <p><strong>Total:</strong> ₹${total.toFixed(2)}</p>
         <h3>Shipping Information</h3>
         <p>${order.shipping.name}, ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.state} - ${order.shipping.zip}</p>
         <p>Phone: ${order.shipping.phone}</p>
@@ -73,14 +89,19 @@
 
   loadOrder();
 </script>
+
 <style>
-.container{max-width:700px;margin:30px auto}
-#orderDetails{border:1px solid #ddd;padding:20px;border-radius:8px;background:#fff}
-.btn-add{display:inline-block;margin-top:20px;background:#28a745;color:#fff;padding:12px 18px;border-radius:6px;text-decoration:none}
-.btn-add:hover{background:#218838}
-.logo {display: flex;align-items: center;gap: 10px;text-decoration: none;font-weight: 700;font-size: 30px;color: var(--primary-dark);}
+  .container { max-width: 700px; margin: 30px auto; }
+  #orderDetails { border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; }
+  #orderDetails h2 { margin-top: 0; color: #28a745; }
+  #orderDetails h3 { margin-top: 20px; }
+  #orderDetails ul { padding-left: 20px; }
+  .btn-add { display: inline-block; margin-top: 20px; background: #28a745; color: #fff; padding: 12px 18px; border-radius: 6px; text-decoration: none; }
+  .btn-add:hover { background: #218838; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 30px; color: var(--primary-dark); }
 </style>
-  <footer class="site-footer">
+
+<footer class="site-footer">
   <p>© 2025 CareKart. All rights reserved.</p>
 </footer>
 </body>
