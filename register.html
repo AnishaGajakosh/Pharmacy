@@ -54,11 +54,11 @@
 
       const json = await res.json();
       if (json.ok) {
-        localStorage.setItem("token", json.token);
-        localStorage.setItem("user", JSON.stringify(json.user));
+        // ✅ Save email for login autofill, don’t auto-login
+        localStorage.setItem("lastRegisteredEmail", data.email);
 
         alert("Registration successful! Please login.");
-window.location.href = "login.html";
+        window.location.href = "login.html";
       } else {
         alert(json.msg || "Registration failed");
       }
