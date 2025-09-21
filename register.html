@@ -12,7 +12,8 @@
     <a class="logo" href="index.html">A1 Medical</a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
-      <a href="login.html">Login</a>
+      <a href="login.html" id="loginLink">Login</a>
+      <a href="register.html" id="registerLink">Register</a>
       <a href="#" id="logoutLink" style="display:none;">Logout</a>
     </nav>
     <div class="titlebar">Create Account</div>
@@ -34,6 +35,8 @@
 </footer>
 
 <script>
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
+
   document.getElementById('year').textContent = new Date().getFullYear();
 
   const form = document.getElementById("registerForm");
@@ -43,7 +46,7 @@
     const data = Object.fromEntries(new FormData(form));
 
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -51,12 +54,11 @@
 
       const json = await res.json();
       if (json.ok) {
-        // save token + user to localStorage
         localStorage.setItem("token", json.token);
         localStorage.setItem("user", JSON.stringify(json.user));
 
         alert("Registration successful!");
-        window.location.href = "index.html"; // or products.html
+        window.location.href = "index.html";
       } else {
         alert(json.msg || "Registration failed");
       }
@@ -65,8 +67,7 @@
       alert("Error connecting to server");
     }
   });
-</script>
-<script>
+
   // Show/hide login/register/logout links
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
@@ -75,12 +76,10 @@
     const logoutLink = document.getElementById("logoutLink");
 
     if (token) {
-      // Logged in
       if (loginLink) loginLink.style.display = "none";
       if (registerLink) registerLink.style.display = "none";
       if (logoutLink) logoutLink.style.display = "inline";
     } else {
-      // Logged out
       if (loginLink) loginLink.style.display = "inline";
       if (registerLink) registerLink.style.display = "inline";
       if (logoutLink) logoutLink.style.display = "none";
@@ -101,7 +100,6 @@
 
   updateAuthLinks();
 </script>
-
 
 <style>
   .auth-form {
