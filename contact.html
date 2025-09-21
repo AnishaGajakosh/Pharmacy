@@ -48,11 +48,6 @@
     <div id="messagesContainer">Enter your email above to view your messages.</div>
   </div>
 </main>
-
-<footer class="site-footer">
-  <div class="container">© <span id="year"></span> CareKart</div>
-</footer>
-
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -78,7 +73,7 @@
         alert("❌ " + result.error);
       }
     } catch (err) {
-      alert("⚠️ Error: " + err.message);
+      alert("Error: " + err.message);
     }
   });
 
@@ -115,7 +110,7 @@
         messagesContainer.appendChild(div);
       });
     } catch (err) {
-      messagesContainer.innerHTML = "<p>⚠️ Error: " + err.message + "</p>";
+      messagesContainer.innerHTML = "<p>Error: " + err.message + "</p>";
     }
   }
 </script>
@@ -130,5 +125,8 @@
     .btn-view {background: #28a745;color: #fff;border: none;padding: 8px 12px;margin-top: 8px;cursor: pointer;border-radius: 4px;}
     .btn-view:hover {background: #1e7e34;}
   </style>
+  <footer class="site-footer">
+  <p>© 2025 CareKart. All rights reserved.</p>
+</footer>
 </body>
 </html>
