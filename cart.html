@@ -56,5 +56,9 @@
     });
     cartList.addEventListener('change', e=>{ if(e.target.matches('.qty')){ const idx=Number(e.target.dataset.idx); cart[idx].quantity = Number(e.target.value); render(); }});
   </script>
+  <style>
+  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+  .back-arrow:hover {color: #1e7e34;}
+  </style>
 </body>
 </html>
