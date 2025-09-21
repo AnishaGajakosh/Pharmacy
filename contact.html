@@ -36,6 +36,25 @@
       font-size: 12px;
       color: #666;
     }
+    .view-section {
+      margin-top: 25px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .btn-view {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      margin-top: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .btn-view:hover {
+      background: #1e7e34;
+    }
   </style>
 </head>
 <body>
@@ -62,6 +81,7 @@
     <li>Address: PharmaHub HQ, Mumbai, India</li>
   </ul>
 
+  <!-- Contact form -->
   <form id="contactForm" style="margin-top:20px">
     <label>Your Name:<br><input type="text" name="name" style="width:100%;padding:8px" required></label><br><br>
     <label>Your Email:<br><input type="email" name="email" style="width:100%;padding:8px" required></label><br><br>
@@ -69,10 +89,19 @@
     <button class="btn-add" type="submit">Send Message</button>
   </form>
 
+  <!-- View my messages section -->
+  <div class="view-section">
+    <h2>View My Messages</h2>
+    <label>Enter Your Email:<br>
+      <input type="email" id="viewEmail" style="width:100%;padding:8px" required>
+    </label><br>
+    <button class="btn-view" onclick="viewMessages()">View Messages</button>
+  </div>
+
   <!-- Show messages -->
   <div class="messages-list">
     <h2>Your Messages</h2>
-    <div id="messagesContainer">Loading...</div>
+    <div id="messagesContainer">Enter your email above to view your messages.</div>
   </div>
 </main>
 
@@ -102,7 +131,6 @@
       if (result.ok) {
         alert("✅ Message sent!");
         form.reset();
-        loadMessages(); // refresh list
       } else {
         alert("❌ " + result.error);
       }
@@ -111,10 +139,16 @@
     }
   });
 
-  // Load messages
-  async function loadMessages() {
+  // View messages by email
+  async function viewMessages() {
+    const email = document.getElementById("viewEmail").value.trim();
+    if (!email) {
+      alert("Please enter your email.");
+      return;
+    }
+
     try {
-      const res = await fetch("/api/contact");
+      const res = await fetch(`/api/contact/${email}`);
       const data = await res.json();
 
       if (!data.ok) {
@@ -123,7 +157,7 @@
       }
 
       if (data.messages.length === 0) {
-        messagesContainer.innerHTML = "<p>No messages yet.</p>";
+        messagesContainer.innerHTML = "<p>No messages found for this email.</p>";
         return;
       }
 
@@ -132,7 +166,7 @@
         const div = document.createElement("div");
         div.className = "message-item";
         div.innerHTML = `
-          <strong>${msg.name}</strong> (${msg.email})<br>
+          <strong>${msg.name}</strong><br>
           ${msg.message}<br>
           <span class="message-date">${new Date(msg.createdAt).toLocaleString()}</span>
         `;
@@ -142,8 +176,6 @@
       messagesContainer.innerHTML = "<p>⚠️ Error: " + err.message + "</p>";
     }
   }
-
-  loadMessages();
 </script>
 </body>
 </html>
