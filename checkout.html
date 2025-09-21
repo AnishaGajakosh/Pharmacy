@@ -70,14 +70,11 @@
       placeOrder(cart, shipping, "cod");
     } else {
       try {
-        const res = await fetch(`${API_BASE}/api/payments/create-order`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-          body: JSON.stringify({ amount: totalAmount })
-        });
+        const res = await fetch(`${API_BASE}/api/orders`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+  body: JSON.stringify(orderData)
+});
         const data = await res.json();
         if (!data.ok) return alert("Payment initialization failed");
 
