@@ -1,6 +1,6 @@
 import express from "express";
 import Order from "../models/Order.js";
-import authMiddleware from "../middleware/auth.js";
+import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -8,8 +8,8 @@ const router = express.Router();
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id })
-      .populate("user", "name email") // include user info
-      .populate("payment")            // include payment details if available
+      .populate("user", "name email")
+      .populate("payment")
       .sort({ createdAt: -1 });
 
     res.json({ ok: true, orders });
