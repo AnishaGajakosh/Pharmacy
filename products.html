@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>All Products — PharmaHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=2">
+  <title>All Products — CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
           <span></span><span></span><span></span>
         </div>
         <a class="logo" href="index.html">
-          <img src="https://via.placeholder.com/40?text=PH" alt="Pharmacy" style="height:50px"> A1 Medical
+          <img src="https://via.placeholder.com/40?text=PH" alt="Pharmacy" style="height:50px"> CareKart
         </a>
       </div>
       <nav class="main-nav">
@@ -25,8 +25,6 @@
       <div class="titlebar">Safe medicines • Fast delivery</div>
     </div>
   </header>
-
-  <!-- sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="profile">
       <div class="avatar" id="avatar">U</div>
@@ -68,15 +66,13 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">© <span id="year"></span> A1 Medical</div>
+    <div class="container">© <span id="year"></span> CareKart</div>
   </footer>
 
-  <!-- Load products.js -->
   <script src="products.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Sidebar toggle
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('sidebar');
     hamburger.addEventListener('click', (e)=>{
@@ -89,7 +85,6 @@
       }
     });
 
-    // User avatar + login/logout
     const user = JSON.parse(localStorage.getItem('user')||'null');
     const logoutLink = document.getElementById("logoutLink");
     const loginLink = document.getElementById("loginLink");
@@ -109,7 +104,6 @@
       window.location.href = "index.html";
     });
 
-    // ====== Product rendering ======
     const grid = document.getElementById('products-grid');
     const catSelect = document.getElementById('catSelect');
     const searchInput = document.getElementById('searchInput');
@@ -139,7 +133,6 @@
       });
     }
 
-    // Load after products.json ready
     document.addEventListener("productsLoaded", ()=>{
       const cats = [...new Set(window.PRODUCTS.map(p=>p.category||'General'))];
       cats.forEach(c=>{
@@ -152,7 +145,6 @@
     catSelect.addEventListener('change', ()=> render({cat:catSelect.value,q:searchInput.value}));
     searchInput.addEventListener('input', ()=> render({cat:catSelect.value,q:searchInput.value}));
 
-    // Add to cart
     grid.addEventListener('click', e=>{
       if(e.target.matches('.btn-add')){
         const id=e.target.dataset.id;
@@ -170,8 +162,6 @@
         window.location.href=`product.html?id=${encodeURIComponent(id)}`;
       }
     });
-
-    // Init cart count
     const cartCount=(JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
     document.getElementById('cart-count').textContent=cartCount;
 
