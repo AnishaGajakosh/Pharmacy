@@ -17,14 +17,16 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
+// MongoDB connection
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB connected"))
+  .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => {
-    console.error(" MongoDB error:", err.message);
+    console.error("❌ MongoDB error:", err.message);
     process.exit(1);
   });
 
+// Contact schema
 const contactSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
@@ -33,11 +35,13 @@ const contactSchema = new mongoose.Schema({
 });
 const Contact = mongoose.model("Contact", contactSchema);
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 
+// Save a new contact message
 app.post("/api/contact", async (req, res) => {
   try {
     const { name, email, message } = req.body;
@@ -48,28 +52,18 @@ app.post("/api/contact", async (req, res) => {
     }
     const newContact = new Contact({ name, email, message });
     await newContact.save();
-    res.json({ ok: true, message: " Message saved successfully" });
+    res.json({ ok: true, message: "Message saved successfully" });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
 });
 
-app.get("/api/contact", async (req, res) => {
+// Get messages by email (for customers to view their own)
+app.get("/api/contact/:email", async (req, res) => {
   try {
-    const messages = await Contact.find().sort({ createdAt: -1 });
+    const email = req.params.email;
+    const messages = await Contact.find({ email }).sort({ createdAt: -1 });
     res.json({ ok: true, messages });
-  } catch (err) {
-    res.status(500).json({ ok: false, error: err.message });
-  }
-});
-
-app.delete("/api/contact/:id", async (req, res) => {
-  try {
-    const deleted = await Contact.findByIdAndDelete(req.params.id);
-    if (!deleted) {
-      return res.status(404).json({ ok: false, error: "Message not found" });
-    }
-    res.json({ ok: true, message: " Message deleted successfully" });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
@@ -78,13 +72,15 @@ app.delete("/api/contact/:id", async (req, res) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Serve static frontend files
 app.use(express.static(__dirname));
 
+// Fallback route for frontend pages
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
 );
