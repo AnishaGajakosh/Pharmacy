@@ -70,11 +70,15 @@
       placeOrder(cart, shipping, "cod");
     } else {
       try {
-        const res = await fetch(`${API_BASE}/api/orders`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-  body: JSON.stringify(orderData)
-});
+        const res = await fetch(`${API_BASE}/api/payments/create-order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          body: JSON.stringify({ amount: totalAmount })
+        });
+
         const data = await res.json();
         if (!data.ok) return alert("Payment initialization failed");
 
@@ -130,7 +134,7 @@
 
   async function placeOrder(cart, shipping, paymentMethod) {
     try {
-      const res = await fetch(`${API_BASE}/api/orders/create`, {
+      const res = await fetch(`${API_BASE}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +146,7 @@
       const data = await res.json();
       if (data.ok) {
         localStorage.removeItem("cart");
-        window.location.href = `order-confirmation.html?id=${data.orderId}`;
+        window.location.href = `order-confirmation.html?id=${data.order._id}`;
       } else {
         alert(data.msg || "Order failed");
       }
