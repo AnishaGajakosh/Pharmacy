@@ -10,12 +10,9 @@ import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
 import orderRoutes from "./routes/orders.js";
 import paymentRoutes from "./routes/payments.js";
-
+import adminRoutes from "./routes/admin.js";
 dotenv.config();
-
 const app = express();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
@@ -29,12 +26,11 @@ mongoose
     process.exit(1);
   });
 
-// API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/admin", adminRoutes);
 
-// ---------------- Serve Frontend (root folder) ----------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -45,7 +41,6 @@ app.use(express.static(__dirname));
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
-// ---------------------------------------------------------------
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
