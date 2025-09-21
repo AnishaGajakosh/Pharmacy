@@ -13,7 +13,8 @@
     <nav class="main-nav">
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
-      <a href="register.html">Register</a>
+      <a href="register.html" id="registerLink">Register</a>
+      <a href="login.html" id="loginLink">Login</a>
       <a href="#" id="logoutLink" style="display:none;">Logout</a>
     </nav>
     <div class="titlebar">Login</div>
@@ -33,7 +34,10 @@
 <footer class="site-footer">
   <div class="container">© <span id="year"></span> A1 Medical</div>
 </footer>
+
 <script>
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
+
   // Show/hide login/register/logout links
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
@@ -42,12 +46,10 @@
     const logoutLink = document.getElementById("logoutLink");
 
     if (token) {
-      // Logged in
       if (loginLink) loginLink.style.display = "none";
       if (registerLink) registerLink.style.display = "none";
       if (logoutLink) logoutLink.style.display = "inline";
     } else {
-      // Logged out
       if (loginLink) loginLink.style.display = "inline";
       if (registerLink) registerLink.style.display = "inline";
       if (logoutLink) logoutLink.style.display = "none";
@@ -67,18 +69,17 @@
   }
 
   updateAuthLinks();
-</script>
 
-<script>
   document.getElementById("year").textContent = new Date().getFullYear();
 
+  // Handle login form
   const form = document.getElementById("loginForm");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(form));
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -86,12 +87,10 @@
       const data = await res.json();
 
       if (data.ok) {
-        // Save token + user in localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-
         alert("Login successful!");
-        window.location.href = "index.html"; // redirect after login
+        window.location.href = "index.html";
       } else {
         alert(data.msg || "Login failed");
       }
