@@ -57,8 +57,8 @@
         localStorage.setItem("token", json.token);
         localStorage.setItem("user", JSON.stringify(json.user));
 
-        alert("Registration successful!");
-        window.location.href = "index.html";
+        alert("Registration successful! Please login.");
+window.location.href = "login.html";
       } else {
         alert(json.msg || "Registration failed");
       }
