@@ -1,11 +1,9 @@
-// routes/admin.js
 import express from "express";
 import Order from "../models/Order.js";
 import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// ✅ Fetch all orders (admin only)
 router.get("/orders", authMiddleware, async (req, res) => {
   try {
     if (!req.user.isAdmin) {
@@ -13,8 +11,8 @@ router.get("/orders", authMiddleware, async (req, res) => {
     }
 
     const orders = await Order.find()
-      .populate("user", "name email")  // customer details
-      .populate("payment");            // payment details
+      .populate("user", "name email")
+      .populate("payment");
 
     res.json({ ok: true, orders });
   } catch (err) {
