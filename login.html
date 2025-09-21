@@ -14,6 +14,7 @@
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
       <a href="register.html">Register</a>
+      <a href="#" id="logoutLink" style="display:none;">Logout</a>
     </nav>
     <div class="titlebar">Login</div>
   </div>
@@ -32,6 +33,41 @@
 <footer class="site-footer">
   <div class="container">© <span id="year"></span> A1 Medical</div>
 </footer>
+<script>
+  // Show/hide login/register/logout links
+  function updateAuthLinks() {
+    const token = localStorage.getItem("token");
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+    const logoutLink = document.getElementById("logoutLink");
+
+    if (token) {
+      // Logged in
+      if (loginLink) loginLink.style.display = "none";
+      if (registerLink) registerLink.style.display = "none";
+      if (logoutLink) logoutLink.style.display = "inline";
+    } else {
+      // Logged out
+      if (loginLink) loginLink.style.display = "inline";
+      if (registerLink) registerLink.style.display = "inline";
+      if (logoutLink) logoutLink.style.display = "none";
+    }
+  }
+
+  // Logout function
+  const logoutLink = document.getElementById("logoutLink");
+  if (logoutLink) {
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      alert("You have been signed out.");
+      window.location.href = "login.html";
+    });
+  }
+
+  updateAuthLinks();
+</script>
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
