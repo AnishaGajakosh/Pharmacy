@@ -32,7 +32,11 @@
 </main>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
+  // 👇 set your backend URL here
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
+
   function getCartTotal() {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -66,8 +70,7 @@
       placeOrder(cart, shipping, "cod");
     } else {
       try {
-        // include Authorization header so backend can create Payment doc linked to user
-        const res = await fetch("/api/payments/create-order", {
+        const res = await fetch(`${API_BASE}/api/payments/create-order`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +81,6 @@
         const data = await res.json();
         if (!data.ok) return alert("Payment initialization failed");
 
-        // data.order is razorpay order; data.paymentId is our Payment._id
         const options = {
           key: data.key,
           amount: data.order.amount,
@@ -87,9 +89,8 @@
           description: "Order Payment",
           order_id: data.order.id,
           handler: async function (response) {
-            // response contains razorpay_payment_id, razorpay_order_id, razorpay_signature
             try {
-              const verifyRes = await fetch("/api/payments/verify", {
+              const verifyRes = await fetch(`${API_BASE}/api/payments/verify`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -102,7 +103,7 @@
                   items: cart,
                   shipping,
                   amount: totalAmount,
-                  paymentId: data.paymentId // optional but helpful to link
+                  paymentId: data.paymentId
                 })
               });
               const verifyData = await verifyRes.json();
@@ -132,11 +133,11 @@
 
   async function placeOrder(cart, shipping, paymentMethod) {
     try {
-      const res = await fetch("/api/orders/create", {
+      const res = await fetch(`${API_BASE}/api/orders/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token")
+          "Authorization": "Bearer " + localStorage.getItem("token")
         },
         body: JSON.stringify({ items: cart, shipping, paymentMethod })
       });
