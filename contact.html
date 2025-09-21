@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact Us - PharmaHub</title>
+  <title>Contact Us - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html">PharmaHub</a>
+    <a class="logo" href="index.html">CareKart</a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
@@ -18,16 +18,15 @@
     <div class="titlebar">Contact Us</div>
   </div>
 </header>
-
 <main class="container">
-  <!-- Back arrow -->
+
   <a href="index.html" class="back-arrow">← Back</a>
   <h1>Get in Touch</h1>
   <p>If you have any questions, feel free to reach us:</p>
   <ul>
-    <li>Email: support@pharmahub.com</li>
-    <li>Phone: +91 98765 43210</li>
-    <li>Address: PharmaHub HQ, Mumbai, India</li>
+    <li>Email: support@carekart.com</li>
+    <li>Phone: +91 9876543210</li>
+    <li>Address: Carekart, Mumbai, India</li>
   </ul>
 
   <form id="contactForm" style="margin-top:20px">
@@ -45,13 +44,12 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container">© <span id="year"></span> PharmaHub</div>
+  <div class="container">© <span id="year"></span> CareKart</div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Handle form submission
   document.getElementById("contactForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -62,7 +60,7 @@
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -80,20 +78,9 @@
     }
   });
 </script>
-
 <style>
-  .back-arrow {
-    display: inline-block;
-    font-size: 22px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    color: #28a745;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .back-arrow:hover {
-    color: #1e7e34;
-  }
+  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+  .back-arrow:hover {color: #1e7e34;}
 </style>
 </body>
 </html>
