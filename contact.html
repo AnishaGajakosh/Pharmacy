@@ -5,57 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Contact Us - PharmaHub</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    .back-arrow {
-      display: inline-block;
-      font-size: 22px;
-      cursor: pointer;
-      margin-bottom: 15px;
-      color: #28a745;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .back-arrow:hover {
-      color: #1e7e34;
-    }
-    .messages-list {
-      margin-top: 30px;
-      padding: 15px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
-    .message-item {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .message-item:last-child {
-      border-bottom: none;
-    }
-    .message-date {
-      font-size: 12px;
-      color: #666;
-    }
-    .view-section {
-      margin-top: 25px;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #fff;
-    }
-    .btn-view {
-      background: #28a745;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      margin-top: 8px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .btn-view:hover {
-      background: #1e7e34;
-    }
-  </style>
 </head>
 <body>
 <header class="site-header">
@@ -76,12 +25,11 @@
   <h1>Get in Touch</h1>
   <p>If you have any questions, feel free to reach us:</p>
   <ul>
-    <li>Email: support@pharmahub.com</li>
-    <li>Phone: +91 98765 43210</li>
-    <li>Address: PharmaHub HQ, Mumbai, India</li>
+    <li>Email: support@carekart.com</li>
+    <li>Phone: +91 9876543210</li>
+    <li>Address:CareKart, Mumbai, India</li>
   </ul>
 
-  <!-- Contact form -->
   <form id="contactForm" style="margin-top:20px">
     <label>Your Name:<br><input type="text" name="name" style="width:100%;padding:8px" required></label><br><br>
     <label>Your Email:<br><input type="email" name="email" style="width:100%;padding:8px" required></label><br><br>
@@ -89,7 +37,6 @@
     <button class="btn-add" type="submit">Send Message</button>
   </form>
 
-  <!-- View my messages section -->
   <div class="view-section">
     <h2>View My Messages</h2>
     <label>Enter Your Email:<br>
@@ -98,7 +45,6 @@
     <button class="btn-view" onclick="viewMessages()">View Messages</button>
   </div>
 
-  <!-- Show messages -->
   <div class="messages-list">
     <h2>Your Messages</h2>
     <div id="messagesContainer">Enter your email above to view your messages.</div>
@@ -115,7 +61,6 @@
   const form = document.getElementById("contactForm");
   const messagesContainer = document.getElementById("messagesContainer");
 
-  // Submit form
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
@@ -139,7 +84,6 @@
     }
   });
 
-  // View messages by email
   async function viewMessages() {
     const email = document.getElementById("viewEmail").value.trim();
     if (!email) {
@@ -177,5 +121,16 @@
     }
   }
 </script>
+  <style>
+    .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+    .back-arrow:hover {color: #1e7e34;}
+    .messages-list {margin-top: 30px;padding: 15px;background: #f9f9f9;border-radius: 8px;border: 1px solid #ddd;}
+    .message-item {border-bottom: 1px solid #ddd;padding: 10px 0;}
+    .message-item:last-child {border-bottom: none;}
+    .message-date {font-size: 12px;color: #666;}
+    .view-section {margin-top: 25px;padding: 15px;border: 1px solid #ccc;border-radius: 8px;background: #fff;}
+    .btn-view {background: #28a745;color: #fff;border: none;padding: 8px 12px;margin-top: 8px;cursor: pointer;border-radius: 4px;}
+    .btn-view:hover {background: #1e7e34;}
+  </style>
 </body>
 </html>
