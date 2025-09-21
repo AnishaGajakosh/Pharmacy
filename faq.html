@@ -2,68 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>FAQ - PharmaHub</title>
+  <meta name="viewport" content="width=device-width,initial-scale=2">
+  <title>FAQ - CareKart</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    .back-arrow {
-      display: inline-block;
-      font-size: 22px;
-      cursor: pointer;
-      margin-bottom: 15px;
-      color: #28a745;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .back-arrow:hover {
-      color: #1e7e34;
-    }
-
-    /* Search + Category */
-    .faq-controls {
-      margin: 15px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .faq-controls input, .faq-controls select {
-      padding: 8px;
-      font-size: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    /* Accordion FAQ */
-    .faq-item {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .faq-question {
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 16px;
-    }
-    .faq-question:hover {
-      color: #28a745;
-    }
-    .faq-answer {
-      display: none;
-      margin-top: 8px;
-      font-size: 14px;
-      color: #555;
-    }
-    .faq-item.active .faq-answer {
-      display: block;
-    }
-  </style>
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html">PharmaHub</a>
+    <a class="logo" href="index.html">CareKart</a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
       <a href="products.html">Products</a>
@@ -74,11 +20,9 @@
 </header>
 
 <main class="container">
-  <!-- Back arrow -->
   <a href="index.html" class="back-arrow">← Back</a>
   <h1>Frequently Asked Questions</h1>
 
-  <!-- Controls -->
   <div class="faq-controls">
     <input type="text" id="faqSearch" placeholder="Search FAQs...">
     <select id="faqCategory">
@@ -91,7 +35,6 @@
     </select>
   </div>
 
-  <!-- FAQ List -->
   <div id="faqList">
     <div class="faq-item" data-cat="orders">
       <div class="faq-question">How do I place an order? <span>+</span></div>
@@ -146,13 +89,12 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container">© <span id="year"></span> PharmaHub</div>
+  <div class="container">© <span id="year"></span> CareKart</div>
 </footer>
 
 <script>
   document.getElementById('year').textContent=new Date().getFullYear();
 
-  // Accordion toggle
   document.querySelectorAll('.faq-question').forEach(q=>{
     q.addEventListener('click',()=>{
       const item=q.parentElement;
@@ -161,7 +103,6 @@
     });
   });
 
-  // Search filter
   const search=document.getElementById('faqSearch');
   const category=document.getElementById('faqCategory');
   const faqs=document.querySelectorAll('.faq-item');
@@ -181,5 +122,16 @@
   search.addEventListener('input',filterFAQs);
   category.addEventListener('change',filterFAQs);
 </script>
+  <style>
+    .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+    .back-arrow:hover {color: #1e7e34;}
+    .faq-controls {margin: 15px 0;display: flex;flex-wrap: wrap;gap: 12px;}
+    .faq-controls input, .faq-controls select {padding: 8px;font-size: 15px;border: 1px solid #ccc;border-radius: 5px;}
+    .faq-item {border-bottom: 1px solid #ddd;padding: 10px 0;}
+    .faq-question {font-weight: bold;cursor: pointer;display: flex;justify-content: space-between;align-items: center;font-size: 16px;}
+    .faq-question:hover {color: #28a745;}
+    .faq-answer {display: none;margin-top: 8px;font-size: 14px;color: #555;}
+    .faq-item.active .faq-answer {display: block;}
+  </style>
 </body>
 </html>
