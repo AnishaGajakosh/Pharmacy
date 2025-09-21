@@ -1,9 +1,10 @@
 import express from "express";
 import Order from "../models/Order.js";
-import { authMiddleware } from "../middleware/auth.js";
+import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
+// Fetch all orders (admin only)
 router.get("/orders", authMiddleware, async (req, res) => {
   try {
     if (!req.user.isAdmin) {
