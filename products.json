@@ -239,7 +239,7 @@
     "price": 70.00,
     "description": "Antibiotic used for bacterial infections.",
     "sku": "AZI500-3",
-    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med27.jpeg",
     "category": "Prescription"
   },
   {
@@ -248,7 +248,7 @@
     "price": 450.00,
     "description": "For diabetes management.",
     "sku": "INSULINPEN",
-    "image": "https://images.unsplash.com/photo-1580281657521-b0de6f9fb96b?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med28.jpeg",
     "category": "Prescription"
   },
   {
@@ -257,7 +257,7 @@
     "price": 90.00,
     "description": "Easy-to-use home pregnancy detection kit.",
     "sku": "PREGKIT",
-    "image": "https://images.unsplash.com/photo-1620912182867-2f163cd4c43e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med29.jpeg",
     "category": "Devices"
   },
   {
@@ -266,7 +266,7 @@
     "price": 200.00,
     "description": "Boosts immunity and wound healing.",
     "sku": "ZINC50",
-    "image": "https://images.unsplash.com/photo-1611078489649-260709e27d43?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med30.jpeg",
     "category": "Supplements"
   },
   {
