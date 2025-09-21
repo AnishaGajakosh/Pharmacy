@@ -1,14 +1,12 @@
-// routes/auth.js
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 const router = express.Router();
 
-// POST /api/auth/register
 router.post("/register", async (req, res) => {
   try {
     let { name, email, password } = req.body;
@@ -17,7 +15,6 @@ router.post("/register", async (req, res) => {
     }
 
     email = email.toLowerCase();
-
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ ok: false, msg: "Email already registered" });
 
@@ -28,7 +25,7 @@ router.post("/register", async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashed });
 
-    const payload = { id: user._id, name: user.name, email: user.email };
+    const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     res.json({ ok: true, token, user: payload });
@@ -38,7 +35,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
@@ -53,7 +49,7 @@ router.post("/login", async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ ok: false, msg: "Invalid credentials" });
 
-    const payload = { id: user._id, name: user.name, email: user.email };
+    const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     res.json({ ok: true, token, user: payload });
