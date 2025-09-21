@@ -122,7 +122,7 @@
     "price": 60.00,
     "description": "Pain reliever and anti-inflammatory.",
     "sku": "IBU400-10",
-    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med14.jpeg",
     "category": "OTC"
   },
   {
@@ -131,7 +131,7 @@
     "price": 45.00,
     "description": "Relieves allergies, runny nose, and sneezing.",
     "sku": "CET10-10",
-    "image": "https://images.unsplash.com/photo-1588776814300-b8a9c90be07e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med15.jpeg",
     "category": "OTC"
   },
   {
@@ -140,7 +140,7 @@
     "price": 280.00,
     "description": "Supports bone and immune health.",
     "sku": "VITD3-60",
-    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med16.jpeg",
     "category": "Supplements"
   },
   {
