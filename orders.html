@@ -9,8 +9,8 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">CareKart</a>
-  <div class="titlebar">Safe medicines • Fast delivery</div>
-    </div>
+    <div class="titlebar">Safe medicines • Fast delivery</div>
+  </div>
 </header>
 <main class="container">
   <a href="index.html" class="back-arrow">← Back</a>
@@ -20,6 +20,17 @@
 
 <script>
   const API_BASE = "https://pharmacy-oszy.onrender.com";
+
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-IN", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
 
   async function loadOrders() {
     try {
@@ -47,6 +58,7 @@
 
         div.innerHTML = `
           <h3>Order #${o._id}</h3>
+          <p><strong>Date:</strong> ${formatDate(o.createdAt)}</p>
           <p><strong>Status:</strong> ${o.status}</p>
           <p><strong>Payment Method:</strong> ${o.paymentMethod}</p>
           ${paymentDetails}
@@ -70,8 +82,8 @@
 .order h3{margin-top:0}
 .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
 .back-arrow:hover {color: #1e7e34;}
-  </style>
-  <footer class="site-footer">
+</style>
+<footer class="site-footer">
   <p>© 2025 CareKart. All rights reserved.</p>
 </footer>
 </body>
