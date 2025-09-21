@@ -30,10 +30,16 @@
     <li>Address: PharmaHub HQ, Mumbai, India</li>
   </ul>
 
-  <form style="margin-top:20px">
-    <label>Your Name:<br><input type="text" style="width:100%;padding:8px"></label><br><br>
-    <label>Your Email:<br><input type="email" style="width:100%;padding:8px"></label><br><br>
-    <label>Message:<br><textarea style="width:100%;padding:8px;height:120px"></textarea></label><br><br>
+  <form id="contactForm" style="margin-top:20px">
+    <label>Your Name:<br>
+      <input name="name" type="text" required style="width:100%;padding:8px">
+    </label><br><br>
+    <label>Your Email:<br>
+      <input name="email" type="email" required style="width:100%;padding:8px">
+    </label><br><br>
+    <label>Message:<br>
+      <textarea name="message" required style="width:100%;padding:8px;height:120px"></textarea>
+    </label><br><br>
     <button class="btn-add" type="submit">Send Message</button>
   </form>
 </main>
@@ -41,21 +47,53 @@
 <footer class="site-footer">
   <div class="container">© <span id="year"></span> PharmaHub</div>
 </footer>
-  
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Handle form submission
+  document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      message: e.target.message.value
+    };
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+      if (data.ok) {
+        alert("✅ Message sent successfully!");
+        e.target.reset();
+      } else {
+        alert("❌ " + data.error);
+      }
+    } catch (err) {
+      alert("⚠️ Error: " + err.message);
+    }
+  });
+</script>
+
 <style>
   .back-arrow {
     display: inline-block;
     font-size: 22px;
     cursor: pointer;
     margin-bottom: 15px;
-    color: #28a745;   /* green instead of blue */
+    color: #28a745;
     text-decoration: none;
     font-weight: 500;
   }
   .back-arrow:hover {
-    color: #1e7e34;   /* darker green hover */
+    color: #1e7e34;
   }
-  </style>
+</style>
 </body>
 </html>
