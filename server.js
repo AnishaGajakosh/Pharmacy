@@ -19,9 +19,9 @@ app.use(morgan("dev"));
 
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log(" MongoDB connected"))
+  .then(() => console.log("MongoDB connected"))
   .catch((err) => {
-    console.error("MongoDB error:", err.message);
+    console.error(" MongoDB error:", err.message);
     process.exit(1);
   });
 
@@ -42,7 +42,9 @@ app.post("/api/contact", async (req, res) => {
   try {
     const { name, email, message } = req.body;
     if (!name || !email || !message) {
-      return res.status(400).json({ ok: false, error: "All fields are required" });
+      return res
+        .status(400)
+        .json({ ok: false, error: "All fields are required" });
     }
     const newContact = new Contact({ name, email, message });
     await newContact.save();
@@ -56,6 +58,18 @@ app.get("/api/contact", async (req, res) => {
   try {
     const messages = await Contact.find().sort({ createdAt: -1 });
     res.json({ ok: true, messages });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+app.delete("/api/contact/:id", async (req, res) => {
+  try {
+    const deleted = await Contact.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ ok: false, error: "Message not found" });
+    }
+    res.json({ ok: true, message: " Message deleted successfully" });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
