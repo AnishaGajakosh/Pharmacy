@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="site-header">
+  <header class="site-header">
     <div class="container header-inner">
       <div style="display:flex;gap:12px;align-items:center">
         <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
@@ -18,33 +18,49 @@
   </header>
 
   <main class="container">
-  <a href="index.html" class="back-arrow">← Back</a>
+    <a href="index.html" class="back-arrow">← Back</a>
     <h1>Your Cart</h1>
     <div id="cartList" class="cart-list"></div>
     <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
       <div id="totalPrice">Total: ₹ 0.00</div>
       <div>
-        <a id="checkoutLink" href="checkout.html" class="btn-add">Proceed to Checkout</a>
+        <a id="checkoutLink" href="checkout.html" class="btn-add disabled">Proceed to Checkout</a>
       </div>
     </div>
   </main>
-  <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+
   <script>
     const cartList = document.getElementById('cartList');
-    let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const checkoutLink = document.getElementById("checkoutLink");
+    const totalPrice = document.getElementById("totalPrice");
 
     function render(){ 
       cartList.innerHTML=''; 
       let total=0; 
+
+      if(cart.length === 0){
+        cartList.innerHTML = `<p style="font-size:18px;color:#555;text-align:center;margin-top:20px">
+          🛒 Your cart is empty.
+        </p>`;
+        totalPrice.textContent = "Total: ₹ 0.00";
+        checkoutLink.classList.add("disabled");
+        return;
+      }
+
+      checkoutLink.classList.remove("disabled");
+
       cart.forEach((it,idx)=>{ 
         total += (it.price||0)*it.quantity; 
-        const d=document.createElement('div'); d.className='cart-item'; 
+        const d=document.createElement('div'); 
+        d.className='cart-item'; 
         d.innerHTML = `
           <div style="display:flex;gap:12px;align-items:center">
             <div style="width:60px;height:60px;background:#f7f7f7;border-radius:8px;display:flex;align-items:center;justify-content:center">IMG</div>
-            <div><div style="font-weight:700">${it.name}</div><div style="font-size:12px;color:#666">₹ ${Number(it.price||0).toFixed(2)}</div></div>
+            <div>
+              <div style="font-weight:700">${it.name}</div>
+              <div style="font-size:12px;color:#666">₹ ${Number(it.price||0).toFixed(2)}</div>
+            </div>
           </div>
           <div style="display:flex;gap:10px;align-items:center">
             <input type="number" min="1" value="${it.quantity}" data-idx="${idx}" class="qty" style="width:70px">
@@ -52,23 +68,48 @@
           </div>`;
         cartList.appendChild(d);
       });
-      document.getElementById('totalPrice').textContent = `Total: ₹ ${total.toFixed(2)}`;
+
+      totalPrice.textContent = `Total: ₹ ${total.toFixed(2)}`;
       localStorage.setItem('cart', JSON.stringify(cart));
     }
+
     render();
 
     cartList.addEventListener('click', e=>{
-      if(e.target.matches('.btn-remove')){ const idx = Number(e.target.dataset.idx); cart.splice(idx,1); render(); }
+      if(e.target.matches('.btn-remove')){ 
+        const idx = Number(e.target.dataset.idx); 
+        cart.splice(idx,1); 
+        render(); 
+      }
     });
-    cartList.addEventListener('change', e=>{ if(e.target.matches('.qty')){ const idx=Number(e.target.dataset.idx); cart[idx].quantity = Number(e.target.value); render(); }});
+
+    cartList.addEventListener('change', e=>{
+      if(e.target.matches('.qty')){ 
+        const idx=Number(e.target.dataset.idx); 
+        cart[idx].quantity = Number(e.target.value); 
+        render(); 
+      }
+    });
+
+    checkoutLink.addEventListener("click", function(e) {
+      cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      if (cart.length === 0) {
+        e.preventDefault();
+        alert("Your cart is empty! Add items before proceeding to checkout.");
+      }
+    });
   </script>
+
   <style>
-  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
-  .back-arrow:hover 
-  .color: #1e7e34;.logo {display: flex;align-items: center;gap: 10px;text-decoration: none;font-weight: 700;font-size: 50px;color: var(--primary-dark);}
+    .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+    .back-arrow:hover { color: #1e7e34; }
+    .logo {display: flex;align-items: center;gap: 10px;text-decoration: none;font-weight: 700;font-size: 50px;color: var(--primary-dark);}
+    .btn-add {background:#28a745;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none;font-weight:600;}
+    .btn-add:hover { background:#218838; }
+    .btn-add.disabled {background: #ccc;pointer-events: none;cursor: not-allowed;}
   </style>
   <footer class="site-footer">
-  <p>© 2025 CareKart. All rights reserved.</p>
-</footer>
+    <p>© 2025 CareKart. All rights reserved.</p>
+  </footer>
 </body>
 </html>
