@@ -1,10 +1,8 @@
 import express from "express";
 import Order from "../models/Order.js";
-import { authMiddleware } from "../middleware/auth.js";
-
+import authMiddleware from "../middleware/auth.js";
 const router = express.Router();
 
-// Fetch user orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id })
