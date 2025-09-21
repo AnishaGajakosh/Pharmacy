@@ -41,7 +41,7 @@
     "price": 80.00,
     "description": "Sterile, flexible bandage for wounds and dressing.",
     "sku": "BAND-5X4",
-    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med5.jpeg",
     "category": "Personal Care"
   },
   {
@@ -50,7 +50,7 @@
     "price": 150.00,
     "description": "Kills 99.9% of germs; alcohol-based sanitizer.",
     "sku": "SAN200",
-    "image": "https://images.unsplash.com/photo-1583947582886-965f7d8c9f0c?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med6.jpeg",
     "category": "Personal Care"
   },
   {
@@ -59,7 +59,7 @@
     "price": 350.00,
     "description": "Disposable surgical masks for daily use.",
     "sku": "MASK50",
-    "image": "https://images.unsplash.com/photo-1584556812952-905ffd0b1917?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med7.jpeg",
     "category": "Personal Care"
   },
   {
@@ -68,7 +68,7 @@
     "price": 450.00,
     "description": "Supports heart and brain health.",
     "sku": "OMEGA30",
-    "image": "https://images.unsplash.com/photo-1611078489311-5f934e1ac822?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med8.jpeg",
     "category": "Supplements"
   },
   {
@@ -77,7 +77,7 @@
     "price": 320.00,
     "description": "Supports bone strength and overall health.",
     "sku": "CALVD60",
-    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med9.jpeg",
     "category": "Supplements"
   },
   {
@@ -86,7 +86,7 @@
     "price": 250.00,
     "description": "Quick and accurate temperature readings.",
     "sku": "THERMO",
-    "image": "https://images.unsplash.com/photo-1584315154643-89a89f73d6a0?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med10.jpeg",
     "category": "Devices"
   },
   {
@@ -95,7 +95,7 @@
     "price": 1200.00,
     "description": "Digital BP monitor for home use.",
     "sku": "BPMON",
-    "image": "https://images.unsplash.com/photo-1611078489649-260709e27d43?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med11.jpeg",
     "category": "Devices"
   },
   {
@@ -104,7 +104,7 @@
     "price": 180.00,
     "description": "Antibiotic for bacterial infections.",
     "sku": "AMOX500-10",
-    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med12.jpeg",
     "category": "Prescription"
   },
   {
@@ -113,7 +113,7 @@
     "price": 250.00,
     "description": "For managing type 2 diabetes.",
     "sku": "MET500-30",
-    "image": "https://images.unsplash.com/photo-1588776814317-1d144a7a1d1a?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med13.jpeg",
     "category": "Prescription"
   },
   {
