@@ -14,17 +14,15 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, error: "No items in order" });
     }
 
-    // Map items and fetch product details
+    // Map items and fetch product details, fallback if not found
     const orderItems = [];
     for (const item of items) {
       const product = await Product.findOne({ id: item.id });
-      if (!product) {
-        return res.status(400).json({ ok: false, error: `Product not found: ${item.id}` });
-      }
+
       orderItems.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
+        id: item.id,
+        name: product ? product.name : item.name || "Unknown Product",
+        price: product ? product.price : item.price || 0,
         quantity: item.quantity
       });
     }
@@ -33,14 +31,14 @@ router.post("/", authMiddleware, async (req, res) => {
       user: req.user.id,
       items: orderItems,
       shipping,
-      paymentMethod,
+      paymentMethod: paymentMethod || "cod",
       status: "pending"
     });
 
     await order.save();
     res.json({ ok: true, order });
   } catch (err) {
-    console.error("Error placing order:", err.message);
+    console.error("❌ Error placing order:", err.message);
     res.status(500).json({ ok: false, error: "Error placing order" });
   }
 });
@@ -51,6 +49,7 @@ router.get("/", authMiddleware, async (req, res) => {
     const orders = await Order.find({ user: req.user.id }).sort({ createdAt: -1 });
     res.json({ ok: true, orders });
   } catch (err) {
+    console.error("❌ Error fetching orders:", err.message);
     res.status(500).json({ ok: false, error: err.message });
   }
 });
