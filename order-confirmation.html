@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Order Confirmation - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,7 +16,7 @@
 
 <main class="container">
   <h1>Order Confirmation</h1>
-  <div id="orderDetails">Loading...</div>
+  <div id="orderDetails" class="order-box">Loading...</div>
   <a href="orders.html" class="btn-add">View My Orders</a>
 </main>
 
@@ -25,8 +26,10 @@
   async function loadOrder() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
+    const orderBox = document.getElementById("orderDetails");
+
     if (!id) {
-      document.getElementById("orderDetails").innerText = "Order ID missing.";
+      orderBox.innerHTML = `<p class="error-msg">❌ Order ID missing.</p>`;
       return;
     }
 
@@ -35,15 +38,18 @@
         headers: { Authorization: "Bearer " + localStorage.getItem("token") }
       });
       const data = await res.json();
-      if (!data.ok) return alert("Failed to load order");
-
-      const order = data.orders.find(o => o._id === id);
-      if (!order) {
-        document.getElementById("orderDetails").innerText = "Order not found.";
+      if (!data.ok) {
+        orderBox.innerHTML = `<p class="error-msg">❌ Failed to load order.</p>`;
         return;
       }
 
-      // Format date nicely
+      const order = data.orders.find(o => o._id === id);
+      if (!order) {
+        orderBox.innerHTML = `<p class="error-msg">❌ Order not found.</p>`;
+        return;
+      }
+
+      // Format date
       const orderDate = new Date(order.createdAt).toLocaleString("en-IN", {
         day: "2-digit",
         month: "short",
@@ -55,6 +61,12 @@
       // Calculate total
       const total = order.items.reduce((sum, i) => sum + (i.price * i.quantity), 0);
 
+      // Payment method text
+      const paymentMethodText = order.paymentMethod === "cod"
+        ? "Cash on Delivery"
+        : (order.paymentMethod || "N/A");
+
+      // Payment details if Razorpay used
       let paymentDetails = "";
       if (order.payment) {
         paymentDetails = `
@@ -65,25 +77,27 @@
         `;
       }
 
-      document.getElementById("orderDetails").innerHTML = `
-        <h2>Thank you for your order!</h2>
+      // Render
+      orderBox.innerHTML = `
+        <h2>🎉 Thank you for your order!</h2>
         <p><strong>Order ID:</strong> ${order._id}</p>
         <p><strong>Status:</strong> ${order.status}</p>
         <p><strong>Date:</strong> ${orderDate}</p>
-        <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+        <p><strong>Payment Method:</strong> ${paymentMethodText}</p>
         ${paymentDetails}
         <h3>Items</h3>
         <ul>
-          ${order.items.map(i => `<li>${i.name} x${i.quantity} - ₹${i.price}</li>`).join("")}
+          ${order.items.map(i => `<li>${i.name} × ${i.quantity} — ₹${i.price}</li>`).join("")}
         </ul>
         <p><strong>Total:</strong> ₹${total.toFixed(2)}</p>
         <h3>Shipping Information</h3>
-        <p>${order.shipping.name}, ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.state} - ${order.shipping.zip}</p>
-        <p>Phone: ${order.shipping.phone}</p>
+        <p>${order.shipping.name}</p>
+        <p>${order.shipping.address}, ${order.shipping.city}, ${order.shipping.state} - ${order.shipping.zip}</p>
+        <p>📞 ${order.shipping.phone}</p>
       `;
     } catch (err) {
       console.error(err);
-      document.getElementById("orderDetails").innerText = "Error loading order.";
+      orderBox.innerHTML = `<p class="error-msg">❌ Error loading order.</p>`;
     }
   }
 
@@ -92,13 +106,41 @@
 
 <style>
   .container { max-width: 700px; margin: 30px auto; }
-  #orderDetails { border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; }
-  #orderDetails h2 { margin-top: 0; color: #28a745; }
-  #orderDetails h3 { margin-top: 20px; }
-  #orderDetails ul { padding-left: 20px; }
-  .btn-add { display: inline-block; margin-top: 20px; background: #28a745; color: #fff; padding: 12px 18px; border-radius: 6px; text-decoration: none; }
+  .order-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff;
+  }
+  .order-box h2 { margin-top: 0; color: #28a745; }
+  .order-box h3 { margin-top: 20px; }
+  .order-box ul { padding-left: 20px; margin: 0; }
+  .order-box li { margin: 5px 0; }
+  .error-msg {
+    color: #dc3545;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+  }
+  .btn-add {
+    display: inline-block;
+    margin-top: 20px;
+    background: #28a745;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
   .btn-add:hover { background: #218838; }
-  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 30px; color: var(--primary-dark); }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--primary-dark);
+  }
 </style>
 
 <footer class="site-footer">
