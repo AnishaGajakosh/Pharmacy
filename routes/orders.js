@@ -1,11 +1,10 @@
-// routes/orderRoutes.js
 import express from "express";
 import Order from "../models/Order.js";
 import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// ✅ Create Order
+// ✅ Place Order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -14,16 +13,14 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, error: "No items in order" });
     }
 
-    const orderItems = items.map(it => ({
-      id: it.id,
-      name: it.name,
-      price: it.price,
-      quantity: it.quantity
-    }));
-
     const order = new Order({
       user: req.user.id,
-      items: orderItems,
+      items: items.map(it => ({
+        id: it.id,
+        name: it.name,
+        price: it.price,
+        quantity: it.quantity
+      })),
       shipping,
       paymentMethod: paymentMethod || "cod",
       status: "pending"
