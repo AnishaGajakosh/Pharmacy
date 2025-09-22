@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -63,9 +63,6 @@
     const paymentMethod = shipping.paymentMethod;
     delete shipping.paymentMethod;
 
-    // ✅ send only _id and quantity
-    const items = cart.map(it => ({ id: it.id, quantity: it.quantity }));
-
     try {
       const res = await fetch(`${API_BASE}/api/orders`, {
         method: "POST",
@@ -73,7 +70,7 @@
           "Content-Type": "application/json",
           "Authorization": "Bearer " + token
         },
-        body: JSON.stringify({ items, shipping, paymentMethod })
+        body: JSON.stringify({ items: cart, shipping, paymentMethod })
       });
 
       const data = await res.json();
@@ -81,7 +78,7 @@
         localStorage.removeItem("cart");
         window.location.href = `order-confirmation.html?id=${data.order._id}`;
       } else {
-        alert(data.error || data.msg || "Order failed");
+        alert(data.error || "Order failed");
       }
     } catch (err) {
       console.error(err);
@@ -89,5 +86,14 @@
     }
   });
 </script>
+
+<style>
+.checkout-form{max-width:600px;margin:20px auto;display:flex;flex-direction:column;gap:12px;padding:20px;background:#fff;border-radius:8px}
+.checkout-form input,.checkout-form select{padding:10px;border:1px solid #ccc;border-radius:6px}
+.btn-add{background:#28a745;color:#fff;padding:12px;border-radius:6px;border:none;cursor:pointer}
+.btn-add:hover{background:#218838}
+.back-arrow {display:inline-block;font-size:22px;margin-bottom:15px;color:#28a745;text-decoration:none;font-weight:500;}
+.back-arrow:hover {color:#1e7e34;}
+</style>
 </body>
 </html>
