@@ -1,4 +1,3 @@
-// routes/orders.js
 import express from "express";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
@@ -6,28 +5,27 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// POST /api/orders → Place new order
+// ✅ Create Order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
 
     if (!items || items.length === 0) {
-      return res.status(400).json({ ok: false, msg: "No items in order" });
+      return res.status(400).json({ ok: false, error: "No items in order" });
     }
 
+    // Map items and fetch product details
     const orderItems = [];
-    for (const it of items) {
-      const product = await Product.findOne({ id: it.id }); // match med001
+    for (const item of items) {
+      const product = await Product.findOne({ id: item.id });
       if (!product) {
-        return res.status(404).json({ ok: false, msg: `Product not found: ${it.id}` });
+        return res.status(400).json({ ok: false, error: `Product not found: ${item.id}` });
       }
-
       orderItems.push({
-        product: product._id, // reference
         id: product.id,
         name: product.name,
         price: product.price,
-        quantity: it.quantity,
+        quantity: item.quantity
       });
     }
 
@@ -35,17 +33,25 @@ router.post("/", authMiddleware, async (req, res) => {
       user: req.user.id,
       items: orderItems,
       shipping,
-      paymentMethod: paymentMethod || "cod",
-      status: "pending",
-      totalPrice: orderItems.reduce((sum, it) => sum + it.price * it.quantity, 0),
+      paymentMethod,
+      status: "pending"
     });
 
     await order.save();
-
-    res.status(201).json({ ok: true, orderId: order._id, order });
+    res.json({ ok: true, order });
   } catch (err) {
-    console.error("❌ Order create error:", err);
-    res.status(500).json({ ok: false, msg: "Error placing order" });
+    console.error("Error placing order:", err.message);
+    res.status(500).json({ ok: false, error: "Error placing order" });
+  }
+});
+
+// ✅ Get User Orders
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user.id }).sort({ createdAt: -1 });
+    res.json({ ok: true, orders });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
   }
 });
 
