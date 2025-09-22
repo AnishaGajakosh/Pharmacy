@@ -5,6 +5,7 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
+// Get orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id })
@@ -19,6 +20,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
+// Place order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -28,11 +30,22 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const detailedItems = await Promise.all(
       items.map(async (it) => {
-        const product = await Product.findById(it.id);
+        let product = null;
+
+        // ✅ If it.id looks like a Mongo ObjectId → findById
+        if (it.id && it.id.match(/^[0-9a-fA-F]{24}$/)) {
+          product = await Product.findById(it.id);
+        }
+
+        // ✅ Else treat it.id as custom product code (like P001)
+        if (!product) {
+          product = await Product.findOne({ id: it.id });
+        }
+
         if (!product) throw new Error(`Product not found: ${it.id}`);
 
         return {
-          id: product._id.toString(),
+          product: product._id,
           name: product.name,
           price: product.price,
           quantity: it.quantity,
@@ -51,7 +64,7 @@ router.post("/", authMiddleware, async (req, res) => {
     await order.save();
     res.status(201).json({ ok: true, orderId: order._id, order });
   } catch (err) {
-    console.error("❌ Order create error:", err);
+    console.error("❌ Order create error:", err.message);
     res.status(500).json({ ok: false, msg: "Error placing order" });
   }
 });
