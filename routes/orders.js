@@ -16,16 +16,15 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const orderItems = [];
     for (const item of items) {
-      // ✅ Look up by MongoDB _id instead of sku
+      // ✅ lookup product by MongoDB _id
       const product = await Product.findById(item.id);
 
       if (!product) {
-        console.warn(`⚠️ Product not found: ${item.id}`);
-        continue;
+        return res.status(400).json({ ok: false, error: `Product not found: ${item.id}` });
       }
 
       orderItems.push({
-        id: product._id.toString(), // ✅ Save MongoDB _id
+        id: product._id.toString(), // save _id as string
         name: product.name,
         price: product.price,
         quantity: item.quantity,
