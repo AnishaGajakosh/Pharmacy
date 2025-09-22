@@ -67,9 +67,9 @@
   </script>
   
   <script src="products.js"></script>
-     <footer class="site-footer">
-  <div class="container">© <span id="year"></span> CareKart. All rights reserved. </div>
-</footer>
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> CareKart. All rights reserved. </div>
+  </footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -115,6 +115,10 @@
     const cartCount = (JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
     document.getElementById('cart-count').textContent = cartCount;
 
+    function truncate(text, max = 80) {
+      return text.length > max ? text.slice(0, max) + "..." : text;
+    }
+
     document.addEventListener("productsLoaded", ()=>{
 
       const cats = [...new Set((window.PRODUCTS||[]).map(p=>p.category||'General'))];
@@ -137,7 +141,7 @@
           <img src="${p.image}" alt="${p.name}">
           <div class="product-info">
             <h3>${p.name}</h3>
-            <p class="desc">${p.description}</p>
+            <p class="desc">${truncate(p.description, 80)}</p>
             <div class="price">₹ ${p.price.toFixed(2)}</div>
             <a href="product.html?id=${p.id}" class="btn-add">View</a>
           </div>`;
