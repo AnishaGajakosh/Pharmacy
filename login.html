@@ -59,38 +59,24 @@
 
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
-    const loginLink = document.getElementById("loginLink");
-    const registerLink = document.getElementById("registerLink");
-    const logoutLink = document.getElementById("logoutLink");
-
-    if (token) {
-      if (loginLink) loginLink.style.display = "none";
-      if (registerLink) registerLink.style.display = "none";
-      if (logoutLink) logoutLink.style.display = "inline";
-    } else {
-      if (loginLink) loginLink.style.display = "inline";
-      if (registerLink) registerLink.style.display = "inline";
-      if (logoutLink) logoutLink.style.display = "none";
-    }
+    document.getElementById("loginLink").style.display = token ? "none" : "inline";
+    document.getElementById("registerLink").style.display = token ? "none" : "inline";
+    document.getElementById("logoutLink").style.display = token ? "inline" : "none";
   }
 
-  const logoutLink = document.getElementById("logoutLink");
-  if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      alert("You have been signed out.");
-      window.location.href = "login.html";
-    });
-  }
+  document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    alert("You have been signed out.");
+    window.location.href = "login.html";
+  });
 
   updateAuthLinks();
 
-  const form = document.getElementById("loginForm");
-  form.addEventListener("submit", async (e) => {
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const formData = Object.fromEntries(new FormData(form));
+    const formData = Object.fromEntries(new FormData(e.target));
 
     try {
       const res = await fetch(`${API_BASE}/api/auth/login`, {
