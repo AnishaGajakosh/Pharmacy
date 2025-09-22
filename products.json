@@ -275,16 +275,16 @@
     "price": 350.00,
     "description": "Supports energy production and nerve health.",
     "sku": "VITB12-30",
-    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med31.jpeg",
     "category": "Supplements"
   },
   {
     "id": "med032",
-    "name": "Skin Moisturizer (100 ml)",
+    "name": "Cetaphil Skin Moisturizer (100 ml)",
     "price": 180.00,
     "description": "Hydrates and nourishes skin.",
     "sku": "MOIST100",
-    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med32.jpeg",
     "category": "Personal Care"
   },
   {
@@ -293,7 +293,7 @@
     "price": 70.00,
     "description": "Relieves ear pain and infections.",
     "sku": "EAR10",
-    "image": "https://images.unsplash.com/photo-1588776814300-b8a9c90be07e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med33.jpeg",
     "category": "OTC"
   },
   {
@@ -302,16 +302,16 @@
     "price": 120.00,
     "description": "Relieves nasal congestion.",
     "sku": "NASAL15",
-    "image": "https://images.unsplash.com/photo-1588776814317-1d144a7a1d1a?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med34.jpeg",
     "category": "OTC"
   },
   {
     "id": "med035",
-    "name": "Hair Oil (200 ml)",
+    "name": "Dabur Anmol Jasmine Coconut Hair Oil 200 ml",
     "price": 220.00,
     "description": "Nourishes scalp and reduces hair fall.",
     "sku": "HAIROIL200",
-    "image": "https://images.unsplash.com/photo-1588776814471-916e68e5c1d2?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med35.jpeg",
     "category": "Personal Care"
   },
   {
