@@ -168,7 +168,7 @@
     cursor:not-allowed;
   }
 
-  /* Cart layout fix */
+  /* Cart layout */
   .cart-item {
     background:#fff;
     border-radius:8px;
@@ -191,7 +191,15 @@
   .cart-right {
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:16px; /* space between qty input and remove */
+  }
+  .cart-name {
+    font-weight:600;
+    font-size:16px;
+  }
+  .cart-price {
+    color:#666;
+    font-size:14px;
   }
   .qty {
     width:70px;
