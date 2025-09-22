@@ -14,13 +14,13 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, error: "No items in order" });
     }
 
-    // Map items and fetch product details, fallback if not found
     const orderItems = [];
     for (const item of items) {
+      // ✅ look up product by your custom ID (med001, etc.)
       const product = await Product.findOne({ id: item.id });
 
       orderItems.push({
-        id: item.id,
+        id: item.id, // ✅ will be med001
         name: product ? product.name : item.name || "Unknown Product",
         price: product ? product.price : item.price || 0,
         quantity: item.quantity
