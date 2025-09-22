@@ -1,4 +1,4 @@
-import express from "express"; 
+import express from "express";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import authMiddleware from "../middleware/auth.js";
@@ -16,13 +16,18 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const orderItems = [];
     for (const item of items) {
-      // ✅ Look up product by SKU instead of id
-      const product = await Product.findOne({ sku: item.id });
+      // ✅ Look up by MongoDB _id instead of sku
+      const product = await Product.findById(item.id);
+
+      if (!product) {
+        console.warn(`⚠️ Product not found: ${item.id}`);
+        continue;
+      }
 
       orderItems.push({
-        id: item.id, // med001 etc.
-        name: product ? product.name : item.name || "Unknown Product",
-        price: product ? product.price : item.price || 0,
+        id: product._id.toString(), // ✅ Save MongoDB _id
+        name: product.name,
+        price: product.price,
         quantity: item.quantity,
       });
     }
