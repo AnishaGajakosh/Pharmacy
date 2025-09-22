@@ -13,8 +13,7 @@
         <div class="hamburger" id="hamburger" aria-label="Open menu">
           <span></span><span></span><span></span>
         </div>
-        <a class="logo" href="index.html"> CareKart
-        </a>
+        <a class="logo" href="index.html">CareKart</a>
       </div>
       <nav class="main-nav">
         <a href="index.html">Home</a>
@@ -24,6 +23,7 @@
       <div class="titlebar">Safe medicines • Fast delivery</div>
     </div>
   </header>
+
   <aside class="sidebar" id="sidebar">
     <div class="profile">
       <div class="avatar" id="avatar">U</div>
@@ -66,9 +66,11 @@
   </main>
 
   <script src="products.js"></script>
-   <footer class="site-footer">
-  <div class="container">© <span id="year"></span> CareKart. All rights reserved. </div>
-</footer>
+
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> CareKart. All rights reserved.</div>
+  </footer>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -162,9 +164,10 @@
       }
       if(e.target.matches('.btn-details')){
         const id=e.target.dataset.id;
-        window.location.href=`product.html?id=${encodeURIComponent(id)}`;
+        window.location.href=`product-detail.html?id=${encodeURIComponent(id)}`;
       }
     });
+
     const cartCount=(JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
     document.getElementById('cart-count').textContent=cartCount;
 
