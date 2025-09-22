@@ -109,30 +109,36 @@ products.html
     const catSelect = document.getElementById('catSelect');
     const searchInput = document.getElementById('searchInput');
 
-    function render(filter){
-      grid.innerHTML='';
-      (window.PRODUCTS||[]).filter(p=>{
-        if(filter?.q && !(`${p.name} ${p.description}`.toLowerCase().includes(filter.q.toLowerCase()))) return false;
-        if(filter?.cat && filter.cat!=='') return p.category===filter.cat;
-        return true;
-      }).forEach(p=>{
-        const card=document.createElement('div'); card.className='product-card';
-        card.innerHTML = `
-          <img src="${p.image}" alt="${p.name}">
-          <div class="product-info">
-            <h3>${p.name}</h3>
-            <p class="desc">${p.description}</p>
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div class="price">₹ ${p.price.toFixed(2)}</div>
-              <div class="actions">
-                <button class="btn-details" data-id="${p.id}">Details</button>
-                <button class="btn-add" data-id="${p.id}">Add to cart</button>
-              </div>
-            </div>
-          </div>`;
-        grid.appendChild(card);
-      });
-    }
+    function truncate(text, max = 80) {
+  return text.length > max ? text.slice(0, max) + "..." : text;
+}
+
+function render(filter){
+  grid.innerHTML='';
+  (window.PRODUCTS||[]).filter(p=>{
+    if(filter?.q && !(`${p.name} ${p.description}`.toLowerCase().includes(filter.q.toLowerCase()))) return false;
+    if(filter?.cat && filter.cat!=='') return p.category===filter.cat;
+    return true;
+  }).forEach(p=>{
+    const card=document.createElement('div'); 
+    card.className='product-card';
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="desc">${truncate(p.description, 80)}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="price">₹ ${p.price.toFixed(2)}</div>
+          <div class="actions">
+            <button class="btn-details" data-id="${p.id}">Details</button>
+            <button class="btn-add" data-id="${p.id}">Add to cart</button>
+          </div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
 
     document.addEventListener("productsLoaded", ()=>{
       const cats = [...new Set(window.PRODUCTS.map(p=>p.category||'General'))];
