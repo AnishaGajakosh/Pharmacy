@@ -1,4 +1,4 @@
-import express from "express";
+import express from "express"; 
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import authMiddleware from "../middleware/auth.js";
@@ -16,14 +16,14 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const orderItems = [];
     for (const item of items) {
-      // ✅ look up product by your custom ID (med001, etc.)
-      const product = await Product.findOne({ id: item.id });
+      // ✅ Look up product by SKU instead of id
+      const product = await Product.findOne({ sku: item.id });
 
       orderItems.push({
-        id: item.id, // ✅ will be med001
+        id: item.id, // med001 etc.
         name: product ? product.name : item.name || "Unknown Product",
         price: product ? product.price : item.price || 0,
-        quantity: item.quantity
+        quantity: item.quantity,
       });
     }
 
@@ -32,7 +32,7 @@ router.post("/", authMiddleware, async (req, res) => {
       items: orderItems,
       shipping,
       paymentMethod: paymentMethod || "cod",
-      status: "pending"
+      status: "pending",
     });
 
     await order.save();
