@@ -109,30 +109,48 @@
   </script>
 
   <style>
-    .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
-    .back-arrow:hover { color: #1e7e34; }
-    .logo {display: flex;align-items: center;gap: 10px;text-decoration: none;font-weight: 700;font-size: 50px;color: var(--primary-dark);}
-    
-    .cart-actions {margin-top: 14px;display: flex;justify-content: space-between;align-items: center;}
-    .action-buttons {display: flex;gap: 10px;}
-    .btn-add {background:#28a745;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none;font-weight:600;}
-    .btn-add:hover { background:#218838; }
-    .btn-add.disabled {background: #ccc;pointer-events: none;cursor: not-allowed;}
+  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+  .back-arrow:hover { color: #1e7e34; }
+  .logo {display: flex;align-items: center;gap: 10px;text-decoration: none;font-weight: 700;font-size: 50px;color: var(--primary-dark);}
+  
+  .cart-actions {margin-top: 14px;display: flex;justify-content: space-between;align-items: center;}
+  .action-buttons {display: flex;gap: 10px;}
+  .btn-add {background:#28a745;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none;font-weight:600;}
+  .btn-add:hover { background:#218838; }
+  .btn-add.disabled {background: #ccc;pointer-events: none;cursor: not-allowed;}
 
-    .btn-clear {background:#dc3545;color:#fff;padding:10px 16px;border-radius:6px;border:none;font-weight:600;cursor:pointer;}
-    .btn-clear:hover { background:#c82333; }
-    .btn-clear.disabled {background:#ccc;pointer-events:none;cursor:not-allowed;}
+  .btn-clear {background:#dc3545;color:#fff;padding:10px 16px;border-radius:6px;border:none;font-weight:600;cursor:pointer;}
+  .btn-clear:hover { background:#c82333; }
+  .btn-clear.disabled {background:#ccc;pointer-events:none;cursor:not-allowed;}
 
-    .cart-item {margin-bottom: 10px;}
-    .cart-row {display: flex;justify-content: space-between;align-items: center;padding: 12px 0;border-bottom: 1px solid #eee;}
-    .cart-left {display: flex;flex-direction: column;gap: 4px;}
-    .cart-name {font-weight: 700;}
-    .cart-price {font-size: 12px;color: #666;}
-    .cart-right {display: flex;gap: 10px;align-items: center;}
-    .qty {width: 70px;padding: 6px;border: 1px solid #ccc;border-radius: 4px;}
-    .btn-remove {background: #dc3545;color: #fff;padding: 6px 12px;border: none;border-radius: 4px;cursor: pointer;font-size: 14px;}
-    .btn-remove:hover {background: #c82333;}
-  </style>
+  .cart-item {margin-bottom: 12px;}
+  .cart-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .cart-left {
+    flex: 1;   /* take full space on left */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cart-name {font-weight: 700;}
+  .cart-price {font-size: 13px;color: #666;}
+
+  .cart-right {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-left: 30px;
+  }
+  .qty {width: 75px;padding: 6px;border: 1px solid #ccc;border-radius: 4px;text-align: center;}
+  .btn-remove {background: #dc3545;color: #fff;padding: 7px 14px;border: none;border-radius: 4px;cursor: pointer;font-size: 14px;}
+  .btn-remove:hover {background: #c82333;}
+</style>
+
 
   <footer class="site-footer">
     <p>© 2025 CareKart. All rights reserved.</p>
