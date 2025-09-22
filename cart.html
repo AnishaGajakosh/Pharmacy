@@ -88,11 +88,51 @@
       }
     });
 
-    checkoutLink.addEventListener("click", function(e) {
+    checkoutLink.addEventListener("click", async function(e) {
       cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+
+      if (!user) {
+        e.preventDefault();
+        alert(" Please login first to proceed to checkout.");
+        window.location.href = "login.html";
+        return;
+      }
+
       if (cart.length === 0) {
         e.preventDefault();
         alert("Your cart is empty! Add items before proceeding to checkout.");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + user.token
+          },
+          body: JSON.stringify({
+            items: cart.map(it => ({ id: it.id, quantity: it.quantity })), 
+            shipping: {
+              name: user.name,
+              address: user.address || "N/A",
+              city: user.city || "",
+              state: user.state || "",
+              zip: user.zip || "",
+              phone: user.phone || ""
+            },
+            paymentMethod: "cod"
+          })
+        });
+
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.msg || "Order failed");
+        console.log("✅ Order saved:", data);
+      } catch (err) {
+        e.preventDefault();
+        alert("❌ Could not save order. Try again.");
+        console.error(err);
       }
     });
   </script>
