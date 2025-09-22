@@ -12,9 +12,9 @@
     <div class="titlebar">Safe medicines • Fast delivery</div>
   </div>
 </header>
-  <main class="container">
-  <a href="cart.html" class="back-arrow">← Back</a>
+
 <main class="container">
+  <a href="cart.html" class="back-arrow">← Back</a>
   <h1>Checkout</h1>
 
   <form id="checkoutForm" class="checkout-form">
@@ -138,13 +138,16 @@
 
   async function placeOrder(cart, shipping, paymentMethod) {
     try {
+      // ✅ only send { id, quantity } to backend
+      const items = cart.map(it => ({ id: it.id, quantity: it.quantity }));
+
       const res = await fetch(`${API_BASE}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + localStorage.getItem("token")
         },
-        body: JSON.stringify({ items: cart, shipping, paymentMethod })
+        body: JSON.stringify({ items, shipping, paymentMethod })
       });
 
       const data = await res.json();
@@ -169,7 +172,8 @@
 .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
 .back-arrow:hover { color: #1e7e34; }
 </style>
-  <footer class="site-footer">
+
+<footer class="site-footer">
   <p>© 2025 CareKart. All rights reserved.</p>
 </footer>
 </body>
