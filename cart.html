@@ -9,7 +9,7 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="index.html"> CareKart </a>
+        <a class="logo" href="index.html"> CareKart </a>
       <div class="titlebar">Trusted medicines, delivered fast</div>
     </div>
   </header>
@@ -18,11 +18,10 @@
     <a href="index.html" class="back-arrow">← Back</a>
     <h1>Your Cart</h1>
     <div id="cartList" class="cart-list"></div>
-    <div class="cart-actions">
+    <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
       <div id="totalPrice">Total: ₹ 0.00</div>
-      <div class="action-buttons">
+      <div>
         <a id="checkoutLink" href="checkout.html" class="btn-add disabled">Proceed to Checkout</a>
-        <button id="clearCartBtn" class="btn-clear disabled">Clear Cart</button>
       </div>
     </div>
   </main>
@@ -31,7 +30,6 @@
     const cartList = document.getElementById('cartList');
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const checkoutLink = document.getElementById("checkoutLink");
-    const clearCartBtn = document.getElementById("clearCartBtn");
     const totalPrice = document.getElementById("totalPrice");
 
     function render(){ 
@@ -44,28 +42,27 @@
         </p>`;
         totalPrice.textContent = "Total: ₹ 0.00";
         checkoutLink.classList.add("disabled");
-        clearCartBtn.classList.add("disabled");
         return;
       }
 
       checkoutLink.classList.remove("disabled");
-      clearCartBtn.classList.remove("disabled");
 
       cart.forEach((it,idx)=>{ 
         total += (it.price||0)*it.quantity; 
         const d=document.createElement('div'); 
         d.className='cart-item'; 
         d.innerHTML = `
-          <div class="cart-row">
-            <div class="cart-left">
-              <div class="cart-name">${it.name}</div>
-              <div class="cart-price">₹ ${Number(it.price||0).toFixed(2)}</div>
-            </div>
-            <div class="cart-right">
-              <input type="number" min="1" value="${it.quantity}" data-idx="${idx}" class="qty">
-              <button data-idx="${idx}" class="btn-remove">Remove</button>
-            </div>
-          </div>`;
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee">
+    <div>
+      <div style="font-weight:700">${it.name}</div>
+      <div style="font-size:12px;color:#666">₹ ${Number(it.price||0).toFixed(2)}</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <input type="number" min="1" value="${it.quantity}" data-idx="${idx}" class="qty" style="width:70px">
+      <button data-idx="${idx}" class="btn-remove">Remove</button>
+    </div>
+  </div>`;
+
         cartList.appendChild(d);
       });
 
@@ -98,131 +95,17 @@
         alert("Your cart is empty! Add items before proceeding to checkout.");
       }
     });
-
-    clearCartBtn.addEventListener("click", function() {
-      if (cart.length > 0 && confirm("Are you sure you want to clear the cart?")) {
-        cart = [];
-        localStorage.setItem("cart", JSON.stringify(cart));
-        render();
-      }
-    });
   </script>
 
-<style>
-  .back-arrow {
-    display: inline-block;
-    font-size: 22px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    color: #28a745;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .back-arrow:hover { color: #1e7e34; }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 50px;
-    color: var(--primary-dark);
-  }
-  
-  .cart-actions {
-    margin-top: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .action-buttons { display: flex; gap: 10px; }
-
-  .btn-add {
-    background:#28a745;
-    color:#fff;
-    padding:10px 16px;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:600;
-  }
-  .btn-add:hover { background:#218838; }
-  .btn-add.disabled {
-    background: #ccc;
-    pointer-events: none;
-    cursor: not-allowed;
-  }
-
-  .btn-clear {
-    background:#dc3545;
-    color:#fff;
-    padding:10px 16px;
-    border-radius:6px;
-    border:none;
-    font-weight:600;
-    cursor:pointer;
-  }
-  .btn-clear:hover { background:#c82333; }
-  .btn-clear.disabled {
-    background:#ccc;
-    pointer-events:none;
-    cursor:not-allowed;
-  }
-
-  /* Cart layout */
-  .cart-item {
-    background:#fff;
-    border-radius:8px;
-    padding:12px;
-    box-shadow: var(--shadow);
-    margin-bottom:10px;
-  }
-  .cart-row {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-  }
-  .cart-left {
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    flex:1;
-  }
-  .cart-right {
-    display:flex;
-    align-items:center;
-    gap:16px; /* space between qty input and remove */
-  }
-  .cart-name {
-    font-weight:600;
-    font-size:16px;
-  }
-  .cart-price {
-    color:#666;
-    font-size:14px;
-  }
-  .qty {
-    width:70px;
-    padding:6px;
-    border:1px solid #ccc;
-    border-radius:4px;
-    text-align:center;
-  }
-  .btn-remove {
-    background:#28a745;
-    color:#fff;
-    padding:7px 14px;
-    border:none;
-    border-radius:4px;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:600;
-  }
-  .btn-remove:hover {
-    background:#218838;
-  }
-</style>
-
+  <style>
+    .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
+    .back-arrow:hover { color: #1e7e34; }
+    .logo {display: flex;align-items: center;gap: 10px;text-decoration: none;font-weight: 700;font-size: 50px;color: var(--primary-dark);}
+    .btn-add {background:#28a745;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none;font-weight:600;}
+    .btn-add:hover { background:#218838; }
+    .btn-add.disabled {background: #ccc;pointer-events: none;cursor: not-allowed;}
+    .cart-item {margin-bottom: 10px;}
+  </style>
   <footer class="site-footer">
     <p>© 2025 CareKart. All rights reserved.</p>
   </footer>
