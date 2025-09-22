@@ -1,3 +1,4 @@
+// routes/orders.js
 import express from "express";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
@@ -5,7 +6,7 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// 🟢 Get all orders for logged-in user
+// ✅ Get user orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id })
@@ -20,7 +21,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-// 🟢 Create new order
+// ✅ Place order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -28,16 +29,13 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, msg: "No items in order" });
     }
 
-    // Map items with DB products
     const detailedItems = await Promise.all(
       items.map(async (it) => {
-        // 🔑 Use product.code instead of _id
-        const product = await Product.findOne({ code: it.id });
+        const product = await Product.findById(it.id); // now using _id
         if (!product) throw new Error(`Product not found: ${it.id}`);
 
         return {
           id: product._id.toString(),
-          code: product.code,
           name: product.name,
           price: product.price,
           quantity: it.quantity,
