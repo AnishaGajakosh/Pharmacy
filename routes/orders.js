@@ -1,11 +1,11 @@
+// routes/orderRoutes.js
 import express from "express";
 import Order from "../models/Order.js";
-import Product from "../models/Product.js";
 import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Create Order
+// ✅ Create Order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -14,17 +14,12 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, error: "No items in order" });
     }
 
-    const orderItems = [];
-    for (const item of items) {
-      const product = await Product.findById(item.id); // ✅ using MongoDB _id
-
-      orderItems.push({
-        id: item.id,
-        name: product ? product.name : "Unknown Product",
-        price: product ? product.price : 0,
-        quantity: item.quantity
-      });
-    }
+    const orderItems = items.map(it => ({
+      id: it.id,
+      name: it.name,
+      price: it.price,
+      quantity: it.quantity
+    }));
 
     const order = new Order({
       user: req.user.id,
@@ -42,7 +37,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// Get User Orders
+// ✅ Get User Orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id }).sort({ createdAt: -1 });
