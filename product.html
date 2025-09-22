@@ -1,142 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Product Details — CareKart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Product Details - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="hamburger" id="hamburger" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </div>
-        <a class="logo" href="index.html">CareKart</a>
-      </div>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
+      <a class="logo" href="index.html">CareKart</a>
+      <nav>
         <a href="products.html">Products</a>
-        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+        <a href="cart.html">Cart</a>
       </nav>
-      <div class="titlebar">Safe medicines • Fast delivery</div>
     </div>
   </header>
 
-  <aside class="sidebar" id="sidebar">
-    <div class="profile">
-      <div class="avatar" id="avatar">U</div>
-      <div>
-        <div class="welcome" id="welcome">Welcome, Guest</div>
-        <div style="font-size:12px;color:var(--muted)">Customer</div>
-      </div>
-    </div>
-    <div class="nav">
-      <a href="login.html" id="loginLink">Login</a>
-      <a href="register.html" id="registerLink">Register</a>
-      <a href="index.html">Home</a>
-      <a href="orders.html">My Orders</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About Us</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms & Conditions</a>
-      <a href="refunds.html">Cancellation & Refund Policy</a>
-      <a href="faq.html">FAQ</a>
-      <a href="#" id="logoutLink" style="color:red;display:none">Sign Out</a>
-    </div>
-  </aside>
-
   <main class="container">
-    <a href="products.html" class="back-arrow">← Back</a>
-
-    <div id="product-detail" class="product-detail"></div>
+    <div id="productDetail"></div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">© <span id="year"></span> CareKart</div>
-  </footer>
-
-  <script src="products.js"></script>
+  <script src="products-data.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const params=new URLSearchParams(location.search);
+    const id=params.get("id");
+    const prod=window.PRODUCTS.find(p=>p.id===id);
 
-    const hamburger=document.getElementById('hamburger');
-    const sidebar=document.getElementById('sidebar');
-    hamburger.addEventListener('click',(e)=>{e.stopPropagation();sidebar.classList.toggle('open');});
-    document.addEventListener('click',(e)=>{if(sidebar.classList.contains('open')&&!sidebar.contains(e.target)&&!hamburger.contains(e.target)){sidebar.classList.remove('open');}});
-
-    const user=JSON.parse(localStorage.getItem('user')||'null');
-    const logoutLink=document.getElementById("logoutLink");
-    const loginLink=document.getElementById("loginLink");
-    const registerLink=document.getElementById("registerLink");
-    if(user){
-      document.getElementById('welcome').textContent=`Welcome, ${user.name}`;
-      document.getElementById('avatar').textContent=(user.name||'U').split(' ').map(s=>s[0]).slice(0,2).join('');
-      logoutLink.style.display="block"; loginLink.style.display="none"; registerLink.style.display="none";
-    } else {
-      logoutLink.style.display="none"; loginLink.style.display="block"; registerLink.style.display="block";
-    }
-    logoutLink.addEventListener("click",(e)=>{e.preventDefault();localStorage.removeItem("token");localStorage.removeItem("user");alert("You have been signed out.");window.location.href="index.html";});
-
-    const cartCount=(JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
-    document.getElementById('cart-count').textContent=cartCount;
-
-    function getQueryParam(key){
-      return new URLSearchParams(window.location.search).get(key);
-    }
-
-    document.addEventListener("productsLoaded", ()=>{
-      const id=getQueryParam("id");
-      const p=(window.PRODUCTS||[]).find(x=>x.id===id);
-      if(!p){
-        document.getElementById("product-detail").innerHTML="<p>Product not found.</p>";
-        return;
-      }
-
-      const detail=document.getElementById("product-detail");
+    const detail=document.getElementById('productDetail');
+    if(prod){
       detail.innerHTML=`
         <div class="detail-card">
-          <img src="${p.image}" alt="${p.name}" class="detail-image">
+          <img src="${prod.image}" alt="${prod.name}" class="detail-image">
           <div class="detail-info">
-            <h1>${p.name}</h1>
-            <p class="category">Category: ${p.category}</p>
-            <p>${p.description}</p>
-            <p><strong>Price:</strong> ₹ ${p.price.toFixed(2)}</p>
+            <h1>${prod.name}</h1>
+            <p class="category">Category: ${prod.category}</p>
+            <p>${prod.description}</p>
+            <p><strong>Price:</strong> ₹ ${prod.price.toFixed(2)}</p>
             <button class="btn-add" id="addCartBtn">Add to Cart</button>
           </div>
         </div>`;
-      
-      document.getElementById("addCartBtn").addEventListener("click",()=>{
-        const cart=JSON.parse(localStorage.getItem('cart')||'[]');
-        const existing=cart.find(it=>it.id===p.id);
-        if(existing) existing.quantity+=1; else cart.push({id:p.id,name:p.name,price:p.price,quantity:1});
-        localStorage.setItem('cart', JSON.stringify(cart));
-        document.getElementById('cart-count').textContent=cart.reduce((s,i)=>s+i.quantity,0);
-        alert(`${p.name} added to cart`);
+      document.getElementById('addCartBtn').addEventListener('click',()=>{
+        let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+        if(!cart.find(c=>c.id===prod.id)) cart.push({...prod,qty:1});
+        localStorage.setItem('cart',JSON.stringify(cart));
+        alert("Added to cart!");
       });
-    });
+    }else{
+      detail.innerHTML="<p>Product not found.</p>";
+    }
   </script>
-
-  <style>
-  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
-  .back-arrow:hover {color: #1e7e34;}
-  .detail-card {display: flex;gap: 40px;align-items: flex-start;margin-top: 20px;padding: 20px;border: 1px solid #e0e0e0;border-radius: 8px;background: #fff;box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
-  .detail-image {width: 300px;height: auto;border-radius: 8px;object-fit: contain;border: 1px solid #ddd;background: #fafafa;padding: 10px;}
-  .detail-info {flex: 1;}
-  .detail-info h1 {margin: 0 0 10px;font-size: 26px;color: #222;}
-  .detail-info .category {font-size: 14px;color: #888;margin-bottom: 15px;}
-  .detail-info p {margin: 10px 0;font-size: 15px;line-height: 1.6;color: #444;}
-  .btn-add {margin-top: 16px;background: #28a745;color: white;border: none;padding: 12px 22px;border-radius: 6px;cursor: pointer;font-size: 16px;transition: background 0.2s;}
-  .btn-add:hover {background: #1e7e34;}
-  @media (max-width: 768px) {
-    .detail-card {flex-direction: column;text-align: center;}
-    .detail-image {width: 100%;max-width: 350px;margin: 0 auto 15px;}
-    .btn-add { width: 100%;}
-  }
-</style>
-  <footer class="site-footer">
-  <p>© 2025 CareKart. All rights reserved.</p>
-</footer>
 </body>
 </html>
