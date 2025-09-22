@@ -5,14 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Register - CareKart</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    .auth-form {max-width: 400px;margin: 20px auto;display: flex;flex-direction: column;gap: 12px;padding: 20px;background: #fff;border-radius: 8px;border: 1px solid #eee;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
-    .auth-form input {padding: 10px;border: 1px solid #ccc;border-radius: 6px;width: 100%;}
-    .btn-add {margin-top: 12px;background: #28a745;color: white;border: none;padding: 12px;border-radius: 6px;cursor: pointer;font-size: 16px;}
-    .btn-add:hover {background: #218838;}
-    .password-wrapper {display: flex;align-items: center;position: relative;}
-    .toggle-password {position: absolute;right: 10px;cursor: pointer;user-select: none;}
-  </style>
 </head>
 <body>
 <header class="site-header">
@@ -33,14 +25,14 @@
   <form id="registerForm" class="auth-form">
     <input type="text" name="name" placeholder="Full Name" required>
     <input type="email" name="email" placeholder="Email" required>
-
-    <div class="password-wrapper">
+    
+    <div style="position:relative;">
       <input type="password" name="password" id="registerPassword" placeholder="Password" required>
       <span class="toggle-password" onclick="togglePassword('registerPassword', this)">👁</span>
     </div>
 
-    <div class="password-wrapper">
-      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    <div style="position:relative;">
+      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
       <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">👁</span>
     </div>
 
@@ -62,13 +54,13 @@
     }
   }
 
-  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  const form = document.getElementById("registerForm");
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.target));
 
-    // ✅ Confirm password check
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    if (data.password !== confirmPassword) {
+    const data = Object.fromEntries(new FormData(form));
+
+    if (data.password !== data.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
@@ -89,28 +81,79 @@
         alert(json.msg || "Registration failed");
       }
     } catch (err) {
-      console.error("Register error:", err);
+      console.error(" Register error:", err);
       alert("Error connecting to server");
     }
   });
 
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
-    document.getElementById("loginLink").style.display = token ? "none" : "inline";
-    document.getElementById("registerLink").style.display = token ? "none" : "inline";
-    document.getElementById("logoutLink").style.display = token ? "inline" : "none";
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+    const logoutLink = document.getElementById("logoutLink");
+
+    if (token) {
+      if (loginLink) loginLink.style.display = "none";
+      if (registerLink) registerLink.style.display = "none";
+      if (logoutLink) logoutLink.style.display = "inline";
+    } else {
+      if (loginLink) loginLink.style.display = "inline";
+      if (registerLink) registerLink.style.display = "inline";
+      if (logoutLink) logoutLink.style.display = "none";
+    }
   }
 
-  document.getElementById("logoutLink").addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    alert("You have been signed out.");
-    window.location.href = "login.html";
-  });
-
+  const logoutLink = document.getElementById("logoutLink");
+  if (logoutLink) {
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      alert("You have been signed out.");
+      window.location.href = "login.html";
+    });
+  }
   updateAuthLinks();
 </script>
+
+<style>
+  .auth-form {
+    max-width: 400px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .auth-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+  }
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .btn-add {
+    margin-top: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn-add:hover { background: #218838; }
+</style>
 
 <footer class="site-footer">
   <p>© 2025 CareKart. All rights reserved.</p>
