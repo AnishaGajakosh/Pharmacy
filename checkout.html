@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=2">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Checkout - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -37,14 +38,8 @@
   </form>
 </main>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
   const API_BASE = "https://pharmacy-oszy.onrender.com";
-
-  function getCartTotal() {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  }
 
   const form = document.getElementById("checkoutForm");
   form.addEventListener("submit", async (e) => {
@@ -68,84 +63,15 @@
     const paymentMethod = shipping.paymentMethod;
     delete shipping.paymentMethod;
 
-    const totalAmount = getCartTotal();
+    // ✅ send only _id and quantity
+    const items = cart.map(it => ({ id: it.id, quantity: it.quantity }));
 
-    if (paymentMethod === "cod") {
-      placeOrder(cart, shipping, "cod");
-    } else {
-      try {
-        const res = await fetch(`${API_BASE}/api/payments/create-order`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-          body: JSON.stringify({ amount: totalAmount })
-        });
-
-        const data = await res.json();
-        if (!data.ok) return alert("Payment initialization failed");
-
-        const options = {
-          key: data.key,
-          amount: data.order.amount,
-          currency: "INR",
-          name: "CareKart",
-          description: "Order Payment",
-          order_id: data.order.id,
-          handler: async function (response) {
-            try {
-              const verifyRes = await fetch(`${API_BASE}/api/payments/verify`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer " + token
-                },
-                body: JSON.stringify({
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                  items: cart,
-                  shipping,
-                  amount: totalAmount,
-                  paymentId: data.paymentId
-                })
-              });
-              const verifyData = await verifyRes.json();
-              if (verifyData.ok) {
-                localStorage.removeItem("cart");
-                window.location.href = `order-confirmation.html?id=${verifyData.orderId}`;
-              } else {
-                alert(verifyData.msg || "Payment verification failed");
-              }
-            } catch (err) {
-              console.error(err);
-              alert("Error verifying payment");
-            }
-          },
-          prefill: { name: shipping.name, email: user.email || "", contact: shipping.phone },
-          theme: { color: "#28a745" }
-        };
-
-        const rzp = new Razorpay(options);
-        rzp.open();
-      } catch (err) {
-        console.error(err);
-        alert("Error initializing payment");
-      }
-    }
-  });
-
-  async function placeOrder(cart, shipping, paymentMethod) {
     try {
-      // send only product id and quantity
-      const items = cart.map(it => ({ id: it.id, quantity: it.quantity }));
-
       const res = await fetch(`${API_BASE}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token")
+          "Authorization": "Bearer " + token
         },
         body: JSON.stringify({ items, shipping, paymentMethod })
       });
@@ -161,20 +87,7 @@
       console.error(err);
       alert("Error placing order");
     }
-  }
+  });
 </script>
-
-<style>
-.checkout-form{max-width:600px;margin:20px auto;display:flex;flex-direction:column;gap:12px;padding:20px;background:#fff;border-radius:8px}
-.checkout-form input,.checkout-form select{padding:10px;border:1px solid #ccc;border-radius:6px}
-.btn-add{background:#28a745;color:#fff;padding:12px;border-radius:6px;border:none;cursor:pointer}
-.btn-add:hover{background:#218838}
-.back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
-.back-arrow:hover { color: #1e7e34; }
-</style>
-
-<footer class="site-footer">
-  <p>© 2025 CareKart. All rights reserved.</p>
-</footer>
 </body>
 </html>
