@@ -5,10 +5,10 @@ const orderSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     items: [
       {
-        id: { type: String, required: true }, // Product _id as string
-        name: { type: String, required: true },
-        price: { type: Number, required: true },
-        quantity: { type: Number, required: true }
+        id: { type: String, required: true },      // e.g., med002
+        name: { type: String, required: true },    // e.g., Cough Syrup (100 ml)
+        price: { type: Number, required: true },   // e.g., 120
+        quantity: { type: Number, required: true } // e.g., 4
       }
     ],
     shipping: {
@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema(
       zip: String,
       phone: String
     },
-    paymentMethod: { type: String, required: true },
+    paymentMethod: { type: String, default: "cod" }, // cod / card / upi
     status: { type: String, default: "pending" }
   },
   { timestamps: true }
