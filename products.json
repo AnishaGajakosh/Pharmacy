@@ -542,90 +542,90 @@
     "id": "med061",
     "name": "Blood Glucose Test Strips (50 pcs)",
     "price": 600.00,
-    "description": "For use with glucometers to test sugar levels.",
+    "description": "Glucotest Prime blood glucose test strips for use with compatible glucometers. Provides fast, accurate, and reliable sugar level readings. Easy to use at home for regular diabetes monitoring. Each pack contains 2x25 strips.",
     "sku": "GLUSTRIPS50",
-    "image": "https://images.unsplash.com/photo-1588776814309-bb6d81d77ec7?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med61.jpeg",
     "category": "Devices"
   },
   {
     "id": "med062",
     "name": "Herbal Cough Syrup (100 ml)",
     "price": 130.00,
-    "description": "Natural relief for cough and sore throat.",
+    "description": "Herbion Naturals sugar-free cough syrup made with herbal extracts. Alcohol-free and non-sedative formula that soothes dry throat, relieves hoarseness, and calms irritation. Naturally drug-free, safe for everyday use.",
     "sku": "HERBCOUGH100",
-    "image": "https://images.unsplash.com/photo-1620912189869-1f2e4c13c370?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med62.jpeg",
     "category": "OTC"
   },
   {
     "id": "med063",
     "name": "Vitamin K2 + D3 Tablets (30 tabs)",
     "price": 340.00,
-    "description": "Supports bone and heart health.",
+    "description": "Premium dietary supplement with Vitamin D3 and K2. Supports strong bones, improves calcium absorption, and promotes heart health. Pack of 30 easy-to-swallow capsules.",
     "sku": "VITKD30",
-    "image": "https://images.unsplash.com/photo-1611078489556-bdf4f5f78eac?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med63.jpeg",
     "category": "Supplements"
   },
   {
     "id": "med064",
     "name": "Antiviral Medicine (10 tabs)",
     "price": 500.00,
-    "description": "Used for viral infections under prescription.",
+    "description": "Famciclovir Tablets IP 250 mg (Virovir 250). Used under medical prescription for treatment of viral infections such as herpes zoster and cold sores. Pack contains 1 strip of 6 tablets.",
     "sku": "ANTIVIRAL10",
-    "image": "https://images.unsplash.com/photo-1588776814887-6b5cda2520eb?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med64.jpeg",
     "category": "Prescription"
   },
   {
     "id": "med065",
     "name": "Oral Rehydration Salts (ORS Pack)",
     "price": 40.00,
-    "description": "Restores hydration quickly during dehydration.",
+    "description": "Booty ORS in refreshing orange flavor. WHO & UNICEF recommended formula to restore hydration and electrolytes during dehydration caused by diarrhea, heat, or exertion. Convenient sachet pack.",
     "sku": "ORS",
-    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med65.jpeg",
     "category": "OTC"
   },
   {
     "id": "med066",
     "name": "Turmeric Capsules (60 caps)",
     "price": 300.00,
-    "description": "Natural anti-inflammatory and antioxidant.",
+    "description": "Nature’s Branch Turmeric Curcumin capsules with BioPerine for better absorption. 1950 mg potency with 95% curcuminoids. Supports joint health, boosts immunity, aids digestion, and provides natural antioxidant benefits.",
     "sku": "TURM60",
-    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med66.jpeg",
     "category": "Supplements"
   },
   {
     "id": "med067",
     "name": "Sleep Aid Tablets (10 tabs)",
     "price": 200.00,
-    "description": "Helps manage occasional sleeplessness.",
+    "description": "HealthAid SleepAid tablets with natural herbs like Hops, Valerian, and Passion Flower. Helps promote calmness and supports restful, natural sleep without dependency. Suitable for occasional sleeplessness.",
     "sku": "SLEEP10",
-    "image": "https://images.unsplash.com/photo-1588776814300-b8a9c90be07e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med67.jpeg",
     "category": "OTC"
   },
   {
     "id": "med068",
     "name": "Energy Drink Powder (500 g)",
     "price": 450.00,
-    "description": "Replenishes electrolytes and energy.",
+    "description": "Workout Nutrition Instant Energy Drink in tangy orange flavor. Enriched with electrolytes, vitamins, and carbohydrates for instant energy boost and rehydration. Ideal for workouts, sports, and daily refreshment. No added preservatives.",
     "sku": "ENERGY500",
-    "image": "https://images.unsplash.com/photo-1600180758895-0a23c8a47a02?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med68.jpeg",
     "category": "Supplements"
   },
   {
     "id": "med069",
     "name": "All-purpose Ointment (25 g)",
     "price": 100.00,
-    "description": "Soothes cuts, burns, and rashes.",
+    "description": "Anusol ointment for soothing relief from piles and anal discomfort. 3-way action: shrinks piles, relieves discomfort, and soothes itching. Calms irritation, cracked skin, and soreness effectively.",
     "sku": "OINT25",
-    "image": "https://images.unsplash.com/photo-1611930021817-bfa7e4dd2c1b?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med69.jpeg",
     "category": "Personal Care"
   },
   {
     "id": "med070",
     "name": "Herbal Hair Shampoo (200 ml)",
     "price": 190.00,
-    "description": "Strengthens hair and reduces dandruff.",
+    "description": "Indulekha Bringha Ayurvedic shampoo for hair fall control. Enriched with bringharaj and natural herbs that nourish scalp, strengthen roots, and promote healthy hair growth. Gentle formula suitable for regular use.",
     "sku": "HERBSHAMP200",
-    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med70.jpeg",
     "category": "Personal Care"
   }
 ]
