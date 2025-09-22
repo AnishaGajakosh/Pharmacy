@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Register - CareKart</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .auth-form {max-width: 400px;margin: 20px auto;display: flex;flex-direction: column;gap: 12px;padding: 20px;background: #fff;border-radius: 8px;border: 1px solid #eee;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+    .auth-form input {padding: 10px;border: 1px solid #ccc;border-radius: 6px;width: 100%;}
+    .btn-add {margin-top: 12px;background: #28a745;color: white;border: none;padding: 12px;border-radius: 6px;cursor: pointer;font-size: 16px;}
+    .btn-add:hover {background: #218838;}
+    .password-wrapper {display: flex;align-items: center;position: relative;}
+    .toggle-password {position: absolute;right: 10px;cursor: pointer;user-select: none;}
+  </style>
 </head>
 <body>
 <header class="site-header">
@@ -25,7 +33,17 @@
   <form id="registerForm" class="auth-form">
     <input type="text" name="name" placeholder="Full Name" required>
     <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
+
+    <div class="password-wrapper">
+      <input type="password" name="password" id="registerPassword" placeholder="Password" required>
+      <span class="toggle-password" onclick="togglePassword('registerPassword', this)">👁</span>
+    </div>
+
+    <div class="password-wrapper">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">👁</span>
+    </div>
+
     <button type="submit" class="btn-add">Register</button>
   </form>
 </main>
@@ -33,13 +51,27 @@
 <script>
   const API_BASE = "https://pharmacy-oszy.onrender.com";
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  function togglePassword(fieldId, el) {
+    const input = document.getElementById(fieldId);
+    if (input.type === "password") {
+      input.type = "text";
+      el.textContent = "🙈";
+    } else {
+      input.type = "password";
+      el.textContent = "👁";
+    }
+  }
 
-  const form = document.getElementById("registerForm");
-  form.addEventListener("submit", async (e) => {
+  document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
 
-    const data = Object.fromEntries(new FormData(form));
+    // ✅ Confirm password check
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    if (data.password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
     try {
       const res = await fetch(`${API_BASE}/api/auth/register`, {
@@ -51,54 +83,36 @@
       const json = await res.json();
       if (json.ok) {
         localStorage.setItem("lastRegisteredEmail", data.email);
-
         alert("Registration successful! Please login.");
         window.location.href = "login.html";
       } else {
         alert(json.msg || "Registration failed");
       }
     } catch (err) {
-      console.error(" Register error:", err);
+      console.error("Register error:", err);
       alert("Error connecting to server");
     }
   });
 
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
-    const loginLink = document.getElementById("loginLink");
-    const registerLink = document.getElementById("registerLink");
-    const logoutLink = document.getElementById("logoutLink");
-
-    if (token) {
-      if (loginLink) loginLink.style.display = "none";
-      if (registerLink) registerLink.style.display = "none";
-      if (logoutLink) logoutLink.style.display = "inline";
-    } else {
-      if (loginLink) loginLink.style.display = "inline";
-      if (registerLink) registerLink.style.display = "inline";
-      if (logoutLink) logoutLink.style.display = "none";
-    }
+    document.getElementById("loginLink").style.display = token ? "none" : "inline";
+    document.getElementById("registerLink").style.display = token ? "none" : "inline";
+    document.getElementById("logoutLink").style.display = token ? "inline" : "none";
   }
 
-  const logoutLink = document.getElementById("logoutLink");
-  if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      alert("You have been signed out.");
-      window.location.href = "login.html";
-    });
-  }
+  document.getElementById("logoutLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    alert("You have been signed out.");
+    window.location.href = "login.html";
+  });
+
   updateAuthLinks();
 </script>
-<style>
-  .auth-form {max-width: 400px;margin: 20px auto;display: flex;flex-direction: column;gap: 12px;padding: 20px;background: #fff;border-radius: 8px;border: 1px solid #eee;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
-  .auth-form input {padding: 10px;border: 1px solid #ccc;border-radius: 6px;}
-  .btn-add {margin-top: 12px;background: #28a745;color: white;border: none;padding: 12px;border-radius: 6px;cursor: pointer;font-size: 16px;}
-  .btn-add:hover {background: #218838;}
-</style>
-  <footer class="site-footer">
+
+<footer class="site-footer">
   <p>© 2025 CareKart. All rights reserved.</p>
 </footer>
 </body>
