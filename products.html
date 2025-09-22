@@ -1,183 +1,96 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>All Products — CareKart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Products - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="hamburger" id="hamburger" aria-label="Open menu">
-          <span></span><span></span><span></span>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">CareKart</a>
+    <nav class="nav-links">
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1>Our Products</h1>
+  <div class="filters">
+    <input type="text" id="searchBox" placeholder="Search products...">
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+      <option value="Tablets">Tablets</option>
+      <option value="Syrups">Syrups</option>
+      <option value="Devices">Devices</option>
+    </select>
+  </div>
+  <div id="productsGrid" class="product-grid"></div>
+</main>
+
+<script src="data.js"></script>
+<script>
+const grid=document.getElementById('productsGrid');
+const searchBox=document.getElementById('searchBox');
+const catFilter=document.getElementById('categoryFilter');
+
+function truncate(text, max = 80) {
+  return text.length > max ? text.slice(0, max) + "..." : text;
+}
+
+function render(filter){
+  grid.innerHTML='';
+  (window.PRODUCTS||[]).filter(p=>{
+    if(filter?.q && !(`${p.name} ${p.description}`.toLowerCase().includes(filter.q.toLowerCase()))) return false;
+    if(filter?.cat && filter.cat!=='') return p.category===filter.cat;
+    return true;
+  }).forEach(p=>{
+    const card=document.createElement('div'); 
+    card.className='product-card';
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="desc">${truncate(p.description, 80)}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="price">₹ ${p.price.toFixed(2)}</div>
+          <div class="actions">
+            <button class="btn-details" data-id="${p.id}">Details</button>
+            <button class="btn-add" data-id="${p.id}">Add to cart</button>
+          </div>
         </div>
-        <a class="logo" href="index.html"> CareKart
-        </a>
-      </div>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
-      </nav>
-      <div class="titlebar">Safe medicines • Fast delivery</div>
-    </div>
-  </header>
-  <aside class="sidebar" id="sidebar">
-    <div class="profile">
-      <div class="avatar" id="avatar">U</div>
-      <div>
-        <div class="welcome" id="welcome">Welcome, Guest</div>
-        <div style="font-size:12px;color:var(--muted)">Customer</div>
-      </div>
-    </div>
-    <div class="nav">
-      <a href="login.html" id="loginLink">Login</a>
-      <a href="register.html" id="registerLink">Register</a>
-      <a href="index.html">Home</a>
-      <a href="orders.html">My Orders</a>
-      <a href="contact.html">Contact</a>
-      <a href="about.html">About Us</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms & Conditions</a>
-      <a href="refunds.html">Cancellation & Refund Policy</a>
-      <a href="faq.html">FAQ</a>
-      <a href="#" id="logoutLink" style="color:red;display:none">Sign Out</a>
-    </div>
-  </aside>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
 
-  <main class="container">
-    <section class="hero">
-      <h1>Medicines & Healthcare</h1>
-      <p>Browse categories, search products and order online.</p>
-    </section>
+function addToCart(id){
+  let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+  cart.push(id);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  alert('Added to cart!');
+}
 
-    <div class="controls">
-      <div class="search">
-        <input id="searchInput" placeholder="Search medicines, e.g. Paracetamol" />
-      </div>
-      <select id="catSelect" class="select-cat">
-        <option value="">All categories</option>
-      </select>
-    </div>
+grid.addEventListener('click',e=>{
+  if(e.target.classList.contains('btn-add')){
+    addToCart(e.target.dataset.id);
+  }
+  if(e.target.classList.contains('btn-details')){
+    window.location.href=`product.html?id=${e.target.dataset.id}`;
+  }
+});
 
-    <div id="products-grid" class="product-grid"></div>
-  </main>
+searchBox.addEventListener('input',()=>{
+  render({q:searchBox.value, cat:catFilter.value});
+});
+catFilter.addEventListener('change',()=>{
+  render({q:searchBox.value, cat:catFilter.value});
+});
 
-  <script src="products.js"></script>
-   <footer class="site-footer">
-  <div class="container">© <span id="year"></span> CareKart. All rights reserved. </div>
-</footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('sidebar');
-    hamburger.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      sidebar.classList.toggle('open');
-    });
-    document.addEventListener('click', (e)=>{
-      if(sidebar.classList.contains('open') && !sidebar.contains(e.target) && !hamburger.contains(e.target)){
-        sidebar.classList.remove('open');
-      }
-    });
-
-    const user = JSON.parse(localStorage.getItem('user')||'null');
-    const logoutLink = document.getElementById("logoutLink");
-    const loginLink = document.getElementById("loginLink");
-    const registerLink = document.getElementById("registerLink");
-    if(user){
-      document.getElementById('welcome').textContent = `Welcome, ${user.name}`;
-      document.getElementById('avatar').textContent = (user.name||'U').split(' ').map(s=>s[0]).slice(0,2).join('');
-      logoutLink.style.display = "block"; loginLink.style.display = "none"; registerLink.style.display = "none";
-    } else {
-      logoutLink.style.display = "none"; loginLink.style.display = "block"; registerLink.style.display = "block";
-    }
-    logoutLink.addEventListener("click", (e)=>{
-      e.preventDefault();
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      alert("You have been signed out.");
-      window.location.href = "index.html";
-    });
-
-    const grid = document.getElementById('products-grid');
-    const catSelect = document.getElementById('catSelect');
-    const searchInput = document.getElementById('searchInput');
-
-    function render(filter){
-      grid.innerHTML='';
-      (window.PRODUCTS||[]).filter(p=>{
-        if(filter?.q && !(`${p.name} ${p.description}`.toLowerCase().includes(filter.q.toLowerCase()))) return false;
-        if(filter?.cat && filter.cat!=='') return p.category===filter.cat;
-        return true;
-      }).forEach(p=>{
-        const card=document.createElement('div'); card.className='product-card';
-        card.innerHTML = `
-          <img src="${p.image}" alt="${p.name}">
-          <div class="product-info">
-            <h3>${p.name}</h3>
-            <p class="desc">${p.description}</p>
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div class="price">₹ ${p.price.toFixed(2)}</div>
-              <div class="actions">
-                <button class="btn-details" data-id="${p.id}">Details</button>
-                <button class="btn-add" data-id="${p.id}">Add to cart</button>
-              </div>
-            </div>
-          </div>`;
-        grid.appendChild(card);
-      });
-    }
-
-    document.addEventListener("productsLoaded", ()=>{
-      const cats = [...new Set(window.PRODUCTS.map(p=>p.category||'General'))];
-      cats.forEach(c=>{
-        const opt=document.createElement('option'); opt.value=c; opt.textContent=c;
-        catSelect.appendChild(opt);
-      });
-      render({});
-    });
-
-    catSelect.addEventListener('change', ()=> render({cat:catSelect.value,q:searchInput.value}));
-    searchInput.addEventListener('input', ()=> render({cat:catSelect.value,q:searchInput.value}));
-
-    grid.addEventListener('click', e=>{
-      if(e.target.matches('.btn-add')){
-        const id=e.target.dataset.id;
-        const p=(window.PRODUCTS||[]).find(x=>x.id===id);
-        if(!p) return;
-        const cart=JSON.parse(localStorage.getItem('cart')||'[]');
-        const existing=cart.find(it=>it.id===id);
-        if(existing) existing.quantity+=1; else cart.push({id:p.id,name:p.name,price:p.price,quantity:1});
-        localStorage.setItem('cart', JSON.stringify(cart));
-        document.getElementById('cart-count').textContent = cart.reduce((s,i)=>s+i.quantity,0);
-        showToast(`${p.name} added to cart`);
-      }
-      if(e.target.matches('.btn-details')){
-        const id=e.target.dataset.id;
-        window.location.href=`product.html?id=${encodeURIComponent(id)}`;
-      }
-    });
-    const cartCount=(JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
-    document.getElementById('cart-count').textContent=cartCount;
-
-    function showToast(msg){
-      const t=document.createElement('div');
-      t.textContent=msg;
-      t.style.position='fixed';
-      t.style.right='20px';
-      t.style.bottom='20px';
-      t.style.background='rgba(0,0,0,0.8)';
-      t.style.color='#fff';
-      t.style.padding='10px 14px';
-      t.style.borderRadius='8px';
-      t.style.zIndex=9999;
-      document.body.appendChild(t);
-      setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),400)},2000);
-    }
-  </script>
+render({});
+</script>
 </body>
 </html>
