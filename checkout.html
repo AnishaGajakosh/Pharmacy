@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=2">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Checkout - CareKart</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -138,7 +138,6 @@
 
   async function placeOrder(cart, shipping, paymentMethod) {
     try {
-      // ✅ only send { id, quantity } to backend
       const items = cart.map(it => ({ id: it.id, quantity: it.quantity }));
 
       const res = await fetch(`${API_BASE}/api/orders`, {
@@ -151,9 +150,11 @@
       });
 
       const data = await res.json();
+      console.log("Order response:", data); // 👈 debug log
+
       if (data.ok) {
         localStorage.removeItem("cart");
-        window.location.href = `order-confirmation.html?id=${data.order._id}`;
+        window.location.href = `order-confirmation.html?id=${data.orderId}`;
       } else {
         alert(data.msg || "Order failed");
       }
