@@ -44,10 +44,15 @@ router.post("/login", async (req, res) => {
 
     email = email.toLowerCase();
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ ok: false, msg: "Invalid credentials" });
+
+    if (!user) {
+      return res.status(400).json({ ok: false, msg: "Not Registered. Please register yourself first before logging in." });
+    }
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ ok: false, msg: "Invalid credentials" });
+    if (!match) {
+      return res.status(400).json({ ok: false, msg: "Invalid credentials" });
+    }
 
     const payload = { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
