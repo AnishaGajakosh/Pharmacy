@@ -16,7 +16,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const orderItems = [];
     for (const item of items) {
-      // ✅ lookup product by MongoDB _id
+      // ✅ Now using MongoDB _id
       const product = await Product.findById(item.id);
 
       if (!product) {
@@ -24,10 +24,10 @@ router.post("/", authMiddleware, async (req, res) => {
       }
 
       orderItems.push({
-        id: product._id.toString(), // save _id as string
+        id: product._id.toString(), // store _id
         name: product.name,
         price: product.price,
-        quantity: item.quantity,
+        quantity: item.quantity
       });
     }
 
@@ -36,7 +36,7 @@ router.post("/", authMiddleware, async (req, res) => {
       items: orderItems,
       shipping,
       paymentMethod: paymentMethod || "cod",
-      status: "pending",
+      status: "pending"
     });
 
     await order.save();
