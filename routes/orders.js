@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// ✅ Create Order
+// Create Order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -16,17 +16,12 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const orderItems = [];
     for (const item of items) {
-      // ✅ Now using MongoDB _id
-      const product = await Product.findById(item.id);
-
-      if (!product) {
-        return res.status(400).json({ ok: false, error: `Product not found: ${item.id}` });
-      }
+      const product = await Product.findById(item.id); // ✅ using MongoDB _id
 
       orderItems.push({
-        id: product._id.toString(), // store _id
-        name: product.name,
-        price: product.price,
+        id: item.id,
+        name: product ? product.name : "Unknown Product",
+        price: product ? product.price : 0,
         quantity: item.quantity
       });
     }
@@ -47,7 +42,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Get User Orders
+// Get User Orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id }).sort({ createdAt: -1 });
