@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Login - CareKart</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .login-form {max-width: 400px;margin: 20px auto;display: flex;flex-direction: column;gap: 12px;padding: 20px;background: #fff;
+      border: 1px solid #eee;border-radius: 8px;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+    .login-form input {padding: 10px;border: 1px solid #ccc;border-radius: 6px;width: 100%;}
+    .btn-add {background: #28a745;color: #fff;padding: 12px;border: none;border-radius: 6px;cursor: pointer;font-size: 16px;}
+    .btn-add:hover {background: #218838;}
+    .password-wrapper {display: flex;align-items: center;position: relative;}
+    .toggle-password {position: absolute;right: 10px;cursor: pointer;user-select: none;}
+  </style>
 </head>
 <body>
 <header class="site-header">
@@ -25,13 +34,28 @@
   <h1>Login</h1>
   <form id="loginForm" class="login-form">
     <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
+    <div class="password-wrapper">
+      <input type="password" name="password" id="loginPassword" placeholder="Password" required>
+      <span class="toggle-password" onclick="togglePassword('loginPassword', this)">👁</span>
+    </div>
     <button type="submit" class="btn-add">Login</button>
   </form>
   <p>Don’t have an account? <a href="register.html">Register here</a></p>
 </main>
+
 <script>
   const API_BASE = "https://pharmacy-oszy.onrender.com";
+
+  function togglePassword(fieldId, el) {
+    const input = document.getElementById(fieldId);
+    if (input.type === "password") {
+      input.type = "text";
+      el.textContent = "🙈";
+    } else {
+      input.type = "password";
+      el.textContent = "👁";
+    }
+  }
 
   function updateAuthLinks() {
     const token = localStorage.getItem("token");
@@ -63,8 +87,6 @@
 
   updateAuthLinks();
 
-  document.getElementById("year").textContent = new Date().getFullYear();
-
   const form = document.getElementById("loginForm");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -92,14 +114,8 @@
     }
   });
 </script>
-<style>
-  .login-form {max-width: 400px;margin: 20px auto;display: flex;flex-direction: column;gap: 12px;padding: 20px;background: #fff;
-    border: 1px solid #eee;border-radius: 8px;box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
-  .login-form input {padding: 10px;border: 1px solid #ccc;border-radius: 6px;}
-  .btn-add {background: #28a745;color: #fff;padding: 12px;border: none;border-radius: 6px;cursor: pointer;font-size: 16px;}
-  .btn-add:hover {background: #218838;}
-</style>
-  <footer class="site-footer">
+
+<footer class="site-footer">
   <p>© 2025 CareKart. All rights reserved.</p>
 </footer>
 </body>
