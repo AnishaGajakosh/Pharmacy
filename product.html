@@ -13,7 +13,7 @@
         <div class="hamburger" id="hamburger" aria-label="Open menu">
           <span></span><span></span><span></span>
         </div>
-        <a class="logo" href="index.html">CareKart</a>
+        <a class="logo" href="index.html"> CareKart</a>
       </div>
       <nav class="main-nav">
         <a href="index.html">Home</a>
@@ -49,90 +49,108 @@
 
   <main class="container">
     <a href="products.html" class="back-arrow">← Back</a>
-
     <div id="product-detail" class="product-detail"></div>
   </main>
 
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> CareKart. All rights reserved.</div>
+  </footer>
+
   <script src="products.js"></script>
-    <footer class="site-footer">
-  <p>© 2025 CareKart. All rights reserved.</p>
-</footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const hamburger=document.getElementById('hamburger');
-    const sidebar=document.getElementById('sidebar');
-    hamburger.addEventListener('click',(e)=>{e.stopPropagation();sidebar.classList.toggle('open');});
-    document.addEventListener('click',(e)=>{if(sidebar.classList.contains('open')&&!sidebar.contains(e.target)&&!hamburger.contains(e.target)){sidebar.classList.remove('open');}});
+    // Sidebar toggle
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sidebar.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
 
-    const user=JSON.parse(localStorage.getItem('user')||'null');
-    const logoutLink=document.getElementById("logoutLink");
-    const loginLink=document.getElementById("loginLink");
-    const registerLink=document.getElementById("registerLink");
-    if(user){
-      document.getElementById('welcome').textContent=`Welcome, ${user.name}`;
-      document.getElementById('avatar').textContent=(user.name||'U').split(' ').map(s=>s[0]).slice(0,2).join('');
-      logoutLink.style.display="block"; loginLink.style.display="none"; registerLink.style.display="none";
+    // Auth state
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const logoutLink = document.getElementById("logoutLink");
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+    if (user) {
+      document.getElementById('welcome').textContent = `Welcome, ${user.name}`;
+      document.getElementById('avatar').textContent = (user.name || 'U').split(' ').map(s => s[0]).slice(0, 2).join('');
+      logoutLink.style.display = "block";
+      loginLink.style.display = "none";
+      registerLink.style.display = "none";
     } else {
-      logoutLink.style.display="none"; loginLink.style.display="block"; registerLink.style.display="block";
+      logoutLink.style.display = "none";
+      loginLink.style.display = "block";
+      registerLink.style.display = "block";
     }
-    logoutLink.addEventListener("click",(e)=>{e.preventDefault();localStorage.removeItem("token");localStorage.removeItem("user");alert("You have been signed out.");window.location.href="index.html";});
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      alert("You have been signed out.");
+      window.location.href = "index.html";
+    });
 
-    const cartCount=(JSON.parse(localStorage.getItem('cart')||'[]')).reduce((s,i)=>s+i.quantity,0);
-    document.getElementById('cart-count').textContent=cartCount;
+    // Cart counter
+    const cartCount = (JSON.parse(localStorage.getItem('cart') || '[]')).reduce((s, i) => s + i.quantity, 0);
+    document.getElementById('cart-count').textContent = cartCount;
 
-    function getQueryParam(key){
-      return new URLSearchParams(window.location.search).get(key);
-    }
+    // Get product ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
 
-    document.addEventListener("productsLoaded", ()=>{
-      const id=getQueryParam("id");
-      const p=(window.PRODUCTS||[]).find(x=>x.id===id);
-      if(!p){
-        document.getElementById("product-detail").innerHTML="<p>Product not found.</p>";
+    function renderProduct() {
+      const product = (window.PRODUCTS || []).find(p => p.id === productId);
+      const container = document.getElementById("product-detail");
+      if (!product) {
+        container.innerHTML = "<p>Product not found.</p>";
         return;
       }
-
-      const detail=document.getElementById("product-detail");
-      detail.innerHTML=`
-        <div class="detail-card">
-          <img src="${p.image}" alt="${p.name}" class="detail-image">
-          <div class="detail-info">
-            <h1>${p.name}</h1>
-            <p class="category">Category: ${p.category}</p>
-            <p>${p.description}</p>
-            <p><strong>Price:</strong> ₹ ${p.price.toFixed(2)}</p>
-            <button class="btn-add" id="addCartBtn">Add to Cart</button>
-          </div>
-        </div>`;
-      
-      document.getElementById("addCartBtn").addEventListener("click",()=>{
-        const cart=JSON.parse(localStorage.getItem('cart')||'[]');
-        const existing=cart.find(it=>it.id===p.id);
-        if(existing) existing.quantity+=1; else cart.push({id:p.id,name:p.name,price:p.price,quantity:1});
-        localStorage.setItem('cart', JSON.stringify(cart));
-        document.getElementById('cart-count').textContent=cart.reduce((s,i)=>s+i.quantity,0);
-        alert(`${p.name} added to cart`);
+      container.innerHTML = `
+        <div class="product-card detail-view">
+          <img src="${product.image}" alt="${product.name}" style="max-width:300px;display:block;margin:auto">
+          <h2>${product.name}</h2>
+          <p>${product.description}</p>
+          <div class="price">Price: ₹ ${product.price.toFixed(2)}</div>
+          <button id="addToCartBtn" class="btn-add">Add to Cart</button>
+        </div>
+      `;
+      document.getElementById("addToCartBtn").addEventListener("click", () => {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const existing = cart.find(it => it.id === product.id);
+        if (existing) existing.quantity += 1;
+        else cart.push({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        document.getElementById("cart-count").textContent = cart.reduce((s, i) => s + i.quantity, 0);
+        showToast(`${product.name} added to cart`);
       });
-    });
-  </script>
+    }
 
-  <style>
-  .back-arrow {display: inline-block;font-size: 22px;cursor: pointer;margin-bottom: 15px;color: #28a745;text-decoration: none;font-weight: 500;}
-  .back-arrow:hover {color: #1e7e34;}
-  .detail-card {display: flex;gap: 40px;align-items: flex-start;margin-top: 20px;padding: 20px;border: 1px solid #e0e0e0;border-radius: 8px;background: #fff;box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
-  .detail-image {width: 300px;height: auto;border-radius: 8px;object-fit: contain;border: 1px solid #ddd;background: #fafafa;padding: 10px;}
-  .detail-info {flex: 1;}
-  .detail-info h1 {margin: 0 0 10px;font-size: 26px;color: #222;}
-  .detail-info .category {font-size: 14px;color: #888;margin-bottom: 15px;}
-  .detail-info p {margin: 10px 0;font-size: 15px;line-height: 1.6;color: #444;}
-  .btn-add {margin-top: 16px;background: #28a745;color: white;border: none;padding: 12px 22px;border-radius: 6px;cursor: pointer;font-size: 16px;transition: background 0.2s;}
-  .btn-add:hover {background: #1e7e34;}
-  @media (max-width: 768px) {
-    .detail-card {flex-direction: column;text-align: center;}
-    .detail-image {width: 100%;max-width: 350px;margin: 0 auto 15px;}
-    .btn-add { width: 100%;}
-  }
-</style>
+    document.addEventListener("productsLoaded", renderProduct);
+
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.position = 'fixed';
+      t.style.right = '20px';
+      t.style.bottom = '20px';
+      t.style.background = 'rgba(0,0,0,0.8)';
+      t.style.color = '#fff';
+      t.style.padding = '10px 14px';
+      t.style.borderRadius = '8px';
+      t.style.zIndex = 9999;
+      document.body.appendChild(t);
+      setTimeout(() => { 
+        t.style.opacity = '0'; 
+        setTimeout(() => t.remove(), 400) 
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
