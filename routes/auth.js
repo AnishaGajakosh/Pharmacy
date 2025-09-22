@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const router = express.Router();
 
+// REGISTER
 router.post("/register", async (req, res) => {
   try {
     let { name, email, password } = req.body;
@@ -35,6 +36,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// LOGIN
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
@@ -45,10 +47,12 @@ router.post("/login", async (req, res) => {
     email = email.toLowerCase();
     const user = await User.findOne({ email });
 
+    // Not registered
     if (!user) {
       return res.status(400).json({ ok: false, msg: "Not Registered. Please register yourself first before logging in." });
     }
 
+    // Wrong password
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(400).json({ ok: false, msg: "Invalid credentials" });
