@@ -7,17 +7,23 @@ import dotenv from "dotenv";
 dotenv.config();
 const router = express.Router();
 
-// REGISTER
 router.post("/register", async (req, res) => {
   try {
-    let { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    let { name, email, password, confirmPassword } = req.body;
+
+    if (!name || !email || !password || !confirmPassword) {
       return res.status(400).json({ ok: false, msg: "Missing fields" });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ ok: false, msg: "Passwords do not match" });
     }
 
     email = email.toLowerCase();
     const existing = await User.findOne({ email });
-    if (existing) return res.status(400).json({ ok: false, msg: "Email already registered" });
+    if (existing) {
+      return res.status(400).json({ ok: false, msg: "Email already registered" });
+    }
 
     if (password.length < 6) {
       return res.status(400).json({ ok: false, msg: "Password must be at least 6 characters long" });
@@ -36,7 +42,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// LOGIN
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
@@ -46,13 +51,10 @@ router.post("/login", async (req, res) => {
 
     email = email.toLowerCase();
     const user = await User.findOne({ email });
-
-    // Not registered
     if (!user) {
-      return res.status(400).json({ ok: false, msg: "Not Registered. Please register yourself first before logging in." });
+      return res.status(400).json({ ok: false, msg: "Not Registered. Please register first." });
     }
 
-    // Wrong password
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(400).json({ ok: false, msg: "Invalid credentials" });
