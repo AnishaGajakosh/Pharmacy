@@ -3,7 +3,7 @@
     "id": "med001",
     "name": "Paracetamol 500mg (Strip of 10)",
     "price": 40.00,
-    "description": "Effective relief from fever and mild pain.",
+    "description": "Effective relief from fever and mild pain. Gentle on the stomach and suitable for all age groups (consult dosage). Provides quick action against headaches, muscle aches, and cold-related fever.",
     "sku": "PARA500-10",
     "image": "images/med1.jpeg",
     "category": "OTC"
@@ -12,7 +12,7 @@
     "id": "med002",
     "name": "Cough Syrup (100 ml)",
     "price": 120.00,
-    "description": "Relieves cough and soothes throat.",
+    "description": "Relieves cough and soothes throat irritation. Provides long-lasting comfort from dry and wet cough. Helps reduce chest congestion and supports easier breathing.",
     "sku": "COUGH100",
     "image": "images/med2.jpeg",
     "category": "OTC"
@@ -21,7 +21,7 @@
     "id": "med003",
     "name": "Vitamin C 500mg (60 tablets)",
     "price": 220.00,
-    "description": "Supports immunity and general health.",
+    "description": "Supports immunity and general health. Promotes collagen production for healthy skin, gums, and joints. Acts as a strong antioxidant to fight free radicals and improve energy levels.",
     "sku": "VITC500-60",
     "image": "images/med3.jpeg",
     "category": "Supplements"
@@ -30,7 +30,7 @@
     "id": "med004",
     "name": "Antacid Tablets (Strip of 10)",
     "price": 55.00,
-    "description": "Fast-acting relief from heartburn and acidity.",
+    "description": "Fast-acting relief from heartburn and acidity. Neutralizes excess stomach acid within minutes. Convenient to carry and provides long-lasting digestive comfort.",
     "sku": "ANTACID-10",
     "image": "images/med4.jpeg",
     "category": "OTC"
@@ -39,7 +39,7 @@
     "id": "med005",
     "name": "Bandage Roll (5 cm x 4 m)",
     "price": 80.00,
-    "description": "Sterile, flexible bandage for wounds and dressing.",
+    "description": "Sterile, flexible bandage for wounds and dressing. Soft texture ensures skin comfort. Easy to wrap, breathable, and suitable for first aid and medical use.",
     "sku": "BAND-5X4",
     "image": "images/med5.jpeg",
     "category": "Personal Care"
@@ -48,7 +48,7 @@
     "id": "med006",
     "name": "Hand Sanitizer (200 ml)",
     "price": 150.00,
-    "description": "Kills 99.9% of germs; alcohol-based sanitizer.",
+    "description": "Kills 99.9% of germs with an alcohol-based formula. Quick-drying, non-sticky, and gentle on hands. Ideal for on-the-go hygiene and everyday protection.",
     "sku": "SAN200",
     "image": "images/med6.jpeg",
     "category": "Personal Care"
@@ -57,7 +57,7 @@
     "id": "med007",
     "name": "Face Masks (Pack of 50)",
     "price": 350.00,
-    "description": "Disposable surgical masks for daily use.",
+    "description": "Disposable surgical masks for daily use. Lightweight, breathable, and comfortable for long wear. Provides effective protection from dust, germs, and pollution.",
     "sku": "MASK50",
     "image": "images/med7.jpeg",
     "category": "Personal Care"
@@ -66,7 +66,7 @@
     "id": "med008",
     "name": "Omega-3 Capsules (30 Softgels)",
     "price": 450.00,
-    "description": "Supports heart and brain health.",
+    "description": "Supports heart and brain health with essential fatty acids. Helps maintain healthy cholesterol levels. Also promotes joint flexibility and eye health.",
     "sku": "OMEGA30",
     "image": "images/med8.jpeg",
     "category": "Supplements"
@@ -75,7 +75,7 @@
     "id": "med009",
     "name": "Calcium + Vitamin D Tablets (60 tabs)",
     "price": 320.00,
-    "description": "Supports bone strength and overall health.",
+    "description": "Supports bone strength and overall health. Helps prevent calcium deficiency and promotes muscle function. Vitamin D enhances calcium absorption for better results.",
     "sku": "CALVD60",
     "image": "images/med9.jpeg",
     "category": "Supplements"
@@ -84,7 +84,7 @@
     "id": "med010",
     "name": "Digital Thermometer",
     "price": 250.00,
-    "description": "Quick and accurate temperature readings.",
+    "description": "Quick and accurate temperature readings. Easy-to-use design with memory recall function. Suitable for oral, underarm, and rectal use with beep alert for results.",
     "sku": "THERMO",
     "image": "images/med10.jpeg",
     "category": "Devices"
@@ -93,7 +93,7 @@
     "id": "med011",
     "name": "Blood Pressure Monitor",
     "price": 1200.00,
-    "description": "Digital BP monitor for home use.",
+    "description": "Digital BP monitor for home use. Large display and one-touch operation for convenience. Stores multiple readings for regular health tracking.",
     "sku": "BPMON",
     "image": "images/med11.jpeg",
     "category": "Devices"
@@ -102,7 +102,7 @@
     "id": "med012",
     "name": "Amoxicillin 500mg Capsules (10 caps)",
     "price": 180.00,
-    "description": "Antibiotic for bacterial infections.",
+    "description": "Antibiotic for bacterial infections. Helps treat respiratory, urinary, and skin infections. Should be taken only with a doctor’s prescription.",
     "sku": "AMOX500-10",
     "image": "images/med12.jpeg",
     "category": "Prescription"
@@ -111,7 +111,7 @@
     "id": "med013",
     "name": "Metformin 500mg Tablets (30 tabs)",
     "price": 250.00,
-    "description": "For managing type 2 diabetes.",
+    "description": "For managing type 2 diabetes effectively. Helps regulate blood sugar levels and improve insulin response. Must be taken under medical supervision.",
     "sku": "MET500-30",
     "image": "images/med13.jpeg",
     "category": "Prescription"
@@ -120,7 +120,7 @@
     "id": "med014",
     "name": "Ibuprofen 400mg (Strip of 10)",
     "price": 60.00,
-    "description": "Pain reliever and anti-inflammatory.",
+    "description": "Pain reliever and anti-inflammatory. Provides quick relief from headaches, muscle pain, and arthritis. Reduces swelling and inflammation effectively.",
     "sku": "IBU400-10",
     "image": "images/med14.jpeg",
     "category": "OTC"
@@ -129,7 +129,7 @@
     "id": "med015",
     "name": "Cetirizine 10mg (Strip of 10)",
     "price": 45.00,
-    "description": "Relieves allergies, runny nose, and sneezing.",
+    "description": "Relieves allergies, runny nose, and sneezing. Provides 24-hour relief from seasonal allergies. Non-drowsy formula suitable for daily use.",
     "sku": "CET10-10",
     "image": "images/med15.jpeg",
     "category": "OTC"
@@ -138,7 +138,7 @@
     "id": "med016",
     "name": "Vitamin D3 1000 IU (60 tabs)",
     "price": 280.00,
-    "description": "Supports bone and immune health.",
+    "description": "Supports bone and immune health. Improves calcium absorption and strengthens teeth. Helps combat vitamin D deficiency effectively.",
     "sku": "VITD3-60",
     "image": "images/med16.jpeg",
     "category": "Supplements"
@@ -147,7 +147,7 @@
     "id": "med017",
     "name": "Multivitamin Tablets (30 tabs)",
     "price": 300.00,
-    "description": "Daily multivitamin for overall wellness.",
+    "description": "Daily multivitamin for overall wellness. Boosts energy, supports immunity, and improves metabolism. Suitable for men and women of all age groups.",
     "sku": "MULTI-30",
     "image": "images/med17.jpeg",
     "category": "Supplements"
@@ -156,7 +156,7 @@
     "id": "med018",
     "name": "Protein Powder (1 kg)",
     "price": 950.00,
-    "description": "Supports muscle recovery and strength.",
+    "description": "Supports muscle recovery and strength. Enriched with essential amino acids for fitness enthusiasts. Ideal for athletes, gym-goers, and post-workout nutrition.",
     "sku": "PROT1KG",
     "image": "images/med18.jpeg",
     "category": "Supplements"
@@ -165,7 +165,7 @@
     "id": "med019",
     "name": "Glucometer Device",
     "price": 1400.00,
-    "description": "Measures blood sugar levels at home.",
+    "description": "Measures blood sugar levels at home with accuracy. Compact design with easy-to-read display. Includes test strips and lancets for convenient testing.",
     "sku": "GLUCO",
     "image": "images/med19.jpeg",
     "category": "Devices"
@@ -174,7 +174,7 @@
     "id": "med020",
     "name": "Pulse Oximeter",
     "price": 800.00,
-    "description": "Checks blood oxygen saturation and pulse.",
+    "description": "Checks blood oxygen saturation and pulse instantly. Lightweight and portable with digital display. Useful for patients with respiratory conditions.",
     "sku": "OXI",
     "image": "images/med20.jpeg",
     "category": "Devices"
@@ -183,7 +183,7 @@
     "id": "med021",
     "name": "Nebulizer Machine",
     "price": 2200.00,
-    "description": "For respiratory therapy and inhalation.",
+    "description": "For respiratory therapy and inhalation treatments. Delivers medication directly to lungs for quick relief. Suitable for children and adults with asthma or breathing issues.",
     "sku": "NEBUL",
     "image": "images/med21.jpeg",
     "category": "Devices"
@@ -192,7 +192,7 @@
     "id": "med022",
     "name": "Antiseptic Liquid (500 ml)",
     "price": 120.00,
-    "description": "Disinfects wounds and surfaces.",
+    "description": "Disinfects wounds and surfaces effectively. Can be used for first aid, cleaning cuts, and hygiene. Protects against bacteria, fungi, and germs.",
     "sku": "ANTISEP500",
     "image": "images/med22.jpeg",
     "category": "Personal Care"
@@ -201,7 +201,7 @@
     "id": "med023",
     "name": "Cotton Wool Roll (500 g)",
     "price": 150.00,
-    "description": "Soft cotton roll for medical use.",
+    "description": "Soft cotton roll for medical and personal use. Absorbent and gentle on skin. Suitable for wound care, cleaning, and baby care.",
     "sku": "COTTON500",
     "image": "images/med23.jpeg",
     "category": "Personal Care"
@@ -210,7 +210,7 @@
     "id": "med024",
     "name": "Shampoo (Anti-Dandruff, 200 ml)",
     "price": 180.00,
-    "description": "Keeps scalp clean and reduces dandruff.",
+    "description": "Keeps scalp clean and reduces dandruff. Strengthens hair roots and prevents flakiness. Leaves hair fresh, smooth, and manageable.",
     "sku": "SHAMP200",
     "image": "images/med24.jpeg",
     "category": "Personal Care"
@@ -219,7 +219,7 @@
     "id": "med025",
     "name": "Pain Relief Spray (50 ml)",
     "price": 160.00,
-    "description": "Quick relief for muscle and joint pain.",
+    "description": "Quick relief for muscle and joint pain. Works deep into tissues to relax stiffness. Handy spray bottle for easy application anytime.",
     "sku": "PAINSPRAY50",
     "image": "images/med25.jpeg",
     "category": "OTC"
@@ -228,7 +228,7 @@
     "id": "med026",
     "name": "Cold & Flu Tablets (60 tabs)",
     "price": 90.00,
-    "description": "For common cold, sneezing, and fever.",
+    "description": "For common cold, sneezing, and fever. Helps relieve nasal congestion and headaches. Provides multi-symptom relief during flu season.",
     "sku": "COLDFLU10",
     "image": "images/med26.jpeg",
     "category": "OTC"
@@ -237,7 +237,7 @@
     "id": "med027",
     "name": "Azithromycin 500mg (3 tabs)",
     "price": 70.00,
-    "description": "Antibiotic used for bacterial infections.",
+    "description": "Antibiotic used for bacterial infections. Commonly prescribed for respiratory and throat infections. Should only be taken on doctor’s advice.",
     "sku": "AZI500-3",
     "image": "images/med27.jpeg",
     "category": "Prescription"
@@ -246,7 +246,7 @@
     "id": "med028",
     "name": "Insulin Pen (Disposable)",
     "price": 450.00,
-    "description": "For diabetes management.",
+    "description": "For diabetes management with convenient use. Provides accurate insulin delivery for blood sugar control. Easy-to-use pen design for daily injections.",
     "sku": "INSULINPEN",
     "image": "images/med28.jpeg",
     "category": "Prescription"
@@ -255,7 +255,7 @@
     "id": "med029",
     "name": "Pregnancy Test Kit",
     "price": 90.00,
-    "description": "Easy-to-use home pregnancy detection kit.",
+    "description": "Easy-to-use home pregnancy detection kit. Gives accurate results within minutes. Provides privacy and reliability for early detection.",
     "sku": "PREGKIT",
     "image": "images/med29.jpeg",
     "category": "Devices"
@@ -264,7 +264,7 @@
     "id": "med030",
     "name": "Zinc Tablets (50 tabs)",
     "price": 200.00,
-    "description": "Boosts immunity and wound healing.",
+    "description": "Boosts immunity and wound healing. Supports healthy skin, nails, and hair. Also helps improve overall metabolism and recovery.",
     "sku": "ZINC50",
     "image": "images/med30.jpeg",
     "category": "Supplements"
@@ -273,7 +273,7 @@
     "id": "med031",
     "name": "Vitamin B12 Capsules (30 caps)",
     "price": 350.00,
-    "description": "Supports energy production and nerve health.",
+    "description": "Supports energy production and nerve health. Helps prevent anemia and fatigue. Improves memory, focus, and overall vitality.",
     "sku": "VITB12-30",
     "image": "images/med31.jpeg",
     "category": "Supplements"
@@ -282,7 +282,7 @@
     "id": "med032",
     "name": "Cetaphil Skin Moisturizer (100 ml)",
     "price": 180.00,
-    "description": "Hydrates and nourishes skin.",
+    "description": "Hydrates and nourishes skin deeply. Gentle, non-irritating formula suitable for sensitive skin. Keeps skin soft, smooth, and moisturized all day.",
     "sku": "MOIST100",
     "image": "images/med32.jpeg",
     "category": "Personal Care"
@@ -291,7 +291,7 @@
     "id": "med033",
     "name": "Ear Drops (10 ml)",
     "price": 70.00,
-    "description": "Relieves ear pain and infections.",
+    "description": "Relieves ear pain and infections. Helps reduce itching, irritation, and wax buildup. Provides quick soothing relief for ear discomfort.",
     "sku": "EAR10",
     "image": "images/med33.jpeg",
     "category": "OTC"
@@ -300,7 +300,7 @@
     "id": "med034",
     "name": "Nasal Spray (15 ml)",
     "price": 120.00,
-    "description": "Relieves nasal congestion.",
+    "description": "Relieves nasal congestion instantly. Moisturizes nasal passages for easy breathing. Useful during cold, flu, or allergies.",
     "sku": "NASAL15",
     "image": "images/med34.jpeg",
     "category": "OTC"
@@ -309,7 +309,7 @@
     "id": "med035",
     "name": "Dabur Anmol Jasmine Coconut Hair Oil 200 ml",
     "price": 220.00,
-    "description": "Nourishes scalp and reduces hair fall.",
+    "description": "Nourishes scalp and reduces hair fall. Enriched with jasmine fragrance for freshness. Strengthens hair roots and promotes shine.",
     "sku": "HAIROIL200",
     "image": "images/med35.jpeg",
     "category": "Personal Care"
@@ -318,54 +318,54 @@
     "id": "med036",
     "name": "Cough Lozenges (Pack of 20)",
     "price": 50.00,
-    "description": "Soothes throat irritation and cough.",
+    "description": "Soothes throat irritation and cough instantly. Provides long-lasting freshness and comfort. Convenient to carry for on-the-go relief.",
     "sku": "LOZ20",
-    "image": "https://images.unsplash.com/photo-1588776814309-bb6d81d77ec7?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med36.jpeg",
     "category": "OTC"
   },
   {
     "id": "med037",
     "name": "Probiotic Capsules (30 caps)",
     "price": 300.00,
-    "description": "Improves gut health and digestion.",
+    "description": "Improves gut health and digestion. Helps restore healthy intestinal flora. Boosts immunity and reduces digestive discomfort.",
     "sku": "PROBIO30",
-    "image": "https://images.unsplash.com/photo-1611078489365-44f85e1ad93b?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med37.jpeg",
     "category": "Supplements"
   },
   {
     "id": "med038",
     "name": "Electrolyte Powder (200 g)",
     "price": 150.00,
-    "description": "Restores hydration and minerals.",
+    "description": "Restores hydration and essential minerals. Helps prevent fatigue and dehydration. Suitable for athletes, travelers, and hot weather use.",
     "sku": "ELECTRO200",
-    "image": "https://images.unsplash.com/photo-1600718379860-9c0cafe8527c?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med38.jpeg",
     "category": "Supplements"
   },
   {
     "id": "med039",
     "name": "Allergy Eye Drops (10 ml)",
     "price": 110.00,
-    "description": "Relieves redness and itching in eyes.",
+    "description": "Relieves redness and itching in eyes. Provides quick soothing effect for allergy-prone eyes. Keeps eyes fresh, clear, and irritation-free.",
     "sku": "EYEDROP10",
-    "image": "https://images.unsplash.com/photo-1588776814471-916e68e5c1d2?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med39.jpeg",
     "category": "OTC"
   },
   {
     "id": "med040",
     "name": "Diaper Rash Cream (50 g)",
     "price": 190.00,
-    "description": "Protects and soothes baby skin.",
+    "description": "Protects and soothes baby skin from rashes. Forms a protective barrier against moisture. Gentle, safe, and dermatologically tested for infants.",
     "sku": "DIAPER50",
-    "image": "https://images.unsplash.com/photo-1611930022073-b8b9d7e5e84e?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med40.jpeg",
     "category": "Personal Care"
   },
   {
     "id": "med041",
     "name": "Hand Wash (250 ml)",
     "price": 120.00,
-    "description": "Gentle hand wash with antibacterial action.",
+    "description": "Gentle hand wash with antibacterial action. Enriched with moisturizing agents to prevent dryness. Leaves hands soft, clean, and hygienically safe after every wash.",
     "sku": "HANDWASH250",
-    "image": "https://images.unsplash.com/photo-1615484477609-1f5c8fba07f4?w=300&auto=format&fit=crop&q=60",
+    "image": "images/med41.jpeg",
     "category": "Personal Care"
   },
   {
