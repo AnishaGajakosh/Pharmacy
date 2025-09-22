@@ -321,6 +321,13 @@ button {
   justify-content: space-between;
   align-items: center;
   box-shadow: var(--shadow);
+  gap: 16px;
+}
+
+.cart-item .product-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 form input,
