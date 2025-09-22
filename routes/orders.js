@@ -5,6 +5,7 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
+// Get user orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id })
@@ -19,6 +20,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
+// Create new order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -26,13 +28,14 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ ok: false, msg: "No items in order" });
     }
 
+    // ✅ Fix: use `findOne({ id: ... })` instead of findById
     const detailedItems = await Promise.all(
       items.map(async (it) => {
-        const product = await Product.findById(it.id);
+        const product = await Product.findOne({ id: it.id });
         if (!product) throw new Error(`Product not found: ${it.id}`);
 
         return {
-          id: product._id.toString(),
+          id: product.id,
           name: product.name,
           price: product.price,
           quantity: it.quantity,
