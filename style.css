@@ -307,20 +307,11 @@ button {
   background: #e6f7f3;
 }
 
-.cart-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .cart-item {
-  background: #fff;
-  border-radius: var(--radius);
-  padding: 12px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow);
   gap: 16px;
 }
 
