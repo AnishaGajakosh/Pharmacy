@@ -45,7 +45,7 @@
 </main>
 
 <script>
-  const API_BASE = "http://localhost:5000";
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
 
   document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contactForm");
@@ -64,7 +64,7 @@
         });
         const result = await res.json();
         if (result.ok) {
-          alert("✅ Message sent!");
+          alert("Message sent!");
           form.reset();
         } else {
           alert("❌ " + result.error);
