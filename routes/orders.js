@@ -3,8 +3,6 @@ import Order from "../models/Order.js";
 import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
-
-// ✅ Place Order
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { items, shipping, paymentMethod } = req.body;
@@ -29,18 +27,17 @@ router.post("/", authMiddleware, async (req, res) => {
     await order.save();
     res.json({ ok: true, order });
   } catch (err) {
-    console.error("❌ Error placing order:", err.message);
+    console.error(" Error placing order:", err.message);
     res.status(500).json({ ok: false, error: "Error placing order" });
   }
 });
 
-// ✅ Get User Orders
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id }).sort({ createdAt: -1 });
     res.json({ ok: true, orders });
   } catch (err) {
-    console.error("❌ Error fetching orders:", err.message);
+    console.error(" Error fetching orders:", err.message);
     res.status(500).json({ ok: false, error: err.message });
   }
 });
