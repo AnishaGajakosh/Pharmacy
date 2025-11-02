@@ -5,29 +5,87 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CareKart Admin - Manage Orders</title>
   <link rel="stylesheet" href="style.css">
+
   <style>
-    body { background:#fafafa; }
-    h1 { text-align:center; margin-top:20px; }
-    table { width:100%; border-collapse:collapse; margin-top:20px; background:#fff; }
-    th, td { padding:10px; border:1px solid #ddd; text-align:left; }
-    th { background:#007bff; color:white; }
-    select { padding:5px; }
-    .btn-update {
-      background:#28a745;
-      color:white;
-      border:none;
-      padding:6px 10px;
-      border-radius:5px;
-      cursor:pointer;
+    body {
+      background: #f9f9f9;
+      font-family: "Poppins", Arial, sans-serif;
+      color: #333;margin: 0;padding: 0;
     }
-    .btn-update:hover { background:#218838; }
-    .status-cell { font-weight:500; }
-    .nav-back { margin:20px; display:block; text-decoration:none; color:#007bff; }
+
+    h1 {
+      text-align: center;margin-top: 30px;color: #2e7d32;
+    }
+
+    .nav-back {
+      margin: 20px;display: block;
+      text-decoration: none;color: #2e7d32;font-weight: 500;
+    }
+
+    .nav-back:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;border-collapse: collapse;margin-top: 20px;
+      background: #fff;border-radius: 8px;
+      overflow: hidden;box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #eee;text-align: left;
+    }
+
+    th {
+      background: #2e7d32;color: #fff;
+      text-transform: uppercase;font-size: 14px;letter-spacing: 0.5px;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    select {
+      padding: 6px;border-radius: 5px;
+      border: 1px solid #ccc;outline: none;
+    }
+
+    .btn-update {
+      background: #43a047;color: white;border: none;
+      padding: 6px 10px;border-radius: 5px;cursor: pointer;transition: 0.3s;
+    }
+
+    .btn-update:hover {
+      background: #2e7d32;
+    }
+
+    .status-cell {
+      font-weight: 500;text-transform: capitalize;
+    }
+
+    footer {
+      text-align: center;padding: 15px;
+      margin-top: 40px;color: #666;font-size: 14px;
+    }
+
+    .toast {
+      position: fixed;bottom: 20px;right: 20px;padding: 12px 18px;border-radius: 8px;color: white;
+      font-size: 15px;box-shadow: 0 2px 8px rgba(0,0,0,0.3);z-index: 9999;opacity: 0;
+      transform: translateY(20px);transition: all 0.4s ease;
+    }
+    .toast.show {
+      opacity: 1;transform: translateY(0);
+    }
+    .toast.success { background: #43a047; }
+    .toast.error { background: #e53935; }
+
   </style>
 </head>
+
 <body>
   <h1>All Orders (Admin)</h1>
-  <a href="index.html" class="nav-back">← Back to Home</a>
+  <a href="index.html" class="nav-back">← Back</a>
 
   <div style="max-width:1100px;margin:0 auto;overflow-x:auto;">
     <table id="ordersTable">
@@ -47,8 +105,8 @@
     </table>
   </div>
 
-  <footer class="site-footer">
-    <div class="container">© 2025 CareKart. All rights reserved.</div>
+  <footer>
+    © 2025 CareKart. All rights reserved.
   </footer>
 
   <script>
@@ -61,21 +119,18 @@
       window.location.href = "login.html";
       return;
     }
-
     try {
       const res = await fetch(`${API_BASE}/api/admin/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       const data = await res.json();
-
-      // ✅ Expecting an array, not an object with ok/orders
-      if (!Array.isArray(data)) throw new Error("Invalid response format");
+      const orders = Array.isArray(data) ? data : data.orders;
+      if (!orders) throw new Error("No orders found");
 
       const tbody = document.querySelector("#ordersTable tbody");
       tbody.innerHTML = "";
 
-      data.forEach(order => {
+      orders.forEach(order => {
         const total = order.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -98,10 +153,9 @@
         `;
         tbody.appendChild(tr);
       });
-
     } catch (err) {
       console.error("Error loading orders:", err);
-      alert("Failed to load orders");
+      showToast("Failed to load orders", "error");
     }
   }
 
@@ -120,21 +174,30 @@
       });
 
       const data = await res.json();
-
-      if (data.success || data.ok) {
-        alert("Status updated successfully");
-        loadOrders();
+      if (data.success || data.ok || data.message === "Order status updated successfully") {
+        const row = document.querySelector(`#status-${orderId}`).closest("tr");
+        row.querySelector(".status-cell").textContent = newStatus;
+        showToast("Status updated successfully!", "success");
       } else {
-        alert("Error updating status: " + (data.error || "Unknown error"));
+        showToast("Error updating status: " + (data.error || "Unknown error"), "error");
       }
     } catch (err) {
       console.error("Error updating status:", err);
-      alert("Error updating status");
+      showToast("Network error while updating status", "error");
     }
   }
-
+  function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add("show"), 100);
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 400);
+    }, 2500);
+  }
   document.addEventListener("DOMContentLoaded", loadOrders);
-</script>
-
+  </script>
 </body>
 </html>
