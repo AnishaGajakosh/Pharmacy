@@ -3,87 +3,127 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Admin - Orders</title>
+  <title>CareKart Admin - Manage Orders</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { background:#fafafa; }
+    h1 { text-align:center; margin-top:20px; }
+    table { width:100%; border-collapse:collapse; margin-top:20px; background:#fff; }
+    th, td { padding:10px; border:1px solid #ddd; text-align:left; }
+    th { background:#007bff; color:white; }
+    select { padding:5px; }
+    .btn-update {
+      background:#28a745;
+      color:white;
+      border:none;
+      padding:6px 10px;
+      border-radius:5px;
+      cursor:pointer;
+    }
+    .btn-update:hover { background:#218838; }
+    .status-cell { font-weight:500; }
+    .nav-back { margin:20px; display:block; text-decoration:none; color:#007bff; }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">CareKart</a>
-    </div>
-  </header>
+  <h1>All Orders (Admin)</h1>
+  <a href="index.html" class="nav-back">← Back to Home</a>
 
-  <main class="container">
-    <h1>All Orders (Admin)</h1>
-    <div id="ordersList"></div>
-  </main>
+  <div style="max-width:1100px;margin:0 auto;overflow-x:auto;">
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Items</th>
+          <th>Total (₹)</th>
+          <th>Payment</th>
+          <th>Shipping</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">© 2025 CareKart. All rights reserved.</div>
+  </footer>
 
   <script>
     const API_BASE = "https://pharmacy-oszy.onrender.com";
 
+
     async function loadOrders() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please log in as admin.");
+        window.location.href = "login.html";
+        return;
+      }
+
       try {
         const res = await fetch(`${API_BASE}/api/admin/orders`, {
-          headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+          headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
-        if (!data.ok) return alert("Failed to load orders");
 
-        const list = document.getElementById("ordersList");
-        list.innerHTML = "";
+        if (!data.ok) throw new Error(data.error || "Failed to load orders");
 
-        data.orders.forEach(o => {
-          const div = document.createElement("div");
-          div.className = "order";
+        const tbody = document.querySelector("#ordersTable tbody");
+        tbody.innerHTML = "";
 
-          div.innerHTML = `
-            <h3>Order #${o._id}</h3>
-            <p><strong>Customer:</strong> ${o.user?.name} (${o.user?.email})</p>
-            <p>
-              <strong>Status:</strong>
-              <select id="status-${o._id}">
-                <option value="pending" ${o.status==="pending"?"selected":""}>Pending</option>
-                <option value="shipped" ${o.status==="shipped"?"selected":""}>Shipped</option>
-                <option value="delivered" ${o.status==="delivered"?"selected":""}>Delivered</option>
+        data.orders.forEach(order => {
+          const total = order.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${order._id}</td>
+            <td>${order.user?.name || 'N/A'}</td>
+            <td>${order.items.map(i => `${i.name} (${i.quantity})`).join(", ")}</td>
+            <td>${total.toFixed(2)}</td>
+            <td>${order.paymentMethod}</td>
+            <td>${order.shipping.address}, ${order.shipping.city}</td>
+            <td class="status-cell">${order.status}</td>
+            <td>
+              <select id="status-${order._id}">
+                <option value="pending" ${order.status==="pending"?"selected":""}>Pending</option>
+                <option value="shipped" ${order.status==="shipped"?"selected":""}>Shipped</option>
+                <option value="delivered" ${order.status==="delivered"?"selected":""}>Delivered</option>
+                <option value="cancelled" ${order.status==="cancelled"?"selected":""}>Cancelled</option>
               </select>
-              <button onclick="updateStatus('${o._id}')">Update</button>
-            </p>
-            <p><strong>Payment Method:</strong> ${o.paymentMethod}</p>
-            <p><strong>Shipping:</strong> 
-              ${o.shipping?.address}, ${o.shipping?.city}, 
-              ${o.shipping?.state}, ${o.shipping?.zip} - ${o.shipping?.phone}
-            </p>
-            <h4>Items:</h4>
-            <ul>
-              ${o.items.map(i => `<li>${i.name} x${i.quantity} - ₹${i.price}</li>`).join("")}
-            </ul>
+              <button class="btn-update" onclick="updateStatus('${order._id}')">Update</button>
+            </td>
           `;
-          list.appendChild(div);
+          tbody.appendChild(tr);
         });
+
       } catch (err) {
         console.error(err);
-        alert("Error loading orders");
+        alert("Failed to load orders");
       }
     }
 
     async function updateStatus(orderId) {
+      const token = localStorage.getItem("token");
       const newStatus = document.getElementById(`status-${orderId}`).value;
+
       try {
         const res = await fetch(`${API_BASE}/api/admin/orders/${orderId}/status`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({ status: newStatus })
         });
 
         const data = await res.json();
         if (data.ok) {
-          alert("Order status updated");
-          loadOrders(); // reload after update
+          alert("Status updated successfully");
+          loadOrders();
         } else {
-          alert(data.error || "Failed to update");
+          alert("Error updating status: " + data.error);
         }
       } catch (err) {
         console.error(err);
@@ -91,26 +131,7 @@
       }
     }
 
-    loadOrders();
+    document.addEventListener("DOMContentLoaded", loadOrders);
   </script>
-
-  <style>
-    .container { max-width:800px; margin:30px auto }
-    .order {
-      border:1px solid #ddd;
-      padding:15px;
-      margin-bottom:20px;
-      border-radius:8px;
-      background:#fff;
-    }
-    .order h3 { margin-top:0 }
-    select { padding:5px }
-    button { margin-left:8px; padding:5px 10px; background:#28a745; color:#fff; border:none; border-radius:4px; cursor:pointer }
-    button:hover { background:#218838 }
-  </style>
-
-  <footer class="site-footer">
-    <p>© 2025 CareKart. All rights reserved.</p>
-  </footer>
 </body>
 </html>
