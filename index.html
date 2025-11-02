@@ -41,6 +41,7 @@
       <a href="terms.html">Terms & Conditions</a>
       <a href="refunds.html">Cancellation & Refund Policy</a>
       <a href="faq.html">FAQ</a>
+      <a href="admin-orders.html" id="adminLink" style="display:none;">Manage Orders</a>
       <a href="#" id="logoutLink" style="color:red;display:none">Sign Out</a>
     </div>
   </aside>
@@ -96,6 +97,14 @@
       logoutLink.style.display = "block";
       loginLink.style.display = "none";
       registerLink.style.display = "none";
+
+      if (user.isAdmin) {
+  document.getElementById("adminLink").style.display = "block";
+} else {
+  document.getElementById("adminLink").style.display = "none";
+}
+
+
     } else {
       logoutLink.style.display = "none";
       loginLink.style.display = "block";
