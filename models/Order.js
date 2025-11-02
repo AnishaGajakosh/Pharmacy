@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     items: [
       {
-        id: { type: String, required: true }, // e.g. "med001"
+        id: { type: String, required: true },
         name: { type: String, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true }
@@ -20,9 +19,12 @@ const orderSchema = new mongoose.Schema(
       phone: { type: String, required: true }
     },
     paymentMethod: { type: String, default: "cod" },
-    status: { type: String, default: "pending" }
+    status: {
+      type: String,
+      enum: ["pending", "shipped", "delivered", "cancelled"],
+      default: "pending"
+    }
   },
   { timestamps: true }
 );
-
 export default mongoose.model("Order", orderSchema);
