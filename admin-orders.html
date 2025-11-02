@@ -52,87 +52,89 @@
   </footer>
 
   <script>
-    const API_BASE = "https://pharmacy-oszy.onrender.com";
+  const API_BASE = "https://pharmacy-oszy.onrender.com";
 
-
-    async function loadOrders() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("Please log in as admin.");
-        window.location.href = "login.html";
-        return;
-      }
-
-      try {
-        const res = await fetch("https://pharmacy-oszy.onrender.com/api/admin/orders", {
-  headers: { Authorization: `Bearer ${token}` },
-});
-
-        const data = await res.json();
-
-        if (!data.ok) throw new Error(data.error || "Failed to load orders");
-
-        const tbody = document.querySelector("#ordersTable tbody");
-        tbody.innerHTML = "";
-
-        data.orders.forEach(order => {
-          const total = order.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${order._id}</td>
-            <td>${order.user?.name || 'N/A'}</td>
-            <td>${order.items.map(i => `${i.name} (${i.quantity})`).join(", ")}</td>
-            <td>${total.toFixed(2)}</td>
-            <td>${order.paymentMethod}</td>
-            <td>${order.shipping.address}, ${order.shipping.city}</td>
-            <td class="status-cell">${order.status}</td>
-            <td>
-              <select id="status-${order._id}">
-                <option value="pending" ${order.status==="pending"?"selected":""}>Pending</option>
-                <option value="shipped" ${order.status==="shipped"?"selected":""}>Shipped</option>
-                <option value="delivered" ${order.status==="delivered"?"selected":""}>Delivered</option>
-                <option value="cancelled" ${order.status==="cancelled"?"selected":""}>Cancelled</option>
-              </select>
-              <button class="btn-update" onclick="updateStatus('${order._id}')">Update</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-
-      } catch (err) {
-        console.error(err);
-        alert("Failed to load orders");
-      }
+  async function loadOrders() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in as admin.");
+      window.location.href = "login.html";
+      return;
     }
 
-    async function updateStatus(orderId) {
-      const token = localStorage.getItem("token");
-      const newStatus = document.getElementById(`status-${orderId}`).value;
+    try {
+      const res = await fetch(`${API_BASE}/api/admin/orders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      try {
-        const res = await fetch(`${API_BASE}/api/admin/orders/${orderId}/status`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({ status: newStatus })
-        });
+      const data = await res.json();
 
-        const data = await res.json();
-        if (data.ok) {
-          alert("Status updated successfully");
-          loadOrders();
-        } else {
-          alert("Error updating status: " + data.error);
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Error updating status");
-      }
+      // ✅ Expecting an array, not an object with ok/orders
+      if (!Array.isArray(data)) throw new Error("Invalid response format");
+
+      const tbody = document.querySelector("#ordersTable tbody");
+      tbody.innerHTML = "";
+
+      data.forEach(order => {
+        const total = order.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${order._id}</td>
+          <td>${order.user?.name || order.shipping?.name || 'N/A'}</td>
+          <td>${order.items.map(i => `${i.name} (${i.quantity})`).join(", ")}</td>
+          <td>₹${total.toFixed(2)}</td>
+          <td>${order.paymentMethod}</td>
+          <td>${order.shipping?.address || ''}, ${order.shipping?.city || ''}</td>
+          <td class="status-cell">${order.status}</td>
+          <td>
+            <select id="status-${order._id}">
+              <option value="pending" ${order.status==="pending"?"selected":""}>Pending</option>
+              <option value="shipped" ${order.status==="shipped"?"selected":""}>Shipped</option>
+              <option value="delivered" ${order.status==="delivered"?"selected":""}>Delivered</option>
+              <option value="cancelled" ${order.status==="cancelled"?"selected":""}>Cancelled</option>
+            </select>
+            <button class="btn-update" onclick="updateStatus('${order._id}')">Update</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+    } catch (err) {
+      console.error("Error loading orders:", err);
+      alert("Failed to load orders");
     }
+  }
 
-    document.addEventListener("DOMContentLoaded", loadOrders);
-  </script>
+  async function updateStatus(orderId) {
+    const token = localStorage.getItem("token");
+    const newStatus = document.getElementById(`status-${orderId}`).value;
+
+    try {
+      const res = await fetch(`${API_BASE}/api/admin/orders/${orderId}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      const data = await res.json();
+
+      if (data.success || data.ok) {
+        alert("Status updated successfully");
+        loadOrders();
+      } else {
+        alert("Error updating status: " + (data.error || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("Error updating status:", err);
+      alert("Error updating status");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadOrders);
+</script>
+
 </body>
 </html>
