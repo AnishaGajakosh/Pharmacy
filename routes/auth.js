@@ -41,7 +41,6 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ ok: false, msg: "Server error" });
   }
 });
-
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
@@ -54,7 +53,6 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(400).json({ ok: false, msg: "Not Registered. Please register first." });
     }
-
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(400).json({ ok: false, msg: "Invalid credentials" });
