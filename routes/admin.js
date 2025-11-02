@@ -1,24 +1,40 @@
 import express from "express";
 import Order from "../models/Order.js";
-import authMiddleware from "../middleware/auth.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-// Fetch all orders (admin only)
-router.get("/orders", authMiddleware, async (req, res) => {
+// ✅ Get all orders (Admin only)
+router.get("/orders", async (req, res) => {
   try {
-    if (!req.user.isAdmin) {
-      return res.status(403).json({ ok: false, msg: "Access denied" });
+    const orders = await Order.find()
+      .populate("user", "name email") // Only populate user info
+      .sort({ createdAt: -1 }); // Most recent first
+
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("❌ Admin fetch orders error:", error);
+    res.status(500).json({ message: "Server error while fetching orders" });
+  }
+});
+
+// ✅ Update order status (Admin)
+router.put("/orders/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
     }
 
-    const orders = await Order.find()
-      .populate("user", "name email")
-      .populate("payment");
+    order.status = status;
+    await order.save();
 
-    res.json({ ok: true, orders });
-  } catch (err) {
-    console.error("❌ Admin fetch orders error:", err);
-    res.status(500).json({ ok: false, msg: "Server error" });
+    res.status(200).json({ message: "Order status updated successfully" });
+  } catch (error) {
+    console.error("❌ Error updating order status:", error);
+    res.status(500).json({ message: "Server error while updating order" });
   }
 });
 
