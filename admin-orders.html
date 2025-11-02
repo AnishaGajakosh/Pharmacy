@@ -64,9 +64,10 @@
       }
 
       try {
-        const res = await fetch(`${API_BASE}/api/admin/orders`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await fetch("https://pharmacy-oszy.onrender.com/api/admin/orders", {
+  headers: { Authorization: `Bearer ${token}` },
+});
+
         const data = await res.json();
 
         if (!data.ok) throw new Error(data.error || "Failed to load orders");
